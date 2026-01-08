@@ -113,6 +113,12 @@ body {
   border-color: #4ade80;     /* green-400 */
 }
 
+.rating-green {
+  background-color: #22c55e; /* green-500 */
+  color: white;
+  border-color: #16a34a;     /* green-600 */
+}
+
 .rating-dark-green {
   background-color: #15803d; /* green-700 */
   color: white;
