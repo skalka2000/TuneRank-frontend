@@ -4,7 +4,8 @@ function AddAlbumForm({onSubmit}){
     const [title, setTitle] = useState("");
     const [artist, setArtist] = useState("");
     const [year, setYear] = useState("");
-    const [rating, setRating] = useState("")
+    const [rating, setRating] = useState("");
+    const [songs, setSongs] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,12 +13,30 @@ function AddAlbumForm({onSubmit}){
             title,
             artist,
             year: year && parseInt(year),
-            rating: rating && parseFloat(rating)
+            rating: rating && parseFloat(rating),
+            songs: songs
+              .filter(song => song.title.trim() !== "")
+              .map(song => ({
+                  title: song.title,
+                  ...(song.track_number && { track_number: parseInt(song.track_number) }),
+                  ...(song.rating && { rating: parseFloat(song.rating) })
+              }))
         };
         onSubmit(album);    
     }
-      return (
+
+    const handleAddSong = () => {
+        setSongs([...songs, {title: "", track_number: "", rating: ""}])
+    }
+
+    const handleSongChange = (index, field, value) => {
+        const updatedSongs = [...songs]
+        updatedSongs[index][field] = value
+        setSongs(updatedSongs)
+    }
+    return (
     <form onSubmit={handleSubmit} className="album-form">
+    <div className="album-form-details">    
       <input
         type="text"
         placeholder="Title"
@@ -44,6 +63,33 @@ function AddAlbumForm({onSubmit}){
         value={rating}
         onChange={(e) => setRating(e.target.value)}
       />
+      </div>
+      {songs.length > 0 && <h3>Songs</h3>}
+      {songs.map((song, index) => (
+        <div key={index} className="song-form-group">
+          <input
+            type="number"
+            placeholder="Track #"
+            value={song.track_number}
+            onChange={(e) => handleSongChange(index, "track_number", e.target.value)}
+            min={1}
+          />            
+          <input
+            type="text"
+            placeholder="Song Title"
+            value={song.title}
+            onChange={(e) => handleSongChange(index, "title", e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Song Rating"
+            value={song.rating}
+            onChange={(e) => handleSongChange(index, "rating", e.target.value)}
+          />
+        </div>
+      ))}
+      
+      <button type="button" onClick={handleAddSong} className="button">Add Song</button>
       <button type="submit" className="button">Save</button>
     </form>
     );
