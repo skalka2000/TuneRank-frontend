@@ -1,41 +1,194 @@
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { getRatingColor } from "../utils/ratingColors";
+import { betweenNumberRange } from "../utils/betweenNumberRange";
+import RangeFilter from "./RangeFilter";
 
 
 function AlbumTable({ albums }) {
-  if (!albums.length) return <p>No albums found.</p>;
+  const [sorting, setSorting] = useState([]);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [activeFilterColumn, setActiveFilterColumn] = useState(null);
+
+
+  const data = useMemo(() => albums, [albums]);
+
+  const columns = useMemo(() => [
+    {
+      accessorKey: "title",
+      header: "Title",
+      filterFn: "includesString",
+      cell: info => info.getValue(),
+    },
+    {
+      accessorKey: "artist",
+      header: "Artist",
+      filterFn: "includesString",
+      cell: info => info.getValue(),
+    },
+    {
+      accessorKey: "year",
+      header: "Year",
+      filterFn: betweenNumberRange,
+      cell: info => info.getValue() ?? "N/A",
+    },
+    {
+      accessorKey: "rating",
+      header: "Rating",
+      size: 80,
+      filterFn: betweenNumberRange,
+      cell: info => (
+        <div className={getRatingColor(info.getValue())}>
+          {info.getValue()}
+        </div>
+      ),
+    },
+    {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <Link to={`/albums/${row.original.id}`}>
+          <button className="button">View</button>
+        </Link>
+      ),
+    },
+  ], []);
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+      columnFilters,
+    },
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    filterFns: {
+      betweenNumberRange,
+    },
+});
+
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Artist</th>
-          <th>Year</th>
-          <th>Rating</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {albums.map((album) => (
-          <tr key={album.id}>
-            <td>{album.title}</td>
-            <td>{album.artist}</td>
-            <td>{album.year}</td>
-            <td>
-              <div className={getRatingColor(album.rating)}>
-                {album.rating}
-              </div>
-            </td>
-            <td>
-              <Link to={`/albums/${album.id}`}>
-                <button className="button">View</button>
-              </Link>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={globalFilter}
+        onChange={(e) => setGlobalFilter(e.target.value)}
+        className="input"
+      />
+      <table className="table">
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th
+                  key={header.id}
+                  style={{
+                    position: "relative",
+                    width: header.column.columnDef.size ?? "150px", // fallback width
+                    maxWidth: header.column.columnDef.maxSize ?? "200px",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    textAlign: header.column.id === "rating" ? "center" : "left",
+                  }}
+                >
+                <div
+                  style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+                >
+                  <span
+                    onClick={header.column.getToggleSortingHandler()}
+                    style={{ cursor: "pointer", userSelect: "none" }}
+                  >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {{
+                      asc: " ↑",
+                      desc: " ↓",
+                    }[header.column.getIsSorted()] ?? ""}
+                  </span>
+
+                  {header.column.getCanFilter() && (
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation(); // prevent sorting on icon click
+                        setActiveFilterColumn((prev) =>
+                          prev === header.column.id ? null : header.column.id
+                        );
+                      }}
+                      style={{
+                        cursor: "pointer",
+                        marginLeft: "0.5rem",
+                        fontSize: "0.8rem",
+                      }}
+                      title="Filter"
+                    >
+                      🔍
+                    </span>
+                  )}
+                </div>
+
+                {activeFilterColumn === header.column.id && (
+                  <div style={{ marginTop: "0.25rem" }}>
+                    {header.column.id === "rating" || header.column.id === "year" ? (
+                      <RangeFilter column={header.column} />
+                    ) : (
+                    <input
+                      type="text"
+                      value={header.column.getFilterValue() ?? ""}
+                      onChange={(e) => header.column.setFilterValue(e.target.value)}
+                      placeholder={`Filter ${header.column.id}`}
+                      style={{
+                        width: "100%",        // fill column
+                        maxWidth: "100%",     // don’t expand beyond column
+                        overflow: "hidden",
+                        boxSizing: "border-box", // important for padding inside constrained width
+                      }}
+                    />
+                    )}
+                  </div>
+                )}
+              </th>
+
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+              <td
+                key={cell.id}
+                style={{
+                  width: cell.column.columnDef.size ?? "150px",
+                  maxWidth: cell.column.columnDef.maxSize ?? "200px",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  textAlign: cell.column.id === "rating" ? "center" : "left",
+                }}
+              >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
