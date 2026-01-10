@@ -10,56 +10,68 @@ import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
 import RangeFilter from "./RangeFilter";
 
-function SongTable({ songs, showAlbum = false }) {
-  const [sorting, setSorting] = useState([]);
+const baseColumns = [
+  {
+    accessorKey: "track_number",
+    header: "#",
+    size: 10,
+    cell: info => info.getValue() ?? "",
+    enableSorting: true,
+    filterFn: betweenNumberRange,
+  },
+  {
+    accessorKey: "title",
+    header: "Title",
+    filterFn: "includesString",
+    cell: info => info.getValue(),
+  },
+  {
+    accessorKey: "album.title",
+    header: "Album",
+    cell: info => info.row.original.album?.title ?? "N/A",
+    filterFn: "includesString",
+  },
+  {
+    accessorKey: "album.artist",
+    header: "Artist",
+    cell: info => info.row.original.album?.artist ?? "N/A",
+    filterFn: "includesString",
+  },
+  {
+    accessorKey: "rating",
+    header: "Rating",
+    size: 80,
+    filterFn: betweenNumberRange,
+    cell: info => (
+      <div className={getRatingColor(info.getValue())}>
+        {info.getValue() ?? "N/A"}
+      </div>
+    ),
+  },
+];
+
+function SongTable({ songs, showAlbum = false, showTrackNumber = true }) {
+  const [sorting, setSorting] = useState(
+    showTrackNumber
+      ? [{ id: "track_number", desc: false }]
+      : []
+  );
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
 
   const data = useMemo(() => songs, [songs]);
 
   const columns = useMemo(() => {
-    const base = [
-      {
-        accessorKey: "track_number",
-        header: "#",
-        size: 40,
-        cell: info => info.getValue() ?? "",
-        enableSorting: true,
-        filterFn: betweenNumberRange,
-      },
-      {
-        accessorKey: "title",
-        header: "Title",
-        filterFn: "includesString",
-        cell: info => info.getValue(),
-      },
-      {
-        accessorKey: "album.title",
-        header: "Album",
-        cell: info => info.row.original.album?.title ?? "N/A",
-        filterFn: "includesString",
-      },
-      {
-        accessorKey: "album.artist",
-        header: "Artist",
-        cell: info => info.row.original.album?.artist ?? "N/A",
-        filterFn: "includesString",
-      },
-      {
-        accessorKey: "rating",
-        header: "Rating",
-        size: 80,
-        filterFn: betweenNumberRange,
-        cell: info => (
-          <div className={getRatingColor(info.getValue())}>
-            {info.getValue() ?? "N/A"}
-          </div>
-        ),
-      },
-    ];
+    let cols = [...baseColumns];
+    if (!showAlbum) {
+      cols = cols.filter(c => c.accessorKey !== "album.title");
+    }
+    if (!showTrackNumber) {
+      cols = cols.filter(c => c.accessorKey !== "track_number");
+    }
+    return cols;
+  }, [showAlbum, showTrackNumber]);
 
-    return showAlbum ? base : base.filter(col => col.accessorKey !== "album.title");
-  }, [showAlbum]);
 
   const table = useReactTable({
     data,

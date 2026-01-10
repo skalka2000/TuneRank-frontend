@@ -20,7 +20,7 @@ function Songs() {
   return (
     <div>
       <h2>All Songs</h2>
-      <SongTable songs={songs} showAlbum />
+      <SongTable songs={songs} showAlbum showTrackNumber={false} />
     </div>
   );
 }
