@@ -22,17 +22,19 @@ function AlbumPage() {
   return (
     <div>
       <h2>{album.title}</h2>
-      <p><strong>Artist:</strong> {album.artist}</p>
-      <p><strong>Year:</strong> {album.year ?? "N/A"}</p>
-      <p><strong>Rating:</strong> {album.rating ?? "N/A"}</p>
-
-      <Link to={`/albums/${id}/add-song`}>
-        <button className="button" style={{ marginBottom: "1rem" }}>
-          Add Song
-        </button>
-      </Link>
-
-      <h3>Songs</h3>
+      <div className = "album-info">
+        <p><strong>Artist:</strong> {album.artist}</p>
+        <p><strong>Year:</strong> {album.year ?? "N/A"}</p>
+        <p><strong>Rating:</strong> {album.rating ?? "N/A"}</p>
+      </div>
+      <div className = "album-info-songs-add-song">
+        <h3>Songs</h3>
+        <Link to={`/albums/${id}/add-song`}>
+          <button className="button">
+            Add Song
+          </button>
+        </Link>
+      </div>
       <SongTable songs={album.songs} />
     </div>
   );

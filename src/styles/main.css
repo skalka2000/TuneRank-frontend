@@ -168,3 +168,16 @@ body {
   gap: 1rem;
   align-items: flex-start;
 }
+
+.album-info {
+  display: flex;
+  flex-direction: wrap;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.album-info-songs-add-song {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
