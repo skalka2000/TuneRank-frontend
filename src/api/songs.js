@@ -18,3 +18,18 @@ export async function fetchSongs(filters = {}) {
   if (!res.ok) throw new Error("Failed to fetch songs");
   return res.json();
 }
+
+export async function addSongToAlbum(albumId, songData) {
+  const res = await fetch(`${API_BASE}/albums/${albumId}/songs`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(songData),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.detail || "Failed to add song");
+  }
+
+  return res.json();
+}
