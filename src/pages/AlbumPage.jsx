@@ -12,7 +12,6 @@ function AlbumPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
-  const [songFilter, setSongFilter] = useState("");
 
 
   useEffect(() => {
@@ -52,13 +51,6 @@ function AlbumPage() {
         </button>
       </div>
       {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
-      <input
-        type="text"
-        placeholder="Filter songs by title..."
-        value={songFilter}
-        onChange={(e) => setSongFilter(e.target.value)}
-        className="input"
-      />
       <SongTable songs={album.songs} />
     </div>
   );
