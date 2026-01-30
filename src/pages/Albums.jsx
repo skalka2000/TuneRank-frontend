@@ -17,7 +17,6 @@ function Albums() {
     }
   };
 
-
   useEffect(() => {
     fetchAlbums()
       .then(setAlbums)
@@ -36,8 +35,7 @@ function Albums() {
                 <button className="button">Add Album</button>
             </Link>
         </div>
-      <AlbumTable albums={albums} onDelete={handleDeleteAlbum} setAlbums={setAlbums}
-/>
+      <AlbumTable albums={albums} onDelete={handleDeleteAlbum} setAlbums={setAlbums}/>
     </div>
   );
 }

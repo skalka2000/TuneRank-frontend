@@ -5,6 +5,7 @@ import { addSongToAlbum } from "../api/songs";
 import SongTable from "../components/SongTable";
 import AddSongForm from "../components/AddSongForm";
 import EditableField from "../components/EditableField";
+import { updateSongField } from "../api/songs";
 
 
 function AlbumPage() {
@@ -17,6 +18,21 @@ function AlbumPage() {
   const handleFieldUpdate = async (field, value) => {
     const updated = await updateAlbumField(id, field, value);
     setAlbum(updated);
+  };
+
+
+  const handleSongUpdate = async (songId, field, value) => {
+    try {
+      const updated = await updateSongField(songId, field, value);
+      setAlbum(prev => ({
+        ...prev,
+        songs: prev.songs.map(song =>
+          song.id === updated.id ? updated : song
+        ),
+      }));
+    } catch (err) {
+      console.error("Failed to update song:", err.message);
+    }
   };
 
   useEffect(() => {
@@ -46,34 +62,26 @@ function AlbumPage() {
     <h2>
       <EditableField
         value={album.title}
-        field="title"
-        albumId={id}
-        onUpdate={handleFieldUpdate}
+        onSave={(val) => handleFieldUpdate("title", val)}
       />
     </h2>
     <div className="album-info">
       <p><strong>Artist:</strong>{" "}
-        <EditableField
-          value={album.artist}
-          field="artist"
-          albumId={id}
-          onUpdate={handleFieldUpdate}
-        />
+      <EditableField
+        value={album.artist}
+        onSave={(val) => handleFieldUpdate("artist", val)}
+      />
       </p>
       <p><strong>Year:</strong>{" "}
         <EditableField
           value={album.year}
-          field="year"
-          albumId={id}
-          onUpdate={handleFieldUpdate}
+          onSave={(val) => handleFieldUpdate("year", val)}
         />
       </p>
       <p><strong>Rating:</strong>{" "}
         <EditableField
           value={album.rating}
-          field="rating"
-          albumId={id}
-          onUpdate={handleFieldUpdate}
+          onSave={(val) => handleFieldUpdate("rating", val)}
         />
       </p>
     </div>
@@ -84,7 +92,7 @@ function AlbumPage() {
         </button>
       </div>
       {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
-      <SongTable songs={album.songs} />
+      <SongTable songs={album.songs} onUpdate={handleSongUpdate}/>
     </div>
   );
 }

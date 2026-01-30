@@ -9,32 +9,49 @@ import { useMemo, useState } from "react";
 import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
 import RangeFilter from "./RangeFilter";
+import EditableField from "./EditableField";
 
-const baseColumns = [
+
+const baseColumns = (onUpdate) => [
   {
     accessorKey: "track_number",
     header: "#",
     size: 10,
-    cell: info => info.getValue() ?? "",
     enableSorting: true,
     filterFn: betweenNumberRange,
+    cell: ({ row }) => (
+      <EditableField
+        value={row.original.track_number}
+        inputType="number"
+        onSave={(val) =>
+          onUpdate(row.original.id, "track_number", parseInt(val))
+        }
+      />
+    ),
   },
   {
     accessorKey: "title",
     header: "Title",
     filterFn: "includesString",
-    cell: info => info.getValue(),
+    cell: ({ row }) => (
+      <EditableField
+        value={row.original.title}
+        onSave={(val) =>
+          onUpdate(row.original.id, "title", val)
+        }
+      />
+    ),
   },
   {
     accessorKey: "album.title",
     header: "Album",
-    cell: info => info.row.original.album?.title ?? "N/A",
+    cell: ({ row }) => row.original.album?.title ?? "N/A",
     filterFn: "includesString",
   },
   {
     accessorKey: "album.artist",
     header: "Artist",
-    cell: info => info.row.original.album?.artist ?? "N/A",
+    cell: ({ row }) => row.original.album?.artist ?? "N/A",
     filterFn: "includesString",
   },
   {
@@ -42,15 +59,20 @@ const baseColumns = [
     header: "Rating",
     size: 80,
     filterFn: betweenNumberRange,
-    cell: info => (
-      <div className={getRatingColor(info.getValue())}>
-        {info.getValue() ?? "N/A"}
-      </div>
-    ),
+    cell: ({ row }) => (
+      <EditableField
+        value={row.original.rating}
+        inputType="number"
+        onSave={(val) =>
+          onUpdate(row.original.id, "rating", parseFloat(val))
+        }
+      />
+    )
   },
 ];
 
-function SongTable({ songs, showAlbum = false, showTrackNumber = true }) {
+
+function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate}) {
   const [sorting, setSorting] = useState(
     showTrackNumber
       ? [{ id: "track_number", desc: false }]
@@ -62,7 +84,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true }) {
   const data = useMemo(() => songs, [songs]);
 
   const columns = useMemo(() => {
-    let cols = [...baseColumns];
+    let cols = [...baseColumns(onUpdate)];
     if (!showAlbum) {
       cols = cols.filter(c => c.accessorKey !== "album.title");
     }
@@ -70,7 +92,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true }) {
       cols = cols.filter(c => c.accessorKey !== "track_number");
     }
     return cols;
-  }, [showAlbum, showTrackNumber]);
+  }, [showAlbum, showTrackNumber, onUpdate]);
 
 
   const table = useReactTable({

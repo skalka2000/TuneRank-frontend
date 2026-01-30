@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-function EditableField({ value, field, albumId, onUpdate }) {
+function EditableField({ value, onSave, inputType = "text", placeholder = "—" }) {
   const [editing, setEditing] = useState(false);
-  const [localValue, setLocalValue] = useState(value);
+  const [localValue, setLocalValue] = useState(value ?? "");
 
   const handleBlur = async () => {
     if (localValue !== value) {
       try {
-        await onUpdate(field, localValue);
+        await onSave(localValue);
       } catch (err) {
         console.error(err.message);
       }
@@ -17,6 +17,7 @@ function EditableField({ value, field, albumId, onUpdate }) {
 
   return editing ? (
     <input
+      type={inputType}
       value={localValue}
       autoFocus
       onChange={(e) => setLocalValue(e.target.value)}
@@ -27,11 +28,11 @@ function EditableField({ value, field, albumId, onUpdate }) {
     />
   ) : (
     <span
-    onDoubleClick={() => setEditing(true)}
-    className="editable-field"
+      onDoubleClick={() => setEditing(true)}
+      className="editable-field"
     >
-    {value || <i style={{ color: "#aaa" }}>—</i>}
-    <span className="edit-icon">✏️</span>
+      {value || <i style={{ color: "#aaa" }}>{placeholder}</i>}
+      <span className="edit-icon">✏️</span>
     </span>
   );
 }

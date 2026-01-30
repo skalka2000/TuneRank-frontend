@@ -19,9 +19,6 @@ function AlbumTable({ albums, onDelete }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [albumToDelete, setAlbumToDelete] = useState(null);
-  
-
-
 
   const data = useMemo(() => albums, [albums]);
 
@@ -39,8 +36,6 @@ function AlbumTable({ albums, onDelete }) {
   const cancelDelete = () => {
     setAlbumToDelete(null);
   };
-
-
 
   const columns = useMemo(() => [
     {

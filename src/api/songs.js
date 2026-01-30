@@ -33,3 +33,16 @@ export async function addSongToAlbum(albumId, songData) {
 
   return res.json();
 }
+
+export async function updateSongField(id, field, value) {
+  const res = await fetch(`http://localhost:8000/songs/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ [field]: value }),
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.detail || "Failed to update song");
+  }
+  return res.json();
+}
