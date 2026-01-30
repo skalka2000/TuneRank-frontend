@@ -46,3 +46,13 @@ export async function updateSongField(id, field, value) {
   }
   return res.json();
 }
+
+export async function deleteSong(songId) {
+  const res = await fetch(`http://localhost:8000/songs/${songId}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.detail || "Failed to delete song");
+  }
+}

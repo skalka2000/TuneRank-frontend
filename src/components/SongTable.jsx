@@ -12,7 +12,8 @@ import RangeFilter from "./RangeFilter";
 import EditableField from "./EditableField";
 
 
-const baseColumns = (onUpdate) => [
+const baseColumns = (onUpdate, onDelete) => {
+  const columns = [
   {
     accessorKey: "track_number",
     header: "#",
@@ -69,10 +70,30 @@ const baseColumns = (onUpdate) => [
       />
     )
   },
-];
+  ];
+  if (onDelete) {
+    columns.push({
+      id: "actions",
+      header: "Actions",
+      size: 50,
+      cell: ({ row }) => (
+        <button
+          className="button button-danger"
+          onClick={() => {
+            const confirmed = window.confirm(`Delete "${row.original.title}"?`);
+            if (confirmed) onDelete(row.original.id);
+          }}
+        >
+          Delete
+        </button>
+      ),
+    });
+  }
+  return columns
+}
 
 
-function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate}) {
+function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate, onDelete}) {
   const [sorting, setSorting] = useState(
     showTrackNumber
       ? [{ id: "track_number", desc: false }]
@@ -84,7 +105,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate}
   const data = useMemo(() => songs, [songs]);
 
   const columns = useMemo(() => {
-    let cols = [...baseColumns(onUpdate)];
+    let cols = [...baseColumns(onUpdate, onDelete)];
     if (!showAlbum) {
       cols = cols.filter(c => c.accessorKey !== "album.title");
     }
@@ -92,7 +113,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate}
       cols = cols.filter(c => c.accessorKey !== "track_number");
     }
     return cols;
-  }, [showAlbum, showTrackNumber, onUpdate]);
+  }, [showAlbum, showTrackNumber, onUpdate, onDelete]);
 
 
   const table = useReactTable({

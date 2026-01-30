@@ -6,6 +6,8 @@ import SongTable from "../components/SongTable";
 import AddSongForm from "../components/AddSongForm";
 import EditableField from "../components/EditableField";
 import { updateSongField } from "../api/songs";
+import { deleteSong } from "../api/songs";
+
 
 
 function AlbumPage() {
@@ -20,7 +22,6 @@ function AlbumPage() {
     setAlbum(updated);
   };
 
-
   const handleSongUpdate = async (songId, field, value) => {
     try {
       const updated = await updateSongField(songId, field, value);
@@ -32,6 +33,18 @@ function AlbumPage() {
       }));
     } catch (err) {
       console.error("Failed to update song:", err.message);
+    }
+  };
+
+  const handleDeleteSong = async (songId) => {
+    try {
+      await deleteSong(songId);
+      setAlbum(prev => ({
+        ...prev,
+        songs: prev.songs.filter(song => song.id !== songId),
+      }));
+    } catch (err) {
+      console.error("Failed to delete song:", err.message);
     }
   };
 
@@ -92,7 +105,7 @@ function AlbumPage() {
         </button>
       </div>
       {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
-      <SongTable songs={album.songs} onUpdate={handleSongUpdate}/>
+      <SongTable songs={album.songs} onUpdate={handleSongUpdate} onDelete={handleDeleteSong}/>
     </div>
   );
 }

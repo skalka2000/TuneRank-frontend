@@ -70,6 +70,7 @@ function AlbumTable({ albums, onDelete }) {
   {
     id: "actions",
     header: "Actions",
+    size: 80,
     cell: ({ row }) => {
       const albumId = row.original.id;
 
