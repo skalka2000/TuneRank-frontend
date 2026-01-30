@@ -5,21 +5,42 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
 import RangeFilter from "./RangeFilter";
+import ConfirmDialog from "./ConfirmDialog";
 
 
-function AlbumTable({ albums }) {
+function AlbumTable({ albums, onDelete }) {
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
+  const [albumToDelete, setAlbumToDelete] = useState(null);
+  
+
 
 
   const data = useMemo(() => albums, [albums]);
+
+  const handleDelete = useCallback((album) => {
+    setAlbumToDelete(album);
+  }, []);
+
+  const confirmDelete = () => {
+    if (albumToDelete) {
+      onDelete(albumToDelete.id);
+      setAlbumToDelete(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setAlbumToDelete(null);
+  };
+
+
 
   const columns = useMemo(() => [
     {
@@ -51,16 +72,29 @@ function AlbumTable({ albums }) {
         </div>
       ),
     },
-    {
-      id: "actions",
-      header: "Actions",
-      cell: ({ row }) => (
-        <Link to={`/albums/${row.original.id}`}>
-          <button className="button">View</button>
-        </Link>
-      ),
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const albumId = row.original.id;
+
+      return (
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <Link to={`/albums/${albumId}`}>
+            <button className="button button-secondary">View</button>
+          </Link>
+          <button
+            className="button button-danger"
+            onClick={() => handleDelete(row.original)}
+          >
+            Delete
+          </button>
+        </div>
+      );
     },
-  ], []);
+  }
+
+  ], [handleDelete]);
 
   const table = useReactTable({
     data,
@@ -188,6 +222,14 @@ function AlbumTable({ albums }) {
           ))}
         </tbody>
       </table>
+      {albumToDelete !== null && (
+        <ConfirmDialog
+          message={`Are you sure you want to delete "${albumToDelete.title}"?`}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
+
     </div>
   );
 }

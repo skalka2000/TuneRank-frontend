@@ -7,6 +7,11 @@ import { addAlbum } from "../api/albums";
 function AddAlbum() {
   const navigate = useNavigate();
 
+  const handleCancel = () => {
+    navigate("/albums");
+  };
+
+
   const handleAddAlbum = async (album) => {
     try {
         await addAlbum(album);
@@ -20,7 +25,7 @@ function AddAlbum() {
   return (
     <div>
       <h2>Add Album</h2>
-      <AddAlbumForm onSubmit={handleAddAlbum} />
+      <AddAlbumForm onSubmit={handleAddAlbum} onCancel={handleCancel} />
     </div>
   );
 }

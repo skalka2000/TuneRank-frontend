@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddAlbumForm({onSubmit}){
+function AddAlbumForm({onSubmit, onCancel}){
     const [title, setTitle] = useState("");
     const [artist, setArtist] = useState("");
     const [year, setYear] = useState("");
@@ -90,7 +90,11 @@ function AddAlbumForm({onSubmit}){
       ))}
       
       <button type="button" onClick={handleAddSong} className="button">Add Song</button>
-      <button type="submit" className="button">Save</button>
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <button type="submit" className="button">Confirm</button>
+        <button type="button" className="button button-danger" onClick={onCancel}>Cancel</button>
+      </div>
+      
     </form>
     );
 }

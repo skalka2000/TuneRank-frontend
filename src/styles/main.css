@@ -190,3 +190,66 @@ body {
   gap: 2rem;
   align-items: center;
 }
+
+.button-secondary {
+  background-color: var(--background); /* off-white */
+  color: var(--text); /* dark text */
+  border: 2px solid var(--primary); /* blue border */
+  transition: all 0.2s ease;
+}
+
+.button-secondary:hover {
+  background-color: #e5e7eb; /* tailwind's gray-200 for subtle hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-danger {
+  background-color: #ef4444; /* red-500 */
+  color: white;
+}
+
+.button-danger:hover {
+  background-color: #dc2626; /* red-600 */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65); /* dark overlay */
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  max-width: 90%;
+  width: 400px;
+  z-index: 1001;
+  text-align: center;
+  transform: scale(1);
+  animation: modal-drop-in 0.2s ease-out;
+}
+
+@keyframes modal-drop-in {
+  from {
+    transform: scale(0.95) translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+}

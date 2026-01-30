@@ -23,3 +23,34 @@ export async function addAlbum(album) {
   return res.json();
 }
 
+export async function deleteAlbum(id) {
+  const res = await fetch(`${API_BASE}/albums/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.detail || "Failed to delete album");
+  }
+}
+
+export async function updateAlbum(id, albumData) {
+  const res = await fetch(`${API_BASE}/albums/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(albumData),
+  });
+  if (!res.ok) throw new Error("Failed to update album");
+  return res.json();
+}
+
+export async function updateAlbumField(id, field, value) {
+  const res = await fetch(`${API_BASE}/albums/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ [field]: value }),
+  });
+  if (!res.ok) throw new Error("Failed to update album");
+  return res.json();
+}
+
+

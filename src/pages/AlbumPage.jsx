@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchAlbumById } from "../api/albums";
+import { fetchAlbumById, updateAlbumField } from "../api/albums";
 import { addSongToAlbum } from "../api/songs";
 import SongTable from "../components/SongTable";
 import AddSongForm from "../components/AddSongForm";
+import EditableField from "../components/EditableField";
 
 
 function AlbumPage() {
@@ -13,6 +14,10 @@ function AlbumPage() {
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
 
+  const handleFieldUpdate = async (field, value) => {
+    const updated = await updateAlbumField(id, field, value);
+    setAlbum(updated);
+  };
 
   useEffect(() => {
     fetchAlbumById(id)
@@ -38,12 +43,40 @@ function AlbumPage() {
 
   return (
     <div>
-      <h2>{album.title}</h2>
-      <div className = "album-info">
-        <p><strong>Artist:</strong> {album.artist}</p>
-        <p><strong>Year:</strong> {album.year ?? "N/A"}</p>
-        <p><strong>Rating:</strong> {album.rating ?? "N/A"}</p>
-      </div>
+    <h2>
+      <EditableField
+        value={album.title}
+        field="title"
+        albumId={id}
+        onUpdate={handleFieldUpdate}
+      />
+    </h2>
+    <div className="album-info">
+      <p><strong>Artist:</strong>{" "}
+        <EditableField
+          value={album.artist}
+          field="artist"
+          albumId={id}
+          onUpdate={handleFieldUpdate}
+        />
+      </p>
+      <p><strong>Year:</strong>{" "}
+        <EditableField
+          value={album.year}
+          field="year"
+          albumId={id}
+          onUpdate={handleFieldUpdate}
+        />
+      </p>
+      <p><strong>Rating:</strong>{" "}
+        <EditableField
+          value={album.rating}
+          field="rating"
+          albumId={id}
+          onUpdate={handleFieldUpdate}
+        />
+      </p>
+    </div>
       <div className = "album-info-songs-add-song">
         <h3>Songs</h3>
         <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>

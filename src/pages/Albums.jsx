@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchAlbums } from "../api/albums";
+import { fetchAlbums, deleteAlbum } from "../api/albums";
 import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
 
@@ -7,6 +7,16 @@ function Albums() {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const handleDeleteAlbum = async (id) => {
+    try {
+      await deleteAlbum(id);
+      setAlbums((prev) => prev.filter((album) => album.id !== id));
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
 
   useEffect(() => {
     fetchAlbums()
@@ -26,7 +36,8 @@ function Albums() {
                 <button className="button">Add Album</button>
             </Link>
         </div>
-      <AlbumTable albums={albums} />
+      <AlbumTable albums={albums} onDelete={handleDeleteAlbum} setAlbums={setAlbums}
+/>
     </div>
   );
 }
