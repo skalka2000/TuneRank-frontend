@@ -26,8 +26,12 @@ function EditableField({ value, field, albumId, onUpdate }) {
       }}
     />
   ) : (
-    <span onDoubleClick={() => setEditing(true)} style={{ cursor: "pointer" }}>
-      {value || <i style={{ color: "#aaa" }}>—</i>}
+    <span
+    onDoubleClick={() => setEditing(true)}
+    className="editable-field"
+    >
+    {value || <i style={{ color: "#aaa" }}>—</i>}
+    <span className="edit-icon">✏️</span>
     </span>
   );
 }
