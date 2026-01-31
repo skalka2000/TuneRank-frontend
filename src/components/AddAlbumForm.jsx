@@ -42,6 +42,7 @@ function AddAlbumForm({onSubmit, onCancel}){
       <input
         type="text"
         placeholder="Title"
+        width={80}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required

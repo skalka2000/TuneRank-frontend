@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { fetchAlbums, deleteAlbum } from "../api/albums";
 import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
+import { useSettings } from "../context/SettingsContext";
 
 function Albums() {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { power } = useSettings();
 
   const handleDeleteAlbum = async (id) => {
     try {
@@ -18,11 +20,11 @@ function Albums() {
   };
 
   useEffect(() => {
-    fetchAlbums()
+    fetchAlbums(power)
       .then(setAlbums)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [power]);
 
   if (loading) return <p>Loading albums...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;

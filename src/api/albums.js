@@ -1,15 +1,17 @@
 const API_BASE = "http://localhost:8000";
 
-export async function fetchAlbums() {
-  const res = await fetch(`${API_BASE}/albums`);
+export async function fetchAlbums(power = 1.0) {
+  const res = await fetch(`${API_BASE}/albums?power=${power}`);
   if (!res.ok) throw new Error("Failed to fetch albums");
   return res.json();
 }
-export async function fetchAlbumById(id) {
-  const res = await fetch(`${API_BASE}/albums/${id}`);
+
+export async function fetchAlbumById(id, power = 1.0) {
+  const res = await fetch(`${API_BASE}/albums/${id}?power=${power}`);
   if (!res.ok) throw new Error("Album not found");
   return res.json();
 }
+
 export async function addAlbum(album) {
   const res = await fetch(`${API_BASE}/albums`,{
     method: "POST",

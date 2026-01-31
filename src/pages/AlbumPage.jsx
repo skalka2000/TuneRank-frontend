@@ -7,6 +7,8 @@ import AddSongForm from "../components/AddSongForm";
 import EditableField from "../components/EditableField";
 import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
+import { useSettings } from "../context/SettingsContext";
+
 
 
 
@@ -16,6 +18,8 @@ function AlbumPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
+  const { power } = useSettings();
+
 
   const handleFieldUpdate = async (field, value) => {
     const updated = await updateAlbumField(id, field, value);
@@ -49,11 +53,11 @@ function AlbumPage() {
   };
 
   useEffect(() => {
-    fetchAlbumById(id)
+    fetchAlbumById(id, power)
       .then(setAlbum)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, power]);
 
   const handleAddSong = async (songData) => {
     try {

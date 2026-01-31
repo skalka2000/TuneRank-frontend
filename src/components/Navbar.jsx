@@ -10,6 +10,7 @@ function Navbar() {
         <li><Link to="/" className = "nav-link">Home</Link></li>
         <li><Link to="/albums" className = "nav-link">Albums</Link></li>
         <li><Link to="/songs" className = "nav-link">Songs</Link></li>
+        <li><Link to="/settings" className = "nav-link">Settings</Link></li>
       </ul>
     </nav>
   );

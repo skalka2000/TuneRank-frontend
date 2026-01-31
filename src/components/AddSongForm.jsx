@@ -33,6 +33,7 @@ function AddSongForm({ onSubmit }) {
         value={trackNumber}
         onChange={(e) => setTrackNumber(e.target.value)}
         min={1}
+        style={{flex: 100}}
       />
       <input
         type="text"

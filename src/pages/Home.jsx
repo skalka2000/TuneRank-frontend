@@ -4,29 +4,31 @@ function Home() {
   return (
     <div style={{ padding: "2rem", lineHeight: "1.6" }}>
       <h2>🎧 Welcome to Album Ratings</h2>
+      <p>
+        Discover, rate, and analyze albums and their songs with flexible controls and real-time updates.
+      </p>
 
       <section style={{ marginTop: "2rem" }}>
         <h3>🚀 Capabilities</h3>
         <ul>
-          <li>📦 Full server-side CRUD for albums and songs</li>
-          <li>📊 Sortable, filterable tables with inline editing</li>
-          <li>✏️ Instant edits for title, rating, year, etc.</li>
-          <li>🎨 Color-coded rating visuals for fast scanning</li>
-          <li>🧠 REST API with backend filtering & sorting</li>
+          <li>📊 View albums and songs in sortable, filterable, responsive tables</li>
+          <li>🖊️ Edit any field (title, rating, year, interlude flag, etc.) directly from the table</li>
+          <li>➕ Add new albums and songs, or delete them instantly</li>
+          <li>🎨 Ratings are color-coded to visually represent quality</li>
+          <li>🧮 Album average rating is calculated using a weighted formula</li>
+          <li>⚙️ Users can adjust the "weighting power" for average calculations via the Settings panel</li>
+          <li>🔍 Filter songs by artist, album, rating, interlude status, and more</li>
+          <li>📦 Backed by a FastAPI + SQLAlchemy RESTful backend</li>
         </ul>
       </section>
 
       <section style={{ marginTop: "2rem" }}>
         <h3>🛠️ To Do</h3>
         <ul>
-          <li>📊 Weighted average rating from song data</li>
-          <li>⏸️ Interlude as a song type</li>
-          <li>🎵 Full album import via Spotify API</li>
-          <li>🎨 Song-level rating visuals</li>
-          <li>🖼️ Album cover image upload & preview</li>
-          <li>🧮 Advanced statistics (distributions, trends)</li>
-          <li>🧼 UI polish and layout refinement</li>
-          <li>🧮 Create and manage lists</li>
+          <li>📷 Album cover image support</li>
+          <li>📐 Polish the UI and improve mobile responsiveness</li>
+          <li>📈 Add advanced statistics and rating analysis tools</li>
+          <li>🌐 Integrate with Spotify to import entire albums</li>
         </ul>
       </section>
     </div>
