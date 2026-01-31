@@ -81,16 +81,30 @@ const baseColumns = (onUpdate, onDelete) => {
     header: "Rating",
     size: 80,
     filterFn: betweenNumberRange,
-    cell: ({ row }) => (
-      <EditableField
-        value={row.original.rating}
-        inputType="number"
-        onSave={(val) =>
-          onUpdate(row.original.id, "rating", parseFloat(val))
-        }
-      />
-    )
+    cell: ({ row }) => {
+      const value = row.original.rating;
+      const percent = (value / 10) * 100;
+      const color = getRatingColor(value);
+
+      return (
+        <div className="rating-cell">
+          <div
+            className="rating-bar"
+            style={{ width: `${percent}%`, backgroundColor: color }}
+          />
+          <EditableField
+            value={value}
+            inputType="number"
+            onSave={(val) =>
+              onUpdate(row.original.id, "rating", parseFloat(val))
+            }
+            renderDisplay={(v) => <span className="rating-value">{v ?? "—"}</span>}
+          />
+        </div>
+      );
+    }
   },
+
   ];
   if (onDelete) {
     columns.push({

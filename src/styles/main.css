@@ -83,18 +83,30 @@ body {
   text-align: right;
 }
 
-.rating-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid;
+.rating-cell {
+  position: relative;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
   text-align: center;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  overflow: hidden;
 }
+
+.rating-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 1;
+}
+
+.rating-value {
+  position: relative;
+  z-index: 1;
+}
+
 
 /* Color variants */
 .rating-red {

@@ -61,45 +61,63 @@ function AlbumTable({ albums, onDelete }) {
       header: "Rating",
       size: 80,
       filterFn: betweenNumberRange,
-      cell: info => (
-        <div className={getRatingColor(info.getValue())}>
-          {info.getValue()}
-        </div>
-      ),
+      cell: info => {
+        const value = info.getValue();
+        const percent = (value / 10) * 100;
+        const color = getRatingColor(value);
+        return (
+          <div className="rating-cell">
+            <div
+              className="rating-bar"
+              style={{ width: `${percent}%`, backgroundColor: color }}
+            />
+            <span className="rating-value">{value ?? "—"}</span>
+          </div>
+        );
+      },
     },
     {
       accessorKey: "average_rating",
       header: "Avg. Rating",
       size: 80,
       filterFn: betweenNumberRange,
-      cell: info => (
-        <div className={getRatingColor(info.getValue())}>
-          {info.getValue()}
-        </div>
-      ),
-    },    
-  {
-    id: "actions",
-    header: "Actions",
-    size: 80,
-    cell: ({ row }) => {
-      const albumId = row.original.id;
-
-      return (
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <Link to={`/albums/${albumId}`}>
-            <button className="button button-secondary">View</button>
-          </Link>
-          <button
-            className="button button-danger"
-            onClick={() => handleDelete(row.original)}
-          >
-            Delete
-          </button>
-        </div>
-      );
+      cell: info => {
+        const value = info.getValue();
+        const percent = (value / 10) * 100;
+        const color = getRatingColor(value);
+        return (
+          <div className="rating-cell">
+            <div
+              className="rating-bar"
+              style={{ width: `${percent}%`, backgroundColor: color }}
+            />
+            <span className="rating-value">{value ?? "—"}</span>
+          </div>
+        );
+      },
     },
-  }
+    {
+      id: "actions",
+      header: "Actions",
+      size: 80,
+      cell: ({ row }) => {
+        const albumId = row.original.id;
+
+        return (
+          <div style={{ display: "flex", gap: "0.5rem" }}>
+            <Link to={`/albums/${albumId}`}>
+              <button className="button button-secondary">View</button>
+            </Link>
+            <button
+              className="button button-danger"
+              onClick={() => handleDelete(row.original)}
+            >
+              Delete
+            </button>
+          </div>
+        );
+      },
+    }
 
   ], [handleDelete]);
 

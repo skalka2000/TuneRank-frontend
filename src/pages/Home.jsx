@@ -26,7 +26,8 @@ function Home() {
         <h3>🛠️ To Do</h3>
         <ul>
           <li>📷 Album cover image support</li>
-          <li>📐 Polish the UI and improve mobile responsiveness</li>
+          <li>📐 Polish the UI</li>
+          <li>🎶 Add genres to albums</li>
           <li>📈 Add advanced statistics and rating analysis tools</li>
           <li>🌐 Integrate with Spotify to import entire albums</li>
         </ul>
