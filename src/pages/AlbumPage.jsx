@@ -80,10 +80,10 @@ function AlbumPage() {
     </h2>
     <div className="album-info">
       <p><strong>Artist:</strong>{" "}
-      <EditableField
-        value={album.artist}
-        onSave={(val) => handleFieldUpdate("artist", val)}
-      />
+        <EditableField
+          value={album.artist}
+          onSave={(val) => handleFieldUpdate("artist", val)}
+        />
       </p>
       <p><strong>Year:</strong>{" "}
         <EditableField
@@ -96,6 +96,9 @@ function AlbumPage() {
           value={album.rating}
           onSave={(val) => handleFieldUpdate("rating", val)}
         />
+      </p>
+      <p><strong>Avg. Song Rating:</strong>{" "}
+        {album.average_rating?.toFixed(2) ?? "N/A"}
       </p>
     </div>
       <div className = "album-info-songs-add-song">

@@ -67,6 +67,17 @@ function AlbumTable({ albums, onDelete }) {
         </div>
       ),
     },
+    {
+      accessorKey: "average_rating",
+      header: "Avg. Rating",
+      size: 80,
+      filterFn: betweenNumberRange,
+      cell: info => (
+        <div className={getRatingColor(info.getValue())}>
+          {info.getValue()}
+        </div>
+      ),
+    },    
   {
     id: "actions",
     header: "Actions",
