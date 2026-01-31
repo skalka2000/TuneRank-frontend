@@ -8,7 +8,7 @@ import EditableField from "../components/EditableField";
 import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
 import { useSettings } from "../context/SettingsContext";
-
+import { getRatingColor } from "../utils/ratingColors";
 
 
 
@@ -20,6 +20,14 @@ function AlbumPage() {
   const [showAddSongForm, setShowAddSongForm] = useState(false);
   const { power } = useSettings();
 
+  const refreshAlbum = async () => {
+    try {
+      const updated = await fetchAlbumById(id, power);
+      setAlbum(updated);
+    } catch (err) {
+      console.error("Failed to refresh album:", err.message);
+    }
+  };
 
   const handleFieldUpdate = async (field, value) => {
     const updated = await updateAlbumField(id, field, value);
@@ -29,12 +37,7 @@ function AlbumPage() {
   const handleSongUpdate = async (songId, field, value) => {
     try {
       const updated = await updateSongField(songId, field, value);
-      setAlbum(prev => ({
-        ...prev,
-        songs: prev.songs.map(song =>
-          song.id === updated.id ? updated : song
-        ),
-      }));
+      await refreshAlbum();
     } catch (err) {
       console.error("Failed to update song:", err.message);
     }
@@ -43,10 +46,7 @@ function AlbumPage() {
   const handleDeleteSong = async (songId) => {
     try {
       await deleteSong(songId);
-      setAlbum(prev => ({
-        ...prev,
-        songs: prev.songs.filter(song => song.id !== songId),
-      }));
+      await refreshAlbum();
     } catch (err) {
       console.error("Failed to delete song:", err.message);
     }
@@ -62,10 +62,7 @@ function AlbumPage() {
   const handleAddSong = async (songData) => {
     try {
       const newSong = await addSongToAlbum(id, songData);
-      setAlbum((prev) => ({
-        ...prev,
-        songs: [...prev.songs, newSong],
-      }));
+      await refreshAlbum();
     } catch (err) {
       console.error(err.message);
     }
@@ -83,6 +80,7 @@ function AlbumPage() {
       />
     </h2>
     <div className="album-info">
+      <div style={{alignItems: 'center', display: 'flex', gap: '30px'}}>
       <p><strong>Artist:</strong>{" "}
         <EditableField
           value={album.artist}
@@ -95,15 +93,38 @@ function AlbumPage() {
           onSave={(val) => handleFieldUpdate("year", val)}
         />
       </p>
-      <p><strong>Rating:</strong>{" "}
-        <EditableField
-          value={album.rating}
-          onSave={(val) => handleFieldUpdate("rating", val)}
-        />
+      <p>
+        <strong>Rating:</strong>{" "}
+        <span
+          className="rating-box"
+          style={{
+            backgroundColor: getRatingColor(album.rating),
+          }}
+        >
+          <EditableField
+            value={album.rating}
+            onSave={(val) => handleFieldUpdate("rating", val)}
+          />
+        </span>
       </p>
-      <p><strong>Avg. Song Rating:</strong>{" "}
-        {album.average_rating?.toFixed(2) ?? "N/A"}
+      <p>
+        <strong>Avg. Song Rating:</strong>{" "}
+        {album.average_rating != null ? (
+          <span
+            className="rating-box"
+            style={{
+              backgroundColor: getRatingColor(album.average_rating),
+            }}
+          >
+            {album.average_rating.toFixed(2)}
+          </span>
+        ) : (
+          "N/A"
+        )}
       </p>
+      </div>
+
+
     </div>
       <div className = "album-info-songs-add-song">
         <h3>Songs</h3>
