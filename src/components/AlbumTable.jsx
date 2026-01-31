@@ -275,7 +275,6 @@ function AlbumTable({ albums, onDelete }) {
           onCancel={cancelDelete}
         />
       )}
-
     </div>
   );
 }

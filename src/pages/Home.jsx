@@ -15,6 +15,7 @@ function Home() {
           <li>🖊️ Edit any field (title, rating, year, interlude flag, etc.) directly from the table</li>
           <li>➕ Add new albums and songs, or delete them instantly</li>
           <li>🎨 Ratings are color-coded to visually represent quality</li>
+          <li>📈 Rating distribution graphs</li>
           <li>🧮 Album average rating is calculated using a weighted formula</li>
           <li>⚙️ Users can adjust the "weighting power" for average calculations via the Settings panel</li>
           <li>🔍 Filter songs by artist, album, rating, interlude status, and more</li>

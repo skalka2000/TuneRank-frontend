@@ -9,8 +9,8 @@ import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
 import { useSettings } from "../context/SettingsContext";
 import { getRatingColor } from "../utils/ratingColors";
-
-
+import { useRef } from "react";
+import { fireConfetti, doomMode } from "../utils/specialEffects";
 
 function AlbumPage() {
   const { id } = useParams();
@@ -19,10 +19,31 @@ function AlbumPage() {
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
   const { power } = useSettings();
+  const previousSongRatingsRef = useRef([])
 
   const refreshAlbum = async () => {
     try {
       const updated = await fetchAlbumById(id, power);
+      const previous = previousSongRatingsRef.current;
+      const current = updated.songs.map(s => ({ id: s.id, rating: s.rating }));
+      const newPerfectSongs = current.filter(({ id, rating }) => {
+        const prev = previous.find(p => p.id === id);
+        return rating === 11 && (!prev || prev.rating !== 11);
+      });
+
+      if (newPerfectSongs.length > 0) {
+        fireConfetti()
+      }
+      const newTrashSongs = current.filter(({ id, rating }) => {
+        const prev = previous.find(p => p.id === id);
+        return rating <= 1 && (!prev || prev.rating > 1);
+      });
+
+      if (newTrashSongs.length > 0) {
+        doomMode();
+      }
+
+      previousSongRatingsRef.current = current;      
       setAlbum(updated);
     } catch (err) {
       console.error("Failed to refresh album:", err.message);
@@ -31,7 +52,7 @@ function AlbumPage() {
 
   const handleFieldUpdate = async (field, value) => {
     const updated = await updateAlbumField(id, field, value);
-    setAlbum(updated);
+    await refreshAlbum();
   };
 
   const handleSongUpdate = async (songId, field, value) => {
@@ -80,7 +101,7 @@ function AlbumPage() {
       />
     </h2>
     <div className="album-info">
-      <div style={{alignItems: 'center', display: 'flex', gap: '30px'}}>
+      <div style={{alignItems: 'center', display: 'flex', gap: '1.5rem'}}>
       <p><strong>Artist:</strong>{" "}
         <EditableField
           value={album.artist}

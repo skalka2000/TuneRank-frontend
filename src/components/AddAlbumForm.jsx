@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import confetti from "canvas-confetti";
+import { fireConfetti, doomMode } from "../utils/specialEffects";
 
 function AddAlbumForm({onSubmit, onCancel}){
     const [title, setTitle] = useState("");
@@ -23,8 +25,7 @@ function AddAlbumForm({onSubmit, onCancel}){
                 is_interlude: song.is_interlude ?? false,
               }))
         };
-        console.log("Submitting album:", album);
-        onSubmit(album);    
+        onSubmit(album);
     }
 
     const handleAddSong = () => {
@@ -42,7 +43,6 @@ function AddAlbumForm({onSubmit, onCancel}){
       <input
         type="text"
         placeholder="Title"
-        width={80}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
@@ -88,6 +88,15 @@ function AddAlbumForm({onSubmit, onCancel}){
             placeholder="Song Rating"
             value={song.rating}
             onChange={(e) => handleSongChange(index, "rating", e.target.value)}
+            onBlur={(e) => {
+              const val = parseFloat(e.target.value);
+              if (val === 11) {
+                fireConfetti()
+              }
+              if (val <= 1) {
+                doomMode(e.target.value)
+              }
+            }}
           />
         <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <input
@@ -96,7 +105,7 @@ function AddAlbumForm({onSubmit, onCancel}){
             onChange={(e) => handleSongChange(index, "is_interlude", e.target.checked)}
           />
           Interlude
-      </label>
+        </label>
         </div>
       ))}
       

@@ -107,44 +107,6 @@ body {
   z-index: 1;
 }
 
-
-/* Color variants */
-.rating-red {
-  background-color: #ef4444; /* red-500 */
-  color: white;
-  border-color: #dc2626;     /* red-600 */
-}
-
-.rating-orange {
-  background-color: #fb923c; /* orange-400 */
-  color: black;
-  border-color: #f97316;     /* orange-500 */
-}
-
-.rating-light-green {
-  background-color: #86efac; /* green-300 */
-  color: black;
-  border-color: #4ade80;     /* green-400 */
-}
-
-.rating-green {
-  background-color: #22c55e; /* green-500 */
-  color: white;
-  border-color: #16a34a;     /* green-600 */
-}
-
-.rating-dark-green {
-  background-color: #15803d; /* green-700 */
-  color: white;
-  border-color: #166534;     /* green-800 */
-}
-
-.rating-gold {
-  background-color: gold;
-  color: black;
-  border-color: goldenrod;
-}
-
 .album-form {
   display: flex;
   flex-direction: column;
@@ -180,7 +142,7 @@ body {
   display: flex;
   flex-direction: wrap;
   gap: 1rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .album-info {
@@ -300,4 +262,24 @@ body {
   text-align: center;
 }
 
+.doom-mode {
+  filter: grayscale(100%) brightness(0.7);
+  transition: filter 0.3s ease-in-out;
+}
 
+.doom-warning {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+  color: red;
+  animation: blink 0.7s infinite;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

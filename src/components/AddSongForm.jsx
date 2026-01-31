@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { fireConfetti, doomMode } from "../utils/specialEffects";
 
 function AddSongForm({ onSubmit }) {
   const [title, setTitle] = useState("");
@@ -8,6 +9,13 @@ function AddSongForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const parsedRating = parseFloat(rating);
+        if (parsedRating === 11) {
+            fireConfetti()
+        }
+        if (parsedRating <= 1.0) {
+            doomMode(e.target.value)
+        }
 
     const newSong = {
       title,
