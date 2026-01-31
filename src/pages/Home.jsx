@@ -31,6 +31,10 @@ function Home() {
           <li>📈 Add advanced statistics and rating analysis tools</li>
           <li>🌐 Integrate with Spotify to import entire albums</li>
           <li>🧮 Create and manage custom lists</li>
+          <li>☁️ Hosting backend server</li>
+          <li>🔐 User login/authentication</li>
+          <li>⚙️ Persistent user settings</li>
+          <li>💾 Export/share/save data features</li>
         </ul>
       </section>
     </div>
