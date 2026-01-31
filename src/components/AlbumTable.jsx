@@ -53,13 +53,14 @@ function AlbumTable({ albums, onDelete }) {
     {
       accessorKey: "year",
       header: "Year",
+      size: 50,
       filterFn: betweenNumberRange,
       cell: info => info.getValue() ?? "N/A",
     },
     {
       accessorKey: "rating",
       header: "Rating",
-      size: 80,
+      size: 90,
       filterFn: betweenNumberRange,
       cell: info => {
         const value = info.getValue();
@@ -78,8 +79,8 @@ function AlbumTable({ albums, onDelete }) {
     },
     {
       accessorKey: "average_rating",
-      header: "Avg. Rating",
-      size: 80,
+      header: "Avg. Song Rating",
+      size: 90,
       filterFn: betweenNumberRange,
       cell: info => {
         const value = info.getValue();
@@ -97,12 +98,32 @@ function AlbumTable({ albums, onDelete }) {
       },
     },
     {
+      accessorKey: "overall_rating",
+      header: "Overall",
+      size: 90,
+      filterFn: betweenNumberRange,
+      cell: info => {
+        const value = info.getValue();
+        const percent = (value / 10) * 100;
+        const color = getRatingColor(value);
+        return (
+          <div className="rating-cell">
+            <div
+              className="rating-bar"
+              style={{ width: `${percent}%`, backgroundColor: color }}
+            />
+            <span className="rating-value">{value ?? "—"}</span>
+          </div>
+        );
+      },
+    },
+
+    {
       id: "actions",
       header: "Actions",
       size: 80,
       cell: ({ row }) => {
         const albumId = row.original.id;
-
         return (
           <div style={{ display: "flex", gap: "0.5rem" }}>
             <Link to={`/albums/${albumId}`}>
