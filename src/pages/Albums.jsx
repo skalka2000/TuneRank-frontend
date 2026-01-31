@@ -3,12 +3,16 @@ import { fetchAlbums, deleteAlbum } from "../api/albums";
 import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
 import { useSettings } from "../context/SettingsContext";
+import RatingDistributionChart from "../components/RatingDistributionChart";
+
 
 function Albums() {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { power } = useSettings();
+  const [displayRatingChart, setDisplayRatingChart] = useState(false)
+
 
   const handleDeleteAlbum = async (id) => {
     try {
@@ -37,6 +41,14 @@ function Albums() {
                 <button className="button">Add Album</button>
             </Link>
         </div>
+        <button 
+        className="button button-secondary" 
+        style={{marginBottom: '20px'}} 
+        onClick={() => setDisplayRatingChart(prev => !prev)}>
+          {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
+        </button>
+        {displayRatingChart && <RatingDistributionChart data={albums} valueAccessor={(a) => a.overall_rating} type="continuous" step={0.25} />}
+        
       <AlbumTable albums={albums} onDelete={handleDeleteAlbum} setAlbums={setAlbums}/>
     </div>
   );
