@@ -17,16 +17,18 @@ function AddAlbumForm({onSubmit, onCancel}){
             songs: songs
               .filter(song => song.title.trim() !== "")
               .map(song => ({
-                  title: song.title,
-                  ...(song.track_number && { track_number: parseInt(song.track_number) }),
-                  ...(song.rating && { rating: parseFloat(song.rating) })
+                title: song.title,
+                ...(song.track_number && { track_number: parseInt(song.track_number) }),
+                ...(song.rating && { rating: parseFloat(song.rating) }),
+                is_interlude: song.is_interlude ?? false,
               }))
         };
+        console.log("Submitting album:", album);
         onSubmit(album);    
     }
 
     const handleAddSong = () => {
-        setSongs([...songs, {title: "", track_number: "", rating: ""}])
+      setSongs([...songs, { title: "", track_number: "", rating: "", is_interlude: false }]);
     }
 
     const handleSongChange = (index, field, value) => {
@@ -86,6 +88,14 @@ function AddAlbumForm({onSubmit, onCancel}){
             value={song.rating}
             onChange={(e) => handleSongChange(index, "rating", e.target.value)}
           />
+        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <input
+            type="checkbox"
+            checked={song.is_interlude}
+            onChange={(e) => handleSongChange(index, "is_interlude", e.target.checked)}
+          />
+          Interlude
+      </label>
         </div>
       ))}
       

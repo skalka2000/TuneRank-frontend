@@ -56,6 +56,27 @@ const baseColumns = (onUpdate, onDelete) => {
     filterFn: "includesString",
   },
   {
+    accessorKey: "is_interlude",
+    header: "Interlude",
+    size: 40,
+    filterFn: (row, columnId, filterValue) => {
+      if (filterValue === "yes") return row.getValue(columnId);
+      if (filterValue === "no") return !row.getValue(columnId);
+      return true;
+    },
+    cell: ({ row }) => (
+      <EditableField
+        value={row.original.is_interlude}
+        inputType="checkbox"
+        onSave={(val) =>
+          onUpdate(row.original.id, "is_interlude", val)
+        }
+        renderDisplay={(val) => (val ? "✅" : "")}
+      />
+    ),
+  },
+
+  {
     accessorKey: "rating",
     header: "Rating",
     size: 80,
@@ -101,6 +122,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
   );
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
+  const [interludeFilter, setInterludeFilter] = useState("all");
 
   const data = useMemo(() => songs, [songs]);
 
@@ -179,22 +201,54 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
                 </div>
                 {activeFilterColumn === header.column.id && (
                   <div style={{ marginTop: "0.25rem" }}>
-                    {["rating", "track_number"].includes(header.column.id) ? (
-                      <RangeFilter column={header.column} />
-                    ) : (
+                  {["rating", "track_number"].includes(header.column.id) ? (
+                    <RangeFilter column={header.column} />
+                  ) : header.column.id === "is_interlude" ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                    <label>
                       <input
-                        type="text"
-                        value={header.column.getFilterValue() ?? ""}
-                        onChange={(e) => header.column.setFilterValue(e.target.value)}
-                        placeholder={`Filter ${header.column.id}`}
-                        style={{
-                          width: "100%",
-                          maxWidth: "100%",
-                          overflow: "hidden",
-                          boxSizing: "border-box",
-                        }}
-                      />
-                    )}
+                        type="radio"
+                        name="interlude"
+                        value="all"
+                        checked={!header.column.getFilterValue()}
+                        onChange={() => header.column.setFilterValue(undefined)}
+                      /> All
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="interlude"
+                        value="no"
+                        checked={header.column.getFilterValue() === "no"}
+                        onChange={() => header.column.setFilterValue("no")}
+                      /> Songs
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="interlude"
+                        value="yes"
+                        checked={header.column.getFilterValue() === "yes"}
+                        onChange={() => header.column.setFilterValue("yes")}
+                      /> Interludes
+                    </label>
+                  </div>
+
+                  ) : (
+                    <input
+                      type="text"
+                      value={header.column.getFilterValue() ?? ""}
+                      onChange={(e) => header.column.setFilterValue(e.target.value)}
+                      placeholder={`Filter ${header.column.id}`}
+                      style={{
+                        width: "100%",
+                        maxWidth: "100%",
+                        overflow: "hidden",
+                        boxSizing: "border-box",
+                      }}
+                    />
+                  )}
+
                   </div>
                 )}
               </th>

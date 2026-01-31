@@ -20,11 +20,13 @@ function Home() {
         <h3>🛠️ To Do</h3>
         <ul>
           <li>📊 Weighted average rating from song data</li>
+          <li>⏸️ Interlude as a song type</li>
           <li>🎵 Full album import via Spotify API</li>
           <li>🎨 Song-level rating visuals</li>
           <li>🖼️ Album cover image upload & preview</li>
           <li>🧮 Advanced statistics (distributions, trends)</li>
           <li>🧼 UI polish and layout refinement</li>
+          <li>🧮 Create and manage lists</li>
         </ul>
       </section>
     </div>

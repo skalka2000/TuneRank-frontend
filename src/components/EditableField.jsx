@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
-function EditableField({ value, onSave, inputType = "text", placeholder = "—" }) {
+function EditableField({
+  value,
+  onSave,
+  inputType = "text",
+  placeholder = "—",
+  renderDisplay,
+}) {
   const [editing, setEditing] = useState(false);
   const [localValue, setLocalValue] = useState(value ?? "");
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editing]);
 
   const handleBlur = async () => {
     if (localValue !== value) {
       try {
-        await onSave(localValue);
+        await onSave(inputType === "checkbox" ? localValue : localValue.trim());
       } catch (err) {
         console.error(err.message);
       }
@@ -15,24 +28,50 @@ function EditableField({ value, onSave, inputType = "text", placeholder = "—" 
     setEditing(false);
   };
 
-  return editing ? (
-    <input
-      type={inputType}
-      value={localValue}
-      autoFocus
-      onChange={(e) => setLocalValue(e.target.value)}
-      onBlur={handleBlur}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") e.target.blur();
-      }}
-    />
-  ) : (
+  const handleClick = () => {
+    setEditing(true);
+    if (inputType === "checkbox") {
+      setLocalValue(prev => !prev); // toggle immediately
+    }
+  };
+
+  if (editing) {
+    if (inputType === "checkbox") {
+      return (
+        <input
+          type="checkbox"
+          checked={localValue}
+          onChange={(e) => setLocalValue(e.target.checked)}
+          onBlur={handleBlur}
+          ref={inputRef}
+        />
+      );
+    }
+
+    return (
+      <input
+        type={inputType}
+        value={localValue}
+        onChange={(e) => setLocalValue(e.target.value)}
+        onBlur={handleBlur}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.target.blur();
+        }}
+        ref={inputRef}
+      />
+    );
+  }
+
+  return (
     <span
-      onDoubleClick={() => setEditing(true)}
+      onClick={handleClick}
       className="editable-field"
+      style={{ cursor: "pointer", userSelect: "none" }}
     >
-      {value || <i style={{ color: "#aaa" }}>{placeholder}</i>}
-      <span className="edit-icon">✏️</span>
+      {renderDisplay
+        ? renderDisplay(value)
+        : value || <i style={{ color: "#aaa" }}>{placeholder}</i>}
+      <span className="edit-icon"> ✏️</span>
     </span>
   );
 }
