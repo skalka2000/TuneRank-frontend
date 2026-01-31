@@ -30,14 +30,15 @@ function AddSongForm({ onSubmit }) {
       <input
         type="number"
         placeholder="Track #"
+        size={20}
         value={trackNumber}
         onChange={(e) => setTrackNumber(e.target.value)}
         min={1}
-        style={{flex: 100}}
       />
       <input
         type="text"
         placeholder="Title"
+        size={60}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required

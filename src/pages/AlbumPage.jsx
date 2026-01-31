@@ -122,6 +122,21 @@ function AlbumPage() {
           "N/A"
         )}
       </p>
+      <p>
+        <strong>Overall:</strong>{" "}
+        {album.overall_rating != null ? (
+          <span
+            className="rating-box"
+            style={{
+              backgroundColor: getRatingColor(album.average_rating),
+            }}
+          >
+            {album.overall_rating.toFixed(2)}
+          </span>
+        ) : (
+          "N/A"
+        )}
+      </p>      
       </div>
 
 

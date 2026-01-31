@@ -30,6 +30,7 @@ function Home() {
           <li>🎶 Add genres to albums</li>
           <li>📈 Add advanced statistics and rating analysis tools</li>
           <li>🌐 Integrate with Spotify to import entire albums</li>
+          <li>🧮 Create and manage custom lists</li>
         </ul>
       </section>
     </div>
