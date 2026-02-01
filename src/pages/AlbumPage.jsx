@@ -10,7 +10,7 @@ import { deleteSong } from "../api/songs";
 import { useSettings } from "../context/SettingsContext";
 import { getRatingColor } from "../utils/ratingColors";
 import { useRef } from "react";
-import { fireConfetti, doomMode } from "../utils/specialEffects";
+import { fireConfetti } from "../utils/specialEffects";
 
 function AlbumPage() {
   const { id } = useParams();
@@ -34,16 +34,6 @@ function AlbumPage() {
       if (newPerfectSongs.length > 0) {
         fireConfetti();
       }
-
-      const newTrashSongs = current.filter(({ id, rating }) => {
-        const prev = previous.find(p => p.id === id);
-        return prev && prev.rating !== rating && rating <= 1;
-      });
-
-      if (newTrashSongs.length > 0) {
-        doomMode();
-      }
-
 
       previousSongRatingsRef.current = current;      
       setAlbum(updated);

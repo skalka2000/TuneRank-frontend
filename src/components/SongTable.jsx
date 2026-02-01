@@ -35,6 +35,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
     accessorKey: "title",
     header: "Title",
     filterFn: "includesString",
+    size: 220,
     cell: ({ row }) => (
       <EditableField
         value={row.original.title}

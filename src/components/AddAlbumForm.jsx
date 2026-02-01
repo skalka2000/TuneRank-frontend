@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
-import { fireConfetti, doomMode } from "../utils/specialEffects";
+import { fireConfetti } from "../utils/specialEffects";
 
 function AddAlbumForm({onSubmit, onCancel}){
     const [title, setTitle] = useState("");
@@ -100,9 +100,6 @@ function AddAlbumForm({onSubmit, onCancel}){
               const val = parseFloat(e.target.value);
               if (val === 11) {
                 fireConfetti()
-              }
-              if (val <= 1) {
-                doomMode()
               }
             }}
           />
