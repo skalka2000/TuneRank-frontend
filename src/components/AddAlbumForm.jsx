@@ -45,6 +45,7 @@ function AddAlbumForm({onSubmit, onCancel}){
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className="input-standard"
         required
       />
       <input
@@ -52,6 +53,7 @@ function AddAlbumForm({onSubmit, onCancel}){
         placeholder="Artist"
         value={artist}
         onChange={(e) => setArtist(e.target.value)}
+        className="input-standard"
         required
       />
       <input
@@ -59,12 +61,14 @@ function AddAlbumForm({onSubmit, onCancel}){
         placeholder="Year"
         value={year}
         onChange={(e) => setYear(e.target.value)}
+        className="input-standard"
       />
       <input
         type="text"
         placeholder="Rating"
         value={rating}
         onChange={(e) => setRating(e.target.value)}
+        className="input-standard"
       />
       </div>
       {songs.length > 0 && <h3>Songs</h3>}
@@ -76,41 +80,45 @@ function AddAlbumForm({onSubmit, onCancel}){
             value={song.track_number}
             onChange={(e) => handleSongChange(index, "track_number", e.target.value)}
             min={1}
+            className="input-standard"
+
           />            
           <input
             type="text"
             placeholder="Song Title"
             value={song.title}
             onChange={(e) => handleSongChange(index, "title", e.target.value)}
+            className="input-standard"
           />
           <input
             type="text"
             placeholder="Song Rating"
             value={song.rating}
             onChange={(e) => handleSongChange(index, "rating", e.target.value)}
+            className="input-standard"
             onBlur={(e) => {
               const val = parseFloat(e.target.value);
               if (val === 11) {
                 fireConfetti()
               }
               if (val <= 1) {
-                doomMode(e.target.value)
+                doomMode()
               }
             }}
           />
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <input
-            type="checkbox"
-            checked={song.is_interlude}
-            onChange={(e) => handleSongChange(index, "is_interlude", e.target.checked)}
-          />
-          Interlude
-        </label>
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={song.is_interlude}
+              onChange={(e) => handleSongChange(index, "is_interlude", e.target.checked)}
+            />
+            Interlude
+          </label>
         </div>
       ))}
       
       <button type="button" onClick={handleAddSong} className="button">Add Song</button>
-      <div style={{ display: "flex", gap: "1rem" }}>
+      <div className="form-button-group">
         <button type="submit" className="button">Confirm</button>
         <button type="button" className="button button-danger" onClick={onCancel}>Cancel</button>
       </div>

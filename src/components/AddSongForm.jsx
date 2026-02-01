@@ -14,7 +14,7 @@ function AddSongForm({ onSubmit }) {
             fireConfetti()
         }
         if (parsedRating <= 1.0) {
-            doomMode(e.target.value)
+            doomMode()
         }
 
     const newSong = {
@@ -34,7 +34,7 @@ function AddSongForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="song-form">
+    <form onSubmit={handleSubmit} className="song-form-group">
       <input
         type="number"
         placeholder="Track #"
@@ -42,6 +42,7 @@ function AddSongForm({ onSubmit }) {
         value={trackNumber}
         onChange={(e) => setTrackNumber(e.target.value)}
         min={1}
+        className="input-standard"
       />
       <input
         type="text"
@@ -49,6 +50,7 @@ function AddSongForm({ onSubmit }) {
         size={60}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className="input-standard"
         required
       />
       <input
@@ -56,8 +58,9 @@ function AddSongForm({ onSubmit }) {
         placeholder="Rating"
         value={rating}
         onChange={(e) => setRating(e.target.value)}
+        className="input-standard"
       />
-      <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <label className="checkbox-label">
         <input
           type="checkbox"
           checked={isInterlude}

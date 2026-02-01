@@ -31,7 +31,7 @@ function EditableField({
   const handleClick = () => {
     setEditing(true);
     if (inputType === "checkbox") {
-      setLocalValue(prev => !prev); // toggle immediately
+      setLocalValue((prev) => !prev);
     }
   };
 
@@ -58,19 +58,20 @@ function EditableField({
           if (e.key === "Enter") e.target.blur();
         }}
         ref={inputRef}
+        className="editable-input"
       />
     );
   }
 
   return (
-    <span
-      onClick={handleClick}
-      className="editable-field"
-      style={{ cursor: "pointer", userSelect: "none" }}
-    >
-      {renderDisplay
-        ? renderDisplay(value)
-        : value || <i style={{ color: "#aaa" }}>{placeholder}</i>}
+    <span onClick={handleClick} className="editable-field">
+      {renderDisplay ? (
+        renderDisplay(value)
+      ) : value ? (
+        value
+      ) : (
+        <span className="placeholder-muted">{placeholder}</span>
+      )}
       <span className="edit-icon"> ✏️</span>
     </span>
   );

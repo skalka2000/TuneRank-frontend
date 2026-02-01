@@ -183,24 +183,21 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
 
   return (
     <div>
-      <table className="table" style={{ tableLayout: "fixed", width: "100%", borderCollapse: "collapse" }}>
+      <table className="table">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
                 <th
                   key={header.id}
+                  className = "table-header"
                   style={{
-                    position: "relative",
                     width: header.column.columnDef.size ?? "150px",
                     maxWidth: header.column.columnDef.maxSize ?? "200px",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
                     textAlign: header.column.id === "rating" || header.column.id === "track_number" ? "center" : "left",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div className = "table-header-content">
                     <span
                       onClick={header.column.getToggleSortingHandler()}
                       style={{ cursor: "pointer", userSelect: "none" }}
@@ -267,12 +264,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
                         value={header.column.getFilterValue() ?? ""}
                         onChange={(e) => header.column.setFilterValue(e.target.value)}
                         placeholder={`Filter ${header.column.id}`}
-                        style={{
-                          width: "100%",
-                          maxWidth: "100%",
-                          overflow: "hidden",
-                          boxSizing: "border-box",
-                        }}
+                        className="table-filter-input"
                       />
                     )}
                     </div>
@@ -288,12 +280,10 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
               {row.getVisibleCells().map(cell => (
                 <td
                   key={cell.id}
+                  className ="table-cell"
                   style={{
                     width: cell.column.columnDef.size ?? "150px",
                     maxWidth: cell.column.columnDef.maxSize ?? "200px",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
                     textAlign: cell.column.id === "rating" || cell.column.id === "track_number" ? "center" : "left",
                   }}
                 >

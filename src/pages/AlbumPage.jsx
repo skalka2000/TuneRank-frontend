@@ -28,20 +28,22 @@ function AlbumPage() {
       const current = updated.songs.map(s => ({ id: s.id, rating: s.rating }));
       const newPerfectSongs = current.filter(({ id, rating }) => {
         const prev = previous.find(p => p.id === id);
-        return rating === 11 && (!prev || prev.rating !== 11);
+        return prev && prev.rating !== rating && rating === 11;
       });
 
       if (newPerfectSongs.length > 0) {
-        fireConfetti()
+        fireConfetti();
       }
+
       const newTrashSongs = current.filter(({ id, rating }) => {
         const prev = previous.find(p => p.id === id);
-        return rating <= 1 && (!prev || prev.rating > 1);
+        return prev && prev.rating !== rating && rating <= 1;
       });
 
       if (newTrashSongs.length > 0) {
         doomMode();
       }
+
 
       previousSongRatingsRef.current = current;      
       setAlbum(updated);

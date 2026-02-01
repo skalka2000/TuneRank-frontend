@@ -37,6 +37,12 @@ function AlbumTable({ albums, onDelete }) {
     setAlbumToDelete(null);
   };
 
+  const sortingIndicator = (sort) => {
+    if (sort === "asc") return " ↑";
+    if (sort === "desc") return " ↓";
+    return "";
+  };
+
   const columns = useMemo(() => [
     {
       accessorKey: "title",
@@ -125,7 +131,7 @@ function AlbumTable({ albums, onDelete }) {
       cell: ({ row }) => {
         const albumId = row.original.id;
         return (
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+          <div className="table-actions">
             <Link to={`/albums/${albumId}`}>
               <button className="button button-secondary">View</button>
             </Link>
@@ -174,73 +180,42 @@ function AlbumTable({ albums, onDelete }) {
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th
-                  key={header.id}
-                  style={{
-                    position: "relative",
-                    width: header.column.columnDef.size ?? "150px", // fallback width
-                    maxWidth: header.column.columnDef.maxSize ?? "200px",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    textAlign: header.column.id === "rating" ? "center" : "left",
-                  }}
-                >
-                <div
-                  style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
-                >
-                  <span
-                    onClick={header.column.getToggleSortingHandler()}
-                    style={{ cursor: "pointer", userSelect: "none" }}
-                  >
+              <th key={header.id} className="table-header" style={{ width: header.column.columnDef.size ?? "150px" }}>
+                <div className="table-header-content" onClick={header.column.getToggleSortingHandler()}>
+                  <span>
                     {flexRender(header.column.columnDef.header, header.getContext())}
-                    {{
-                      asc: " ↑",
-                      desc: " ↓",
-                    }[header.column.getIsSorted()] ?? ""}
+                    {sortingIndicator(header.column.getIsSorted())}
                   </span>
-
                   {header.column.getCanFilter() && (
                     <span
                       onClick={(e) => {
-                        e.stopPropagation(); // prevent sorting on icon click
-                        setActiveFilterColumn((prev) =>
-                          prev === header.column.id ? null : header.column.id
-                        );
-                      }}
-                      style={{
-                        cursor: "pointer",
-                        marginLeft: "0.5rem",
-                        fontSize: "0.8rem",
+                        e.stopPropagation();
+                        setActiveFilterColumn((prev) => prev === header.column.id ? null : header.column.id);
                       }}
                       title="Filter"
+                      style={{ marginLeft: "0.5rem", fontSize: "0.8rem" }}
                     >
                       🔍
                     </span>
                   )}
                 </div>
-
                 {activeFilterColumn === header.column.id && (
-                  <div style={{ marginTop: "0.25rem" }}>
-                    {header.column.id === "rating" || header.column.id === "year" ? (
+                  <div>
+                    {["rating", "year"].includes(header.column.id) ? (
                       <RangeFilter column={header.column} />
                     ) : (
-                    <input
-                      type="text"
-                      value={header.column.getFilterValue() ?? ""}
-                      onChange={(e) => header.column.setFilterValue(e.target.value)}
-                      placeholder={`Filter ${header.column.id}`}
-                      style={{
-                        width: "100%",        // fill column
-                        maxWidth: "100%",     // don’t expand beyond column
-                        overflow: "hidden",
-                        boxSizing: "border-box", // important for padding inside constrained width
-                      }}
-                    />
+                      <input
+                        type="text"
+                        value={header.column.getFilterValue() ?? ""}
+                        onChange={(e) => header.column.setFilterValue(e.target.value)}
+                        placeholder={`Filter ${header.column.id}`}
+                        className="table-filter-input"
+                      />
                     )}
                   </div>
                 )}
               </th>
+
 
               ))}
             </tr>
@@ -250,17 +225,7 @@ function AlbumTable({ albums, onDelete }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-              <td
-                key={cell.id}
-                style={{
-                  width: cell.column.columnDef.size ?? "150px",
-                  maxWidth: cell.column.columnDef.maxSize ?? "200px",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  textAlign: cell.column.id === "rating" ? "center" : "left",
-                }}
-              >
+              <td key={cell.id} className="table-cell" style={{ width: cell.column.columnDef.size ?? "150px" }}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
               ))}
