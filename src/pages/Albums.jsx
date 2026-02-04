@@ -10,7 +10,7 @@ function Albums() {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { power } = useSettings();
+  const { power, greatnessThreshold, scalingFactor, steepFactor } = useSettings();
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
 
 
@@ -24,11 +24,11 @@ function Albums() {
   };
 
   useEffect(() => {
-    fetchAlbums(power)
+    fetchAlbums(power, greatnessThreshold, scalingFactor, steepFactor)
       .then(setAlbums)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [power]);
+  }, [power, greatnessThreshold, scalingFactor, steepFactor]);
 
   if (loading) return <p>Loading albums...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;

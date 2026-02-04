@@ -215,8 +215,6 @@ function AlbumTable({ albums, onDelete }) {
                   </div>
                 )}
               </th>
-
-
               ))}
             </tr>
           ))}
