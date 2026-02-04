@@ -65,7 +65,7 @@ function AlbumTable({ albums, onDelete }) {
     },
     {
       accessorKey: "rating",
-      header: "Rating",
+      header: "Album Rating",
       size: 90,
       filterFn: betweenNumberRange,
       cell: info => {

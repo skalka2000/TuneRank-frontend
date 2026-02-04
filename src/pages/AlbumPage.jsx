@@ -107,7 +107,7 @@ function AlbumPage() {
         />
       </p>
       <p>
-        <strong>Rating:</strong>{" "}
+        <strong>Album Rating:</strong>{" "}
         <span
           className="rating-box"
           style={{
@@ -144,7 +144,7 @@ function AlbumPage() {
               backgroundColor: getRatingColor(album.average_rating),
             }}
           >
-            {album.overall_rating.toFixed(2)}
+            {(Math.floor(album.overall_rating * 100) / 100).toFixed(2)}
           </span>
         ) : (
           "N/A"
