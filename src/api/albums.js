@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000";
+const API_BASE = process.env.REACT_APP_API_BASE;
 
 export async function fetchAlbums(power = 1.0, greatnessThreshold = 8.0, scalingFactor = 0.3, steepFactor = 3, averageRatingWeight= 0.5) {
   const res = await fetch(`${API_BASE}/albums?power=${power}&greatness_threshold=${greatnessThreshold}&scaling_factor=${scalingFactor}&steep_factor=${steepFactor}&average_rating_weight=${averageRatingWeight}`);
