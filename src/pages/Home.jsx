@@ -17,7 +17,8 @@ function Home() {
           <li>🎨 Ratings are color-coded to visually represent quality</li>
           <li>📈 Rating distribution graphs</li>
           <li>🧮 Album average rating is calculated using a weighted formula</li>
-          <li>⚙️ Users can adjust the "weighting power" for average calculations via the Settings panel</li>
+          <li>📈 Advanced normalization blending logistic and linear scaling for nuanced score adjustment</li>
+          <li>⚙️ Fine-tuned parameters with real-time visual feedback in the Settings panel</li>
           <li>🔍 Filter songs by artist, album, rating, interlude status, and more</li>
           <li>📦 Backed by a FastAPI + SQLAlchemy RESTful backend</li>
         </ul>
@@ -29,6 +30,7 @@ function Home() {
           <li>📷 Album cover image support</li>
           <li>📐 Polish the UI</li>
           <li>🎶 Add genres to albums</li>
+          <li>📈 Rating distribution graphs for filtered input</li>
           <li>📈 Add advanced statistics and rating analysis tools</li>
           <li>🌐 Integrate with Spotify to import entire albums</li>
           <li>🧮 Create and manage custom lists</li>

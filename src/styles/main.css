@@ -22,6 +22,7 @@
   --space-md: 1rem;
   --space-lg: 2rem;
   --space-xl: 2.5rem;
+  --space-xxl: 5rem;
 
   /* Border Radius */
   --radius-sm: 4px;
@@ -466,6 +467,6 @@ body {
 .settings-section {
   margin-bottom: var(--space-lg); 
   display: flex; 
-  gap: var(--space-lg); 
+  gap: var(--space-xxl); 
   align-items: flex-start;
 }
