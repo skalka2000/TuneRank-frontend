@@ -62,7 +62,36 @@ body {
   padding: var(--space-md) var(--space-lg);
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
+  flex-direction: column;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: var(--space-lg);
+  margin: 0;
+  margin-top: var(--space-sm);
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    flex-direction: row;
+  }
+
+  .navbar-links {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: auto;
+    gap: var(--space-lg);
+  }
+}
+
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .nav-link {
@@ -75,20 +104,6 @@ body {
 .nav-link:hover {
   color: var(--secondary);
   transform: translateY(-2px);
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-
-.navbar-links {
-  list-style: none;
-  display: flex;
-  gap: var(--space-lg);
-  margin: 0;
-  padding: 0;
 }
 
 /* =============
@@ -153,7 +168,7 @@ body {
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .table th,
@@ -226,6 +241,10 @@ body {
   gap: var(--space-sm);
 }
 
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth on iOS */
+}
 
 
 /* =============

@@ -35,7 +35,6 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
     accessorKey: "title",
     header: "Title",
     filterFn: "includesString",
-    size: 220,
     cell: ({ row }) => (
       <EditableField
         value={row.original.title}
@@ -80,7 +79,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
 
   {
     accessorKey: "rating",
-    header: "Rating",
+    header: "Song Rating",
     size: 80,
     filterFn: betweenNumberRange,
     cell: ({ row }) => {
@@ -162,7 +161,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
       cols = cols.filter(c => c.accessorKey !== "track_number");
     }
     return cols;
-  }, [showAlbum, showTrackNumber, onUpdate, onDelete]);
+  }, [showAlbum, showTrackNumber, onUpdate, onDelete, handleDelete]);
 
 
   const table = useReactTable({
@@ -184,117 +183,119 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
 
   return (
     <div>
-      <table className="table">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <th
-                  key={header.id}
-                  className = "table-header"
-                  style={{
-                    width: header.column.columnDef.size ?? "150px",
-                    maxWidth: header.column.columnDef.maxSize ?? "200px",
-                    textAlign: header.column.id === "rating" || header.column.id === "track_number" ? "center" : "left",
-                  }}
-                >
-                  <div className = "table-header-content">
-                    <span
-                      onClick={header.column.getToggleSortingHandler()}
-                      style={{ cursor: "pointer", userSelect: "none" }}
-                    >
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {{
-                        asc: " ↑",
-                        desc: " ↓",
-                      }[header.column.getIsSorted()] ?? ""}
-                    </span>
-                    {header.column.getCanFilter() && (
+      <div className="table-wrapper">
+        <table className="table">
+          <thead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th
+                    key={header.id}
+                    className = "table-header"
+                    style={{
+                      width: header.column.columnDef.size ?? "150px",
+                      maxWidth: header.column.columnDef.maxSize ?? "200px",
+                      textAlign: header.column.id === "rating" || header.column.id === "track_number" ? "center" : "left",
+                    }}
+                  >
+                    <div className = "table-header-content">
                       <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveFilterColumn(prev =>
-                            prev === header.column.id ? null : header.column.id
-                          );
-                        }}
-                        style={{ cursor: "pointer", marginLeft: "0.5rem", fontSize: "0.8rem" }}
-                        title="Filter"
+                        onClick={header.column.getToggleSortingHandler()}
+                        style={{ cursor: "pointer", userSelect: "none" }}
                       >
-                        🔍
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {{
+                          asc: " ↑",
+                          desc: " ↓",
+                        }[header.column.getIsSorted()] ?? ""}
                       </span>
-                    )}
-                  </div>
-                  {activeFilterColumn === header.column.id && (
-                    <div style={{ marginTop: "0.25rem" }}>
-                    {["rating", "track_number"].includes(header.column.id) ? (
-                      <RangeFilter column={header.column} />
-                    ) : header.column.id === "is_interlude" ? (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                      <label>
-                        <input
-                          type="radio"
-                          name="interlude"
-                          value="all"
-                          checked={!header.column.getFilterValue()}
-                          onChange={() => header.column.setFilterValue(undefined)}
-                        /> All
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="interlude"
-                          value="no"
-                          checked={header.column.getFilterValue() === "no"}
-                          onChange={() => header.column.setFilterValue("no")}
-                        /> Songs
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="interlude"
-                          value="yes"
-                          checked={header.column.getFilterValue() === "yes"}
-                          onChange={() => header.column.setFilterValue("yes")}
-                        /> Interludes
-                      </label>
+                      {header.column.getCanFilter() && (
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveFilterColumn(prev =>
+                              prev === header.column.id ? null : header.column.id
+                            );
+                          }}
+                          style={{ cursor: "pointer", marginLeft: "0.5rem", fontSize: "0.8rem" }}
+                          title="Filter"
+                        >
+                          🔍
+                        </span>
+                      )}
                     </div>
+                    {activeFilterColumn === header.column.id && (
+                      <div style={{ marginTop: "0.25rem" }}>
+                      {["rating", "track_number"].includes(header.column.id) ? (
+                        <RangeFilter column={header.column} />
+                      ) : header.column.id === "is_interlude" ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                        <label>
+                          <input
+                            type="radio"
+                            name="interlude"
+                            value="all"
+                            checked={!header.column.getFilterValue()}
+                            onChange={() => header.column.setFilterValue(undefined)}
+                          /> All
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="interlude"
+                            value="no"
+                            checked={header.column.getFilterValue() === "no"}
+                            onChange={() => header.column.setFilterValue("no")}
+                          /> Songs
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="interlude"
+                            value="yes"
+                            checked={header.column.getFilterValue() === "yes"}
+                            onChange={() => header.column.setFilterValue("yes")}
+                          /> Interludes
+                        </label>
+                      </div>
 
-                    ) : (
-                      <input
-                        type="text"
-                        value={header.column.getFilterValue() ?? ""}
-                        onChange={(e) => header.column.setFilterValue(e.target.value)}
-                        placeholder={`Filter ${header.column.id}`}
-                        className="table-filter-input"
-                      />
+                      ) : (
+                        <input
+                          type="text"
+                          value={header.column.getFilterValue() ?? ""}
+                          onChange={(e) => header.column.setFilterValue(e.target.value)}
+                          placeholder={`${header.column.id} filter`}
+                          className="table-filter-input"
+                        />
+                      )}
+                      </div>
                     )}
-                    </div>
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td
-                  key={cell.id}
-                  className ="table-cell"
-                  style={{
-                    width: cell.column.columnDef.size ?? "150px",
-                    maxWidth: cell.column.columnDef.maxSize ?? "200px",
-                    textAlign: cell.column.id === "rating" || cell.column.id === "track_number" ? "center" : "left",
-                  }}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map(row => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map(cell => (
+                  <td
+                    key={cell.id}
+                    className ="table-cell"
+                    style={{
+                      width: cell.column.columnDef.size ?? "150px",
+                      maxWidth: cell.column.columnDef.maxSize ?? "200px",
+                      textAlign: cell.column.id === "rating" || cell.column.id === "track_number" ? "center" : "left",
+                    }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {songToDelete !== null && (
         <ConfirmDialog
           message={`Are you sure you want to delete "${songToDelete.title}"?`}

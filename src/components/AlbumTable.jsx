@@ -107,7 +107,7 @@ function AlbumTable({ albums, onDelete }) {
     },
     {
       accessorKey: "overall_rating",
-      header: "Overall",
+      header: "Overall Rating",
       size: 90,
       filterFn: betweenNumberRange,
       cell: info => {
@@ -177,62 +177,64 @@ function AlbumTable({ albums, onDelete }) {
         onChange={(e) => setGlobalFilter(e.target.value)}
         className="input"
       />
-      <table className="table">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-              <th key={header.id} className="table-header" style={{ width: header.column.columnDef.size ?? "150px" }}>
-                <div className="table-header-content" onClick={header.column.getToggleSortingHandler()}>
-                  <span>
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                    {sortingIndicator(header.column.getIsSorted())}
-                  </span>
-                  {header.column.getCanFilter() && (
-                    <span
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveFilterColumn((prev) => prev === header.column.id ? null : header.column.id);
-                      }}
-                      title="Filter"
-                      style={{ marginLeft: "0.5rem", fontSize: "0.8rem" }}
-                    >
-                      🔍
+      <div className = "table-wrapper">
+        <table className="table">
+          <thead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                <th key={header.id} className="table-header" style={{ width: header.column.columnDef.size ?? "150px" }}>
+                  <div className="table-header-content" onClick={header.column.getToggleSortingHandler()}>
+                    <span>
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {sortingIndicator(header.column.getIsSorted())}
                     </span>
-                  )}
-                </div>
-                {activeFilterColumn === header.column.id && (
-                  <div>
-                    {["rating", "year"].includes(header.column.id) ? (
-                      <RangeFilter column={header.column} />
-                    ) : (
-                      <input
-                        type="text"
-                        value={header.column.getFilterValue() ?? ""}
-                        onChange={(e) => header.column.setFilterValue(e.target.value)}
-                        placeholder={`Filter ${header.column.id}`}
-                        className="table-filter-input"
-                      />
+                    {header.column.getCanFilter() && (
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveFilterColumn((prev) => prev === header.column.id ? null : header.column.id);
+                        }}
+                        title="Filter"
+                        style={{ marginLeft: "0.5rem", fontSize: "0.8rem" }}
+                      >
+                        🔍
+                      </span>
                     )}
                   </div>
-                )}
-              </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="table-cell" style={{ width: cell.column.columnDef.size ?? "150px" }}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  {activeFilterColumn === header.column.id && (
+                    <div>
+                      {["rating", "year"].includes(header.column.id) ? (
+                        <RangeFilter column={header.column} />
+                      ) : (
+                        <input
+                          type="text"
+                          value={header.column.getFilterValue() ?? ""}
+                          onChange={(e) => header.column.setFilterValue(e.target.value)}
+                          placeholder={`${header.column.id} filter`}
+                          className="table-filter-input"
+                        />
+                      )}
+                    </div>
+                  )}
+                </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} className="table-cell" style={{ width: cell.column.columnDef.size ?? "150px" }}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {albumToDelete !== null && (
         <ConfirmDialog
           message={`Are you sure you want to delete "${albumToDelete.title}"?`}
