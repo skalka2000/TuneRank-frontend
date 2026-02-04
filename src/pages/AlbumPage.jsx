@@ -18,12 +18,12 @@ function AlbumPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
-  const { power, greatnessThreshold, scalingFactor, steepFactor } = useSettings();
+  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useSettings();
   const previousSongRatingsRef = useRef([])
 
   const refreshAlbum = async () => {
     try {
-      const updated = await fetchAlbumById(id, power, greatnessThreshold, steepFactor);
+      const updated = await fetchAlbumById(id, power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight);
       const previous = previousSongRatingsRef.current;
       const current = updated.songs.map(s => ({ id: s.id, rating: s.rating }));
       const newPerfectSongs = current.filter(({ id, rating }) => {
@@ -66,11 +66,11 @@ function AlbumPage() {
   };
 
   useEffect(() => {
-    fetchAlbumById(id, power, greatnessThreshold, scalingFactor, steepFactor)
+    fetchAlbumById(id, power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight)
       .then(setAlbum)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [id, power, greatnessThreshold, scalingFactor, steepFactor]);
+  }, [id, power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight]);
 
   const handleAddSong = async (songData) => {
     try {

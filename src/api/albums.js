@@ -1,13 +1,13 @@
 const API_BASE = "http://localhost:8000";
 
-export async function fetchAlbums(power = 1.0, greatnessThreshold = 8.0, scalingFactor = 0.3, steepFactor = 3) {
-  const res = await fetch(`${API_BASE}/albums?power=${power}&greatness_threshold=${greatnessThreshold}&scaling_factor=${scalingFactor}&steep_factor=${steepFactor}`);
+export async function fetchAlbums(power = 1.0, greatnessThreshold = 8.0, scalingFactor = 0.3, steepFactor = 3, averageRatingWeight= 0.5) {
+  const res = await fetch(`${API_BASE}/albums?power=${power}&greatness_threshold=${greatnessThreshold}&scaling_factor=${scalingFactor}&steep_factor=${steepFactor}&average_rating_weight=${averageRatingWeight}`);
   if (!res.ok) throw new Error("Failed to fetch albums");
   return res.json();
 }
 
-export async function fetchAlbumById(id, power = 1.0, greatnessThreshold = 8.0, scalingFactor = 0.3, steepFactor = 3) {
-  const res = await fetch(`${API_BASE}/albums/${id}?power=${power}&greatness_threshold=${greatnessThreshold}&scaling_factor=${scalingFactor}&steep_factor=${steepFactor}`);
+export async function fetchAlbumById(id, power = 1.0, greatnessThreshold = 8.0, scalingFactor = 0.3, steepFactor = 3, averageRatingWeight = 0.5) {
+  const res = await fetch(`${API_BASE}/albums/${id}?power=${power}&greatness_threshold=${greatnessThreshold}&scaling_factor=${scalingFactor}&steep_factor=${steepFactor}&average_rating_weight=${averageRatingWeight}`);
   if (!res.ok) throw new Error("Album not found");
   return res.json();
 }

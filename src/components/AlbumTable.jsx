@@ -98,7 +98,9 @@ function AlbumTable({ albums, onDelete }) {
               className="rating-bar"
               style={{ width: `${percent}%`, backgroundColor: color }}
             />
-            <span className="rating-value">{value ?? "—"}</span>
+            <span className="rating-value">
+              {value != null ? value.toFixed(2) : "—"}
+            </span>
           </div>
         );
       },

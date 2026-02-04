@@ -8,13 +8,16 @@ export function SettingsProvider({ children }) {
   const [greatnessThreshold, setGreatnessThreshold] = useState(8.0)
   const [scalingFactor, setScalingFactor] = useState(0.3)
   const [steepFactor, setSteepFactor] = useState(3.0)
+  const [averageRatingWeight, setAverageRatingWeight] = useState(0.5)
+  
   return (
     <SettingsContext.Provider 
     value={{ 
         power, setPower, 
         greatnessThreshold, setGreatnessThreshold, 
         scalingFactor, setScalingFactor, 
-        steepFactor, setSteepFactor 
+        steepFactor, setSteepFactor,
+        averageRatingWeight, setAverageRatingWeight
         }}>
       {children}
     </SettingsContext.Provider>
