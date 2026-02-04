@@ -10,6 +10,7 @@ import {
   Legend
 } from "recharts";
 import { useSettings } from "../context/SettingsContext";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 function NormalizationGraph() {
   const {
@@ -18,7 +19,11 @@ function NormalizationGraph() {
     steepFactor,
   } = useSettings();
 
-  const ticks = [...Array(19)].map((_, i) => +(1 + i * 0.5).toFixed(1));
+  const isMobile = useIsMobile()
+
+  const ticks = isMobile
+    ? [...Array(10)].map((_, i) => i + 1)
+    : [...Array(19)].map((_, i) => +(1 + i * 0.5).toFixed(1));
 
   const data = useMemo(() => {
     const rescaleLinear = (r, mu) => {
@@ -56,7 +61,7 @@ function NormalizationGraph() {
   }, [greatnessThreshold, scalingFactor, steepFactor]);
 
   return (
-    <div style={{ width: "600px", height: "350px" }}>
+    <div style={{ width: "100%", maxWidth: "600px", height: "400px", margin: "0 auto" }}>
       <h4 style={{ marginBottom: "1rem" }}>🎵 Weighted Average Rating Adjustment Curve</h4>
 
       <ResponsiveContainer width="100%" height="100%">
