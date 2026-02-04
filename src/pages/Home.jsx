@@ -21,6 +21,9 @@ function Home() {
           <li>⚙️ Fine-tuned parameters with real-time visual feedback in the Settings panel</li>
           <li>🔍 Filter songs by artist, album, rating, interlude status, and more</li>
           <li>📦 Backed by a FastAPI + SQLAlchemy RESTful backend</li>
+          <li>🖥️ The backend server is fully hosted and running</li>
+          <li>🌐 The app is live and accessible <a href="https://tunerank-frontend.onrender.com/" target="_blank" rel="noopener noreferrer">here</a></li>
+          <li>📱 Fully responsive and supports mobile usage</li>
         </ul>
       </section>
 
@@ -30,14 +33,14 @@ function Home() {
           <li>📷 Album cover image support</li>
           <li>📐 Polish the UI</li>
           <li>🎶 Add genres to albums</li>
-          <li>📈 Rating distribution graphs for filtered input</li>
+          <li>📊 Rating distribution graphs for filtered input</li>
           <li>📈 Add advanced statistics and rating analysis tools</li>
           <li>🌐 Integrate with Spotify to import entire albums</li>
           <li>🧮 Create and manage custom lists</li>
-          <li>☁️ Hosting backend server</li>
           <li>🔐 User login/authentication</li>
           <li>⚙️ Persistent user settings</li>
-          <li>💾 Export/share/save data features</li>
+          <li>🧍 User-specific ratings</li>
+          <li>💾 Import/export/share/save data features</li>
         </ul>
       </section>
     </div>
