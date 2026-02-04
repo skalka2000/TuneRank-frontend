@@ -1,5 +1,4 @@
 import NormalizationGraph from "../components/NormalizationGraph";
-import SettingsPanel from "../components/SettingsPanel";
 import WeightedAveragePanel from "../components/WeightedAveragePanel";
 import LogisticNormalizationPanel from "../components/LogisticNormalizationPanel";
 import WeightedAverageImpactGraph from "../components/WeightedAverageImpactGraph";

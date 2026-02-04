@@ -3,7 +3,7 @@ import React from "react";
 function Home() {
   return (
     <div style={{ padding: "2rem", lineHeight: "1.6" }}>
-      <h2>🎧 Welcome to Album Ratings</h2>
+      <h2>🎧 Welcome to TuneRank</h2>
       <p>
         Discover, rate, and analyze albums and their songs with flexible controls and real-time updates.
       </p>

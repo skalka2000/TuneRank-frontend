@@ -5,7 +5,7 @@ import "../styles/main.css";
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="navbar-brand">Album Rating</div>
+      <div className="navbar-brand">TuneRank</div>
       <ul className="navbar-links">
         <li><Link to="/" className = "nav-link">Home</Link></li>
         <li><Link to="/albums" className = "nav-link">Albums</Link></li>
