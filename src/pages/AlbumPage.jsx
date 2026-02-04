@@ -136,7 +136,7 @@ function AlbumPage() {
         )}
       </p>
       <p>
-        <strong>Overall:</strong>{" "}
+        <strong>Overall Rating:</strong>{" "}
         {album.overall_rating != null ? (
           <span
             className="rating-box"

@@ -7,13 +7,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useMemo } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 function binRatings(data, accessor, step, type) {
   const bins = {};
 
   if (type === "continuous") {
     const max = 10;
-    const min = 0;
+    const min = 1;
 
     // Initialize bins from 10 down, but store them in correct ascending order
     const binEdges = [];
@@ -68,12 +69,23 @@ export default function RatingDistributionChart({
     return binRatings(data, valueAccessor, step, type);
   }, [data, valueAccessor, step, type]);
 
+  const isMobile = useIsMobile()
+
+  const ticks = isMobile
+    ? [...Array(10)].map((_, i) => i + 1)
+    : [...Array(39)].map((_, i) => +(1 + i * 0.25).toFixed(1));
+
+  const ticksFormatter = isMobile
+    ? (v) => v.toFixed(0)
+    : (v) => v.toFixed(2)
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={chartData}>
         <XAxis
           dataKey="bin"
-          tickFormatter={(v) => v.toFixed(2)}
+          ticks={ticks}
+          tickFormatter={ticksFormatter}
           domain={[0, 10]}
         />
         <YAxis allowDecimals={false} />

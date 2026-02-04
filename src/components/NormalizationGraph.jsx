@@ -85,7 +85,8 @@ function NormalizationGraph() {
             label={{
               value: "Adjusted Score",
               angle: -90,
-              position: "insideLeft"
+              position: "insideLeft",
+              dy: 30
             }}
           />
 

@@ -109,7 +109,7 @@ function WeightedAverageImpactGraph() {
           <YAxis
             domain={[1, 10]}
             ticks={[...Array(19)].map((_, i) => +(1 + i * 0.5).toFixed(1))}
-            label={{ value: "New Weighted Avg", angle: -90, position: "insideLeft" }}
+            label={{ value: "New Weighted Avg", angle: -90, position: "insideLeft", dy: 30 }}
           />
 
           <Tooltip />
