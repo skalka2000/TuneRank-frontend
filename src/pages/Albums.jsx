@@ -46,14 +46,6 @@ function Albums() {
   return (
     <div className="page">
       <h1>Albums</h1>
-      {displayRatingChart && (
-        <RatingDistributionChart
-          data={albums}
-          valueAccessor={(a) => a.overall_rating}
-          type="continuous"
-          step={0.25}
-        />
-      )}
       <AlbumTable
         albums={albums}
         onDelete={handleDeleteAlbum}
