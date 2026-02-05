@@ -11,7 +11,9 @@ import { betweenNumberRange } from "../utils/betweenNumberRange";
 import RangeFilter from "./common/RangeFilter";
 import EditableField from "./common/EditableField";
 import ConfirmDialog from "./common/ConfirmDialog";
-
+import RatingCell from "./common/RatingCell";
+import ColumnFilter from "./common/ColumnFilter";
+import GlobalTextFilter from "./common/GlobalTextFilter";
 
 const baseColumns = (onUpdate, onDelete, handleDelete) => {
   const columns = [
@@ -86,22 +88,22 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
       const value = row.original.rating;
       const percent = (value / 10) * 100;
       const color = getRatingColor(value);
-
       return (
-        <div className="rating-cell">
-          <div
-            className="rating-bar"
-            style={{ width: `${percent}%`, backgroundColor: color }}
-          />
-          <EditableField
-            value={value}
-            inputType="number"
-            onSave={(val) =>
-              onUpdate(row.original.id, "rating", parseFloat(val))
-            }
-            renderDisplay={(v) => <span className="rating-value">{v ?? "—"}</span>}
-          />
-        </div>
+        <RatingCell
+          value={value}
+          editable={
+            <EditableField
+              value={value}
+              inputType="number"
+              onSave={(val) =>
+                onUpdate(row.original.id, "rating", parseFloat(val))
+              }
+              renderDisplay={(v) => (
+                <span className="rating-value">{v != null ? v.toFixed(2) : "—"}</span>
+              )}
+            />
+          }
+        />
       );
     }
   },
@@ -134,6 +136,8 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [songToDelete, setSongToDelete] = useState(null);
+  const [globalFilter, setGlobalFilter] = useState("");
+
 
   const handleDelete = useCallback((song) => {
     setSongToDelete(song);
@@ -170,9 +174,11 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
     state: {
       sorting,
       columnFilters,
+      globalFilter
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -183,6 +189,10 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
 
   return (
     <div>
+      <GlobalTextFilter
+        value={globalFilter}
+        onChange={setGlobalFilter}
+      />
       <div className="table-wrapper">
         <table className="table">
           <thead>
@@ -225,50 +235,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
                       )}
                     </div>
                     {activeFilterColumn === header.column.id && (
-                      <div style={{ marginTop: "0.25rem" }}>
-                      {["rating", "track_number"].includes(header.column.id) ? (
-                        <RangeFilter column={header.column} />
-                      ) : header.column.id === "is_interlude" ? (
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                        <label>
-                          <input
-                            type="radio"
-                            name="interlude"
-                            value="all"
-                            checked={!header.column.getFilterValue()}
-                            onChange={() => header.column.setFilterValue(undefined)}
-                          /> All
-                        </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name="interlude"
-                            value="no"
-                            checked={header.column.getFilterValue() === "no"}
-                            onChange={() => header.column.setFilterValue("no")}
-                          /> Songs
-                        </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name="interlude"
-                            value="yes"
-                            checked={header.column.getFilterValue() === "yes"}
-                            onChange={() => header.column.setFilterValue("yes")}
-                          /> Interludes
-                        </label>
-                      </div>
-
-                      ) : (
-                        <input
-                          type="text"
-                          value={header.column.getFilterValue() ?? ""}
-                          onChange={(e) => header.column.setFilterValue(e.target.value)}
-                          placeholder={`${header.column.id} filter`}
-                          className="table-filter-input"
-                        />
-                      )}
-                      </div>
+                      <ColumnFilter column={header.column} />
                     )}
                   </th>
                 ))}

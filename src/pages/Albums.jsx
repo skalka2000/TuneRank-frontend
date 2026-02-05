@@ -36,7 +36,7 @@ function Albums() {
   return (
     <div className="page">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", marginTop: "1rem" }}>
-            <h2 style={{ margin: 0 }}>Albums</h2>
+            <h2 style={{ margin: "0.2rem" }}>Albums</h2>
             <Link to="/albums/add">
                 <button className="button">Add Album</button>
             </Link>

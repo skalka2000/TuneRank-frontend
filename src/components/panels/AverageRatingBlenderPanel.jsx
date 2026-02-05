@@ -24,6 +24,7 @@ function AverageRatingBlender() {
         <label>
           Album Rating:
           <input
+            className="input-simple"
             type="number"
             min={0}
             max={10}
@@ -37,6 +38,7 @@ function AverageRatingBlender() {
         <label>
           Weighted Average Rating:
           <input
+            className="input-simple"
             type="number"
             min={0}
             max={10}

@@ -11,6 +11,9 @@ import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
 import RangeFilter from "./common/RangeFilter";
 import ConfirmDialog from "./common/ConfirmDialog";
+import RatingCell from "./common/RatingCell";
+import ColumnFilter from "./common/ColumnFilter";
+import GlobalTextFilter from "./common/GlobalTextFilter";
 
 
 function AlbumTable({ albums, onDelete }) {
@@ -68,62 +71,21 @@ function AlbumTable({ albums, onDelete }) {
       header: "Album Rating",
       size: 90,
       filterFn: betweenNumberRange,
-      cell: info => {
-        const value = info.getValue();
-        const percent = (value / 10) * 100;
-        const color = getRatingColor(value);
-        return (
-          <div className="rating-cell">
-            <div
-              className="rating-bar"
-              style={{ width: `${percent}%`, backgroundColor: color }}
-            />
-            <span className="rating-value">{value ?? "—"}</span>
-          </div>
-        );
-      },
+      cell: info => <RatingCell value={info.getValue()} />
     },
     {
       accessorKey: "average_rating",
       header: "Avg. Song Rating",
       size: 90,
       filterFn: betweenNumberRange,
-      cell: info => {
-        const value = info.getValue();
-        const percent = (value / 10) * 100;
-        const color = getRatingColor(value);
-        return (
-          <div className="rating-cell">
-            <div
-              className="rating-bar"
-              style={{ width: `${percent}%`, backgroundColor: color }}
-            />
-            <span className="rating-value">
-              {value != null ? value.toFixed(2) : "—"}
-            </span>
-          </div>
-        );
-      },
+      cell: info => <RatingCell value={info.getValue()} />
     },
     {
       accessorKey: "overall_rating",
       header: "Overall Rating",
       size: 90,
       filterFn: betweenNumberRange,
-      cell: info => {
-        const value = info.getValue();
-        const percent = (value / 10) * 100;
-        const color = getRatingColor(value);
-        return (
-          <div className="rating-cell">
-            <div
-              className="rating-bar"
-              style={{ width: `${percent}%`, backgroundColor: color }}
-            />
-            <span className="rating-value">{value ?? "—"}</span>
-          </div>
-        );
-      },
+      cell: info => <RatingCell value={info.getValue()} />
     },
 
     {
@@ -170,12 +132,9 @@ function AlbumTable({ albums, onDelete }) {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Search..."
+      <GlobalTextFilter
         value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-        className="input"
+        onChange={setGlobalFilter}
       />
       <div className = "table-wrapper">
         <table className="table">
@@ -203,19 +162,7 @@ function AlbumTable({ albums, onDelete }) {
                     )}
                   </div>
                   {activeFilterColumn === header.column.id && (
-                    <div>
-                      {["rating", "year"].includes(header.column.id) ? (
-                        <RangeFilter column={header.column} />
-                      ) : (
-                        <input
-                          type="text"
-                          value={header.column.getFilterValue() ?? ""}
-                          onChange={(e) => header.column.setFilterValue(e.target.value)}
-                          placeholder={`${header.column.id} filter`}
-                          className="table-filter-input"
-                        />
-                      )}
-                    </div>
+                    <ColumnFilter column={header.column} />
                   )}
                 </th>
                 ))}

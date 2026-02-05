@@ -105,6 +105,7 @@ function AddAlbumForm({onSubmit, onCancel}){
           <label className="checkbox-label">
             <input
               type="checkbox"
+              className="checkbox-standard"
               checked={song.is_interlude}
               onChange={(e) => handleSongChange(index, "is_interlude", e.target.checked)}
             />

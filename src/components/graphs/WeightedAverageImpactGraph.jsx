@@ -59,6 +59,7 @@ function WeightedAverageImpactGraph() {
         <label>
           Weighted Avg Rating:
           <input
+            className = "input-simple"
             type="number"
             value={avgRating}
             min={1}
@@ -72,6 +73,7 @@ function WeightedAverageImpactGraph() {
         <label>
           Song Count:
           <input
+            className = "input-simple"
             type="number"
             value={songCount}
             min={1}
@@ -80,10 +82,10 @@ function WeightedAverageImpactGraph() {
             style={{ width: "60px", marginLeft: "0.5rem" }}
           />
         </label>
-
-        <label>
+        <label className="checkbox-label">
           <input
             type="checkbox"
+            className="checkbox-standard"
             checked={isInterlude}
             onChange={(e) => setIsInterlude(e.target.checked)}
             style={{ marginRight: "0.3rem" }}

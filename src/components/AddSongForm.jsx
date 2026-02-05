@@ -60,6 +60,7 @@ function AddSongForm({ onSubmit }) {
       <label className="checkbox-label">
         <input
           type="checkbox"
+          className="checkbox-standard"
           checked={isInterlude}
           onChange={(e) => setIsInterlude(e.target.checked)}
         />
