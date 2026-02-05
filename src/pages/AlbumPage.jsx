@@ -85,6 +85,10 @@ function AlbumPage() {
   if (loading) return <p>Loading album...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
+  const addSongForm = showAddSongForm ? (
+    <AddSongForm onSubmit={handleAddSong} />
+  ) : null;
+
   return (
     <div className="page">
       <AlbumHeader album={album} onFieldUpdate={handleFieldUpdate} />
@@ -134,16 +138,22 @@ function AlbumPage() {
             )}
           </p>      
       </div>
-      <div className = "album-info-songs-add-song">
-        <h3>Songs</h3>
-        <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
-          {showAddSongForm ? "Cancel" : "Add Song"}
-        </button>
-      </div>
-      <div>
+      <div style={{marginBottom: "1rem"}}>
         {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
       </div>
-      <SongTable songs={album.songs} onUpdate={handleSongUpdate} onDelete={handleDeleteSong}/>
+      <SongTable 
+        songs={album.songs} 
+        onUpdate={handleSongUpdate} 
+        onDelete={handleDeleteSong}
+        extraContent={addSongForm}
+        toolbarActions={
+          <div className="toolbar-actions">
+            <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
+              {showAddSongForm ? "Cancel" : "Add Song"}
+            </button>
+          </div>
+        }
+      />
     </div>
   );
 }

@@ -60,7 +60,10 @@ body {
 .page {
   padding: var(--space-sm);
   line-height: 1.6;
+}
 
+.page h1{
+  margin: var(--space-xs)
 }
 
 /* =============
@@ -256,6 +259,24 @@ body {
   -webkit-overflow-scrolling: touch; /* Smooth on iOS */
 }
 
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+  gap: var(--space-md);
+}
+
+.table-toolbar-actions {
+  display: flex;
+  gap: var(--space-small);
+  flex-wrap: wrap;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: var(--space-md)
+}
 
 /* =============
    RATING CELLS

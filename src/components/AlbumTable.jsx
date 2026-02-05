@@ -14,9 +14,9 @@ import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import GlobalTextFilter from "./common/GlobalTextFilter";
+import TableToolbar from "./common/TableToolbar";
 
-
-function AlbumTable({ albums, onDelete }) {
+function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState([]);
@@ -132,39 +132,51 @@ function AlbumTable({ albums, onDelete }) {
 
   return (
     <div>
-      <GlobalTextFilter
-        value={globalFilter}
-        onChange={setGlobalFilter}
+      {/* Top toolbar with filter and optional external buttons */}
+      <TableToolbar
+        globalFilter={globalFilter}
+        onGlobalFilterChange={setGlobalFilter}
+        actions={toolbarActions}
       />
-      <div className = "table-wrapper">
+      {extraContent}
+      <div className="table-wrapper">
         <table className="table">
           <thead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
-                <th key={header.id} className="table-header" style={{ width: header.column.columnDef.size ?? "150px" }}>
-                  <div className="table-header-content" onClick={header.column.getToggleSortingHandler()}>
-                    <span>
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                      {sortingIndicator(header.column.getIsSorted())}
-                    </span>
-                    {header.column.getCanFilter() && (
-                      <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveFilterColumn((prev) => prev === header.column.id ? null : header.column.id);
-                        }}
-                        title="Filter"
-                        style={{ marginLeft: "0.5rem", fontSize: "0.8rem" }}
-                      >
-                        🔍
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="table-header"
+                    style={{ width: header.column.columnDef.size ?? "150px" }}
+                  >
+                    <div
+                      className="table-header-content"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <span>
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {sortingIndicator(header.column.getIsSorted())}
                       </span>
+                      {header.column.getCanFilter() && (
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveFilterColumn((prev) =>
+                              prev === header.column.id ? null : header.column.id
+                            );
+                          }}
+                          title="Filter"
+                          style={{ marginLeft: "0.5rem", fontSize: "0.8rem" }}
+                        >
+                          🔍
+                        </span>
+                      )}
+                    </div>
+                    {activeFilterColumn === header.column.id && (
+                      <ColumnFilter column={header.column} />
                     )}
-                  </div>
-                  {activeFilterColumn === header.column.id && (
-                    <ColumnFilter column={header.column} />
-                  )}
-                </th>
+                  </th>
                 ))}
               </tr>
             ))}
@@ -173,16 +185,21 @@ function AlbumTable({ albums, onDelete }) {
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="table-cell" style={{ width: cell.column.columnDef.size ?? "150px" }}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+                  <td
+                    key={cell.id}
+                    className="table-cell"
+                    style={{ width: cell.column.columnDef.size ?? "150px" }}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
                 ))}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {albumToDelete !== null && (
+
+      {albumToDelete && (
         <ConfirmDialog
           message={`Are you sure you want to delete "${albumToDelete.title}"?`}
           onConfirm={confirmDelete}

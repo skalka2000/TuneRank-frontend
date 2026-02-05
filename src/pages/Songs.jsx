@@ -33,17 +33,34 @@ function Songs() {
   if (loading) return <p>Loading songs...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
+  const ratingChart = displayRatingChart ? (
+    <RatingDistributionChart 
+      data={songs} 
+      valueAccessor={(s) => s.rating} 
+      type="discrete" 
+      step={0.5} 
+    />
+  ) : null;
+
   return (
     <div className="page">
-      <h2>All Songs</h2>
-      <button 
-      className="button button-secondary" 
-      style={{marginBottom: '20px'}} 
-      onClick={() => setDisplayRatingChart(prev => !prev)}>
-        {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
-      </button>
-      {displayRatingChart && <RatingDistributionChart data={songs} valueAccessor={(s) => s.rating} type="discrete" step={0.5} />}
-      <SongTable songs={songs} showAlbum showTrackNumber={false}  onUpdate={handleSongUpdate}/>
+      <h1>All Songs</h1>
+      <SongTable 
+        songs={songs} 
+        showAlbum 
+        showTrackNumber={false}  
+        onUpdate={handleSongUpdate}
+        extraContent={ratingChart}
+        toolbarActions={
+          <div>
+            <button 
+              className="button button-secondary" 
+              style={{marginBottom: '20px'}} 
+              onClick={() => setDisplayRatingChart(prev => !prev)}>
+              {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
+            </button>
+          </div>
+        }/>
     </div>
   );
 }

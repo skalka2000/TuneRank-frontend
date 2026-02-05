@@ -14,6 +14,7 @@ import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import GlobalTextFilter from "./common/GlobalTextFilter";
+import TableToolbar from "./common/TableToolbar";
 
 const baseColumns = (onUpdate, onDelete, handleDelete) => {
   const columns = [
@@ -127,7 +128,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
   return columns
 }
 
-function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate, onDelete}) {
+function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate, onDelete, extraContent, toolbarActions}) {
   const [sorting, setSorting] = useState(
     showTrackNumber
       ? [{ id: "track_number", desc: false }]
@@ -189,12 +190,15 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
 
   return (
     <div>
-      <GlobalTextFilter
-        value={globalFilter}
-        onChange={setGlobalFilter}
+      {/* Top toolbar with filter and optional external buttons */}
+      <TableToolbar
+        globalFilter={globalFilter}
+        onGlobalFilterChange={setGlobalFilter}
+        actions={toolbarActions}
       />
-      <div className="table-wrapper">
-        <table className="table">
+      {extraContent}
+      <div className = "table-wrapper">
+        <table className = "table">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
