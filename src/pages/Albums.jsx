@@ -64,7 +64,7 @@ function Albums() {
               className="button button-secondary"
               onClick={() => setDisplayRatingChart(prev => !prev)}
             >
-              {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
+            {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
             </button>
               <Link to="/albums/add">
                 <button className="button">Add Album</button>

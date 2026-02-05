@@ -56,7 +56,6 @@ function Songs() {
           <div>
             <button 
               className="button button-secondary" 
-              style={{marginBottom: '20px'}} 
               onClick={() => setDisplayRatingChart(prev => !prev)}>
               {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
             </button>
