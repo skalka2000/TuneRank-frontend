@@ -12,6 +12,7 @@ import { getRatingColor } from "../utils/ratingColors";
 import { useRef } from "react";
 import { fireConfetti } from "../utils/specialEffects";
 import AlbumHeader from "../components/AlbumHeader";
+import LoadingOverlay from "../components/common/LoadingOverlay";
 
 function AlbumPage() {
   const { id } = useParams();
@@ -82,7 +83,7 @@ function AlbumPage() {
     }
   };
 
-  if (loading) return <p>Loading album...</p>;
+  if (loading) return <LoadingOverlay message="Loading album..." />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   const addSongForm = showAddSongForm ? (

@@ -3,6 +3,7 @@ import { fetchSongs } from "../api/songs";
 import SongTable from "../components/SongTable";
 import { updateSongField } from "../api/songs";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
+import LoadingOverlay from "../components/common/LoadingOverlay";
 
 
 function Songs() {
@@ -30,7 +31,7 @@ function Songs() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p>Loading songs...</p>;
+  if (loading) return <LoadingOverlay message="Loading songs..." />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   const ratingChart = displayRatingChart ? (

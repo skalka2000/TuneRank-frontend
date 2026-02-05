@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
 import { useSettings } from "../context/SettingsContext";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
+import LoadingOverlay from "../components/common/LoadingOverlay";
 
 
 function Albums() {
@@ -30,7 +31,7 @@ function Albums() {
       .finally(() => setLoading(false));
   }, [power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight]);
 
-  if (loading) return <p>Loading albums...</p>;
+  if (loading) return <LoadingOverlay message="Loading albums..." />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   const ratingChart = displayRatingChart ? (
