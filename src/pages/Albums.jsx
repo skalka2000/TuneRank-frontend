@@ -35,20 +35,19 @@ function Albums() {
 
   return (
     <div className="page">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", marginTop: "1rem" }}>
-            <h2 style={{ margin: "0.2rem" }}>Albums</h2>
-            <Link to="/albums/add">
-                <button className="button">Add Album</button>
-            </Link>
-        </div>
-        <button 
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", marginTop: "1rem" }}>
+        <h2 style={{ margin: "0.2rem" }}>Albums</h2>
+          <Link to="/albums/add">
+            <button className="button">Add Album</button>
+          </Link>
+      </div>
+      <button 
         className="button button-secondary" 
         style={{marginBottom: '20px'}} 
         onClick={() => setDisplayRatingChart(prev => !prev)}>
-          {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
-        </button>
-        {displayRatingChart && <RatingDistributionChart data={albums} valueAccessor={(a) => a.overall_rating} type="continuous" step={0.25} />}
-        
+        {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
+      </button>
+      {displayRatingChart && <RatingDistributionChart data={albums} valueAccessor={(a) => a.overall_rating} type="continuous" step={0.25} />}
       <AlbumTable albums={albums} onDelete={handleDeleteAlbum} setAlbums={setAlbums}/>
     </div>
   );
