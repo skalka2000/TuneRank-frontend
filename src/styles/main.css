@@ -54,6 +54,16 @@ body {
 }
 
 /* =============
+   PAGE
+   ============= */
+
+.page {
+  padding: var(--space-sm);
+  line-height: 1.6;
+
+}
+
+/* =============
    NAVIGATION
    ============= */
 .navbar {
@@ -493,7 +503,7 @@ body {
 
 @media (min-width: 768px) {
   .settings-section {
-    margin-top: var(--space-xxl);
+    margin-bottom: var(--space-xl);
     flex-direction: row;
     gap: var(--space-xxl); 
   }

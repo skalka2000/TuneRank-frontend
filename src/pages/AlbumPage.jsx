@@ -85,7 +85,7 @@ function AlbumPage() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
+    <div className="page">
     <h2>
       <EditableField
         value={album.title}

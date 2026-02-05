@@ -34,7 +34,7 @@ function Songs() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
+    <div className="page">
       <h2>All Songs</h2>
       <button 
       className="button button-secondary" 

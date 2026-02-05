@@ -34,7 +34,7 @@ function Albums() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
-    <div>
+    <div className="page">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", marginTop: "1rem" }}>
             <h2 style={{ margin: 0 }}>Albums</h2>
             <Link to="/albums/add">

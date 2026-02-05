@@ -2,7 +2,7 @@ import React from "react";
 
 function Home() {
   return (
-    <div style={{ padding: "2rem", lineHeight: "1.6" }}>
+    <div className="page">
       <h2>🎧 Welcome to TuneRank</h2>
       <p>
         Rate, customize and analyze albums and their songs with flexible controls and real-time updates.

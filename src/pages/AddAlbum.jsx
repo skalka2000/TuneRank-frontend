@@ -23,7 +23,7 @@ function AddAlbum() {
   };
 
   return (
-    <div>
+    <div className="page">
       <h2>Add Album</h2>
       <AddAlbumForm onSubmit={handleAddAlbum} onCancel={handleCancel} />
     </div>
