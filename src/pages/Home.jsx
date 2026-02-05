@@ -41,6 +41,8 @@ function Home() {
           <li>⚙️ Persistent user settings</li>
           <li>🧍 User-specific ratings</li>
           <li>💾 Import/export/share/save data features</li>
+          <li>⚙️ Include interlude weight and min_weight in Settings</li>
+          <li>⚙️ Include default profiles in Settings</li>
         </ul>
       </section>
     </div>

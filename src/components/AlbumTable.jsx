@@ -78,14 +78,14 @@ function AlbumTable({ albums, onDelete }) {
       header: "Avg. Song Rating",
       size: 90,
       filterFn: betweenNumberRange,
-      cell: info => <RatingCell value={info.getValue()} />
+      cell: info => <RatingCell value={info.getValue()} precision={2} />
     },
     {
       accessorKey: "overall_rating",
       header: "Overall Rating",
       size: 90,
       filterFn: betweenNumberRange,
-      cell: info => <RatingCell value={info.getValue()} />
+      cell: info => <RatingCell value={info.getValue()} precision={2}/>
     },
 
     {
