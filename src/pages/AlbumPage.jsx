@@ -11,6 +11,7 @@ import { useSettings } from "../context/SettingsContext";
 import { getRatingColor } from "../utils/ratingColors";
 import { useRef } from "react";
 import { fireConfetti } from "../utils/specialEffects";
+import AlbumHeader from "../components/AlbumHeader";
 
 function AlbumPage() {
   const { id } = useParams();
@@ -86,72 +87,53 @@ function AlbumPage() {
 
   return (
     <div className="page">
-    <h2>
-      <EditableField
-        value={album.title}
-        onSave={(val) => handleFieldUpdate("title", val)}
-      />
-    </h2>
-    <div className="album-info">
-      <div style={{alignItems: 'center', display: 'flex', gap: '1.5rem'}}>
-      <p><strong>Artist:</strong>{" "}
-        <EditableField
-          value={album.artist}
-          onSave={(val) => handleFieldUpdate("artist", val)}
-        />
-      </p>
-      <p><strong>Year:</strong>{" "}
-        <EditableField
-          value={album.year}
-          onSave={(val) => handleFieldUpdate("year", val)}
-        />
-      </p>
-      <p>
-        <strong>Album Rating:</strong>{" "}
-        <span
-          className="rating-box"
-          style={{
-            backgroundColor: getRatingColor(album.rating),
-          }}
-        >
-          <EditableField
-            value={album.rating}
-            onSave={(val) => handleFieldUpdate("rating", val)}
-          />
-        </span>
-      </p>
-      <p>
-        <strong>Avg. Song Rating:</strong>{" "}
-        {album.average_rating != null ? (
-          <span
-            className="rating-box"
-            style={{
-              backgroundColor: getRatingColor(album.average_rating),
-            }}
-          >
-            {album.average_rating.toFixed(2)}
-          </span>
-        ) : (
-          "N/A"
-        )}
-      </p>
-      <p>
-        <strong>Overall Rating:</strong>{" "}
-        {album.overall_rating != null ? (
-          <span
-            className="rating-box"
-            style={{
-              backgroundColor: getRatingColor(album.average_rating),
-            }}
-          >
-            {(Math.floor(album.overall_rating * 100) / 100).toFixed(2)}
-          </span>
-        ) : (
-          "N/A"
-        )}
-      </p>      
+      <AlbumHeader album={album} onFieldUpdate={handleFieldUpdate} />
+      <div className="album-ratings" style={{alignItems: 'center'}}>
+          <p>
+            <strong>Album Rating:</strong>{" "}
+            <span
+              className="rating-box"
+              style={{
+                backgroundColor: getRatingColor(album.rating),
+              }}
+            >
+              <EditableField
+                value={album.rating}
+                onSave={(val) => handleFieldUpdate("rating", val)}
+              />
+            </span>
+          </p>
+          <p>
+            <strong>Avg. Song Rating:</strong>{" "}
+            {album.average_rating != null ? (
+              <span
+                className="rating-box"
+                style={{
+                  backgroundColor: getRatingColor(album.average_rating),
+                }}
+              >
+                {album.average_rating.toFixed(2)}
+              </span>
+            ) : (
+              "N/A"
+            )}
+          </p>
+          <p>
+            <strong>Overall Rating:</strong>{" "}
+            {album.overall_rating != null ? (
+              <span
+                className="rating-box"
+                style={{
+                  backgroundColor: getRatingColor(album.average_rating),
+                }}
+              >
+                {(Math.floor(album.overall_rating * 100) / 100).toFixed(2)}
+              </span>
+            ) : (
+              "N/A"
+            )}
+          </p>      
       </div>
-    </div>
       <div className = "album-info-songs-add-song">
         <h3>Songs</h3>
         <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>

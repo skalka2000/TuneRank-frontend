@@ -298,7 +298,6 @@ body {
    FORMS
    ============= */
 .album-form,
-.album-info,
 .album-form-details,
 .song-form {
   display: flex;
@@ -313,16 +312,36 @@ body {
   align-items: center;
 }
 
+.album-ratings {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
 .album-form {
   flex-direction: column;
 }
 
 .album-form-details,
 .song-form-group,
-.album-info,
+.album-ratings,
 .song-form {
   flex-wrap: wrap;
 }
+
+.album-header {
+  margin-bottom: var(--space-md);
+}
+
+.album-title {
+  font-size: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.album-meta-mobile p {
+  margin: 0;
+}
+
 
 .input-standard {
   padding: var(--space-sm);
