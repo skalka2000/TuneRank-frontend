@@ -139,9 +139,6 @@ function AlbumPage() {
             )}
           </p>      
       </div>
-      <div style={{marginBottom: "1rem"}}>
-        {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
-      </div>
       <SongTable 
         songs={album.songs} 
         onUpdate={handleSongUpdate} 
