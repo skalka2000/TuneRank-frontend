@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useMemo } from "react";
-import { useIsMobile } from "../hooks/useIsMobile";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 function binRatings(data, accessor, step, type) {
   const bins = {};

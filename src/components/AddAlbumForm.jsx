@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import confetti from "canvas-confetti";
 import { fireConfetti } from "../utils/specialEffects";
 
 function AddAlbumForm({onSubmit, onCancel}){

@@ -493,7 +493,29 @@ body {
 
 @media (min-width: 768px) {
   .settings-section {
+    margin-top: var(--space-xxl);
     flex-direction: row;
     gap: var(--space-xxl); 
   }
+}
+
+.settings-panel {
+    padding: var(--space-md);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md),
+}
+
+.settings-panel h3 {
+  margin: 0;
+  margin-bottom: var(--space-lg);
+}
+
+.slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg); /* or 1.5rem */
 }

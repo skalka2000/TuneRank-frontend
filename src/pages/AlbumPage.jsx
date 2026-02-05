@@ -4,7 +4,7 @@ import { fetchAlbumById, updateAlbumField } from "../api/albums";
 import { addSongToAlbum } from "../api/songs";
 import SongTable from "../components/SongTable";
 import AddSongForm from "../components/AddSongForm";
-import EditableField from "../components/EditableField";
+import EditableField from "../components/common/EditableField";
 import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
 import { useSettings } from "../context/SettingsContext";

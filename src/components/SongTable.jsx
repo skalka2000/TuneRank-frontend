@@ -8,9 +8,9 @@ import {
 import { useMemo, useState, useCallback } from "react";
 import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
-import RangeFilter from "./RangeFilter";
-import EditableField from "./EditableField";
-import ConfirmDialog from "./ConfirmDialog";
+import RangeFilter from "./common/RangeFilter";
+import EditableField from "./common/EditableField";
+import ConfirmDialog from "./common/ConfirmDialog";
 
 
 const baseColumns = (onUpdate, onDelete, handleDelete) => {

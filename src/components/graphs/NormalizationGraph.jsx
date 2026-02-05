@@ -9,8 +9,8 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
-import { useSettings } from "../context/SettingsContext";
-import { useIsMobile } from "../hooks/useIsMobile";
+import { useSettings } from "../../context/SettingsContext";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 function NormalizationGraph() {
   const {

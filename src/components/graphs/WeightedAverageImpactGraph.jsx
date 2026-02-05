@@ -9,8 +9,8 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
-import { useSettings } from "../context/SettingsContext";
-import { useIsMobile } from "../hooks/useIsMobile";
+import { useSettings } from "../../context/SettingsContext";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 function WeightedAverageImpactGraph() {
   const { power } = useSettings();
@@ -57,7 +57,7 @@ function WeightedAverageImpactGraph() {
       {/* Inputs */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
         <label>
-          Avg Rating:
+          Weighted Avg Rating:
           <input
             type="number"
             value={avgRating}

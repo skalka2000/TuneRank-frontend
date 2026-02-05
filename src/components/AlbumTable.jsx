@@ -9,8 +9,8 @@ import { useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
-import RangeFilter from "./RangeFilter";
-import ConfirmDialog from "./ConfirmDialog";
+import RangeFilter from "./common/RangeFilter";
+import ConfirmDialog from "./common/ConfirmDialog";
 
 
 function AlbumTable({ albums, onDelete }) {

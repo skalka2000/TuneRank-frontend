@@ -3,7 +3,7 @@ import { fetchAlbums, deleteAlbum } from "../api/albums";
 import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
 import { useSettings } from "../context/SettingsContext";
-import RatingDistributionChart from "../components/RatingDistributionChart";
+import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 
 
 function Albums() {

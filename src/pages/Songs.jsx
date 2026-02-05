@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchSongs } from "../api/songs";
 import SongTable from "../components/SongTable";
 import { updateSongField } from "../api/songs";
-import RatingDistributionChart from "../components/RatingDistributionChart";
+import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 
 
 function Songs() {
