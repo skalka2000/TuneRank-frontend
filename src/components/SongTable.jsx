@@ -94,12 +94,12 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
           editable={
             <EditableField
               value={value}
-              inputType="number"
+              inputType="text"
               onSave={(val) =>
                 onUpdate(row.original.id, "rating", parseFloat(val))
               }
               renderDisplay={(v) => (
-                <span className="rating-value">{v != null ? v.toFixed(2) : "—"}</span>
+                <span className="rating-value">{v != null ? v : "—"}</span>
               )}
             />
           }
