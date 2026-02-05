@@ -5,21 +5,23 @@ const LYRICS = [
   "Ground control to Major Tom...",
   "Commencing countdown, engines on...",
   "Check ignition and may God's love be with you.",
-  "LIFT OFF 🚀..."
+  "LIFT OFF... 🚀"
 ];
 
 function LoadingOverlay({ message = "Loading...", lyrics = LYRICS }) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [fadeKey, setFadeKey] = useState(0); // used to re-trigger animation
 
   useEffect(() => {
     if (!lyrics || lyrics.length <= 1) return;
 
     const interval = setInterval(() => {
-      setCurrentLineIndex(prev => {
+      setCurrentLineIndex((prev) => {
         if (prev < lyrics.length - 1) {
+          setFadeKey(prev + 1);
           return prev + 1;
         }
-        return prev; // stay on last line
+        return prev;
       });
     }, 3000);
 
@@ -33,18 +35,10 @@ function LoadingOverlay({ message = "Loading...", lyrics = LYRICS }) {
       <div className="note note1">🎵</div>
       <div className="note note2">🎶</div>
       <div className="note note3">🎵</div>
-      <p
-        style={{
-          marginTop: "1rem",
-          fontStyle: "italic",
-          maxWidth: "400px",
-          textAlign: "center",
-          transition: "opacity 0.5s",
-        }}
-      >
+      <p className="lyrics-line fade-in" key={fadeKey}>
         “{line}”
       </p>
-      <p style={{ marginTop: "0.5rem" }}>{message}</p>
+      <p className="loading-message">{message}</p>
     </div>
   );
 }
