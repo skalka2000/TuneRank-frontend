@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { fireConfetti } from "../utils/specialEffects";
+import SongInputRow from "./common/SongInputRow";
 
 function AddAlbumForm({onSubmit, onCancel}){
     const [title, setTitle] = useState("");
@@ -72,48 +73,12 @@ function AddAlbumForm({onSubmit, onCancel}){
       </div>
       {songs.length > 0 && <h3>Songs</h3>}
       {songs.map((song, index) => (
-        <div key={index} className="song-form-group">
-          <input
-            type="number"
-            placeholder="Track #"
-            value={song.track_number}
-            onChange={(e) => handleSongChange(index, "track_number", e.target.value)}
-            min={1}
-            className="input-standard"
-
-          />            
-          <input
-            type="text"
-            placeholder="Song Title"
-            value={song.title}
-            onChange={(e) => handleSongChange(index, "title", e.target.value)}
-            className="input-standard"
-          />
-          <input
-            type="text"
-            placeholder="Song Rating"
-            value={song.rating}
-            onChange={(e) => handleSongChange(index, "rating", e.target.value)}
-            className="input-standard"
-            onBlur={(e) => {
-              const val = parseFloat(e.target.value);
-              if (val === 11) {
-                fireConfetti()
-              }
-            }}
-          />
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              className="checkbox-standard"
-              checked={song.is_interlude}
-              onChange={(e) => handleSongChange(index, "is_interlude", e.target.checked)}
-            />
-            Interlude
-          </label>
-        </div>
+        <SongInputRow
+          key={index}
+          song={song}
+          onChange={(field, value) => handleSongChange(index, field, value)}
+        />
       ))}
-      
       <button type="button" onClick={handleAddSong} className="button">Add Song</button>
       <div className="form-button-group">
         <button type="submit" className="button">Confirm</button>

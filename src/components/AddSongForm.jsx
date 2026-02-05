@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { fireConfetti } from "../utils/specialEffects";
+import SongInputRow from "./common/SongInputRow";
 
 function AddSongForm({ onSubmit }) {
   const [title, setTitle] = useState("");
@@ -31,43 +32,16 @@ function AddSongForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="song-form-group">
-      <input
-        type="number"
-        placeholder="Track #"
-        size={20}
-        value={trackNumber}
-        onChange={(e) => setTrackNumber(e.target.value)}
-        min={1}
-        className="input-standard"
-      />
-      <input
-        type="text"
-        placeholder="Title"
-        size={60}
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="input-standard"
-        required
-      />
-      <input
-        type="text"
-        placeholder="Rating"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        className="input-standard"
-      />
-      <label className="checkbox-label">
-        <input
-          type="checkbox"
-          className="checkbox-standard"
-          checked={isInterlude}
-          onChange={(e) => setIsInterlude(e.target.checked)}
-        />
-        Interlude
-      </label>
-      <button type="submit" className="button">Save</button>
-    </form>
+    <SongInputRow
+      song={{ title, track_number: trackNumber, rating, is_interlude: isInterlude }}
+      onChange={(field, val) => {
+        if (field === "title") setTitle(val);
+        if (field === "track_number") setTrackNumber(val);
+        if (field === "rating") setRating(val);
+        if (field === "is_interlude") setIsInterlude(val);
+      }}
+      showTrack={true}
+    />
   );
 }
 

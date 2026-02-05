@@ -151,8 +151,6 @@ function AlbumPage() {
         )}
       </p>      
       </div>
-
-
     </div>
       <div className = "album-info-songs-add-song">
         <h3>Songs</h3>
@@ -160,7 +158,9 @@ function AlbumPage() {
           {showAddSongForm ? "Cancel" : "Add Song"}
         </button>
       </div>
-      {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
+      <div style ={{marginBottom: "1rem"}}>
+        {showAddSongForm && <AddSongForm onSubmit={handleAddSong} />}
+      </div>
       <SongTable songs={album.songs} onUpdate={handleSongUpdate} onDelete={handleDeleteSong}/>
     </div>
   );
