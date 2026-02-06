@@ -85,7 +85,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
   {
     accessorKey: "rating",
     header: songRatingHeader,
-    size: 80,
+    size: isMobile ? 40 : 80,
     filterFn: betweenNumberRange,
     cell: ({ row }) => {
       const value = row.original.rating;
