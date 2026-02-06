@@ -5,6 +5,7 @@ import AlbumTable from "../components/AlbumTable";
 import { useSettings } from "../context/SettingsContext";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 import LoadingOverlay from "../components/common/LoadingOverlay";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 
 function Albums() {
@@ -13,7 +14,7 @@ function Albums() {
   const [error, setError] = useState("");
   const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useSettings();
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
-
+  const isMobile = useIsMobile()
 
   const handleDeleteAlbum = async (id) => {
     try {
@@ -43,6 +44,10 @@ function Albums() {
     />
   ) : null;
 
+  const addButtonText = isMobile ? "➕" : "Add Album"
+  const displayRatingChartButton = isMobile ? "📊" : "Display Rating Distribution"
+  const hideRatingChartButton = isMobile ? "🔙" : "Hide Rating Distribution"
+
   return (
     <div className="page">
       <h1>Albums</h1>
@@ -56,10 +61,10 @@ function Albums() {
               className="button button-secondary"
               onClick={() => setDisplayRatingChart(prev => !prev)}
             >
-            {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
+            {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
             </button>
               <Link to="/albums/add">
-                <button className="button">Add Album</button>
+                <button className="button">{addButtonText}</button>
               </Link>
           </div>
         }

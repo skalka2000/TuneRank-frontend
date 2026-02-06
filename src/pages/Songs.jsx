@@ -4,6 +4,7 @@ import SongTable from "../components/SongTable";
 import { updateSongField } from "../api/songs";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 import LoadingOverlay from "../components/common/LoadingOverlay";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 
 function Songs() {
@@ -11,6 +12,7 @@ function Songs() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
+  const isMobile = useIsMobile()
 
   const handleSongUpdate = async (songId, field, value) => {
     try {
@@ -42,6 +44,9 @@ function Songs() {
       step={0.5} 
     />
   ) : null;
+  
+  const displayRatingChartButton = isMobile ? "📊" : "Display Rating Distribution"
+  const hideRatingChartButton = isMobile ? "🔙" : "Hide Rating Distribution"
 
   return (
     <div className="page">
@@ -56,7 +61,7 @@ function Songs() {
             <button 
               className="button button-secondary" 
               onClick={() => setDisplayRatingChart(prev => !prev)}>
-              {displayRatingChart ? "Hide Rating Distribution" : "Display Rating Distribution"}
+              {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
             </button>
           </div>
         }/>

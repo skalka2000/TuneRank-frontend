@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { fireConfetti } from "../utils/specialEffects";
 import AlbumHeader from "../components/AlbumHeader";
 import LoadingOverlay from "../components/common/LoadingOverlay";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 function AlbumPage() {
   const { id } = useParams();
@@ -22,6 +23,8 @@ function AlbumPage() {
   const [showAddSongForm, setShowAddSongForm] = useState(false);
   const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useSettings();
   const previousSongRatingsRef = useRef([])
+  const isMobile = useIsMobile()
+  
 
   const refreshAlbum = async () => {
     try {
@@ -90,6 +93,9 @@ function AlbumPage() {
     <AddSongForm onSubmit={handleAddSong} />
   ) : null;
 
+  const addButtonText = isMobile ? "➕" : "Add Song"
+  const cancelButtonText = isMobile ? "🔙" : "Cancel"
+
   return (
     <div className="page">
       <AlbumHeader album={album} onFieldUpdate={handleFieldUpdate} />
@@ -148,7 +154,7 @@ function AlbumPage() {
         toolbarActions={
           <div className="toolbar-actions">
             <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
-              {showAddSongForm ? "Cancel" : "Add Song"}
+              {showAddSongForm ? cancelButtonText : addButtonText}
             </button>
           </div>
         }
