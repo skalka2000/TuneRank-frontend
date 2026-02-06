@@ -169,6 +169,20 @@ body {
   margin-top: var(--space-md);
 }
 
+@media (max-width: 768px) {
+  .button {
+    font-size: 0.85rem;
+    padding: var(--space-xs) var(--space-sm); /* tighter padding */
+  }
+
+  .button-danger,
+  .button-secondary {
+    font-size: 0.85rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+}
+
+
 
 /* =============
    TABLES
@@ -283,18 +297,16 @@ body {
 
 @media (max-width: 768px) {
   .table-cell {
-    max-width: 120px; /* adjust as needed */
+    max-width: 120px;
     word-wrap: break-word;
     white-space: normal;
     overflow-wrap: break-word;
   }
 
-  .table th {
+  .table th,
+   table td {
     white-space: normal;
-  }
-  .table td {
-    word-break: break-word;
-    white-space: normal;
+    font-size: 0.8rem;
   }
 }
 
