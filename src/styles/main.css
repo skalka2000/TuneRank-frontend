@@ -172,7 +172,7 @@ body {
 @media (max-width: 768px) {
   .button {
     font-size: 0.85rem;
-    padding: var(--space-xs) var(--space-sm); /* tighter padding */
+    padding: var(--space-xs) var(--space-sm);
   }
 
   .button-danger,
@@ -443,6 +443,23 @@ body {
   outline: none;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
+
+@media (max-width: 768px) {
+  .input-simple {
+    font-size: 0.8rem;
+    height: 1.25rem;
+  }
+  .input-standard {
+    font-size: 0.9rem;
+    height: 1.5rem;
+  }
+  .table-filter-input,
+  .range-input {
+    font-size: 0.8rem;
+    height: 1.25rem;
+  }
+}
+
 
 .album-form button {
   align-self: flex-start;
