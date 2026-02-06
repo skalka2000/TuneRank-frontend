@@ -91,7 +91,7 @@ function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
       {
         accessorKey: "overall_rating",
         header: overallRatingHeader,
-        size: 90,
+        size: isMobile ? 40 : 90,
         filterFn: betweenNumberRange,
         cell: info => <RatingCell value={info.getValue()} precision={2} />,
       },
