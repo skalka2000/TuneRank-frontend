@@ -281,6 +281,25 @@ body {
   height: 100%;
 }
 
+@media (max-width: 768px) {
+  .table-cell {
+    max-width: 120px; /* adjust as needed */
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  .table th {
+    white-space: normal;
+  }
+  .table td {
+    word-break: break-word;
+    white-space: normal;
+  }
+
+}
+
+
 /* =============
    RATING CELLS
    ============= */
