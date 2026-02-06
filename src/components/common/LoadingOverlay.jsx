@@ -5,6 +5,7 @@ const LYRICS = [
   "Ground control to Major Tom...",
   "Commencing countdown, engines on...",
   "Check ignition and may God's love be with you.",
+  "3, 2, 1...",
   "LIFT OFF... 🚀"
 ];
 
