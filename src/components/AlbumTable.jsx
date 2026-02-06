@@ -15,6 +15,7 @@ import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import GlobalTextFilter from "./common/GlobalTextFilter";
 import TableToolbar from "./common/TableToolbar";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
   const [sorting, setSorting] = useState([]);
@@ -22,6 +23,7 @@ function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [albumToDelete, setAlbumToDelete] = useState(null);
+  const isMobile = useIsMobile()
 
   const data = useMemo(() => albums, [albums]);
 
@@ -46,71 +48,85 @@ function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
     return "";
   };
 
-  const columns = useMemo(() => [
-    {
-      accessorKey: "title",
-      header: "Title",
-      filterFn: "includesString",
-      cell: info => info.getValue(),
-    },
-    {
-      accessorKey: "artist",
-      header: "Artist",
-      filterFn: "includesString",
-      cell: info => info.getValue(),
-    },
-    {
-      accessorKey: "year",
-      header: "Year",
-      size: 50,
-      filterFn: betweenNumberRange,
-      cell: info => info.getValue() ?? "N/A",
-    },
-    {
-      accessorKey: "rating",
-      header: "Album Rating",
-      size: 90,
-      filterFn: betweenNumberRange,
-      cell: info => <RatingCell value={info.getValue()} />
-    },
-    {
-      accessorKey: "average_rating",
-      header: "Avg. Song Rating",
-      size: 90,
-      filterFn: betweenNumberRange,
-      cell: info => <RatingCell value={info.getValue()} precision={2} />
-    },
-    {
-      accessorKey: "overall_rating",
-      header: "Overall Rating",
-      size: 90,
-      filterFn: betweenNumberRange,
-      cell: info => <RatingCell value={info.getValue()} precision={2}/>
-    },
+  const deleteButtonText = isMobile ? "🗑️" : "Delete"
+  const viewButtonText = isMobile ? "🔎" : "View"
 
-    {
-      id: "actions",
-      header: "Actions",
-      size: 80,
-      cell: ({ row }) => {
-        const albumId = row.original.id;
-        return (
-          <div className="table-actions">
-            <Link to={`/albums/${albumId}`}>
-              <button className="button button-secondary">View</button>
-            </Link>
-            <button
-              className="button button-danger"
-              onClick={() => handleDelete(row.original)}
-            >
-              Delete
-            </button>
-          </div>
-        );
+  const overallRatingHeader = isMobile ? "Rating" : "Overall Rating"
+
+  const columns = useMemo(() => {
+    const baseColumns = [
+      {
+        accessorKey: "title",
+        header: "Title",
+        filterFn: "includesString",
+        cell: info => info.getValue(),
       },
+      {
+        accessorKey: "artist",
+        header: "Artist",
+        filterFn: "includesString",
+        cell: info => info.getValue(),
+      },
+      {
+        accessorKey: "year",
+        header: "Year",
+        size: 50,
+        filterFn: betweenNumberRange,
+        cell: info => info.getValue() ?? "N/A",
+      },
+      {
+        accessorKey: "rating",
+        header: "Album Rating",
+        size: 90,
+        filterFn: betweenNumberRange,
+        cell: info => <RatingCell value={info.getValue()} />,
+      },
+      {
+        accessorKey: "average_rating",
+        header: "Avg. Song Rating",
+        size: 90,
+        filterFn: betweenNumberRange,
+        cell: info => <RatingCell value={info.getValue()} precision={2} />,
+      },
+      {
+        accessorKey: "overall_rating",
+        header: overallRatingHeader,
+        size: 90,
+        filterFn: betweenNumberRange,
+        cell: info => <RatingCell value={info.getValue()} precision={2} />,
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        size: 80,
+        cell: ({ row }) => {
+          const albumId = row.original.id;
+          return (
+            <div className="table-actions">
+              <Link to={`/albums/${albumId}`}>
+                <button className="button button-secondary">{viewButtonText}</button>
+              </Link>
+              <button
+                className="button button-danger"
+                onClick={() => handleDelete(row.original)}
+              >
+                {deleteButtonText}
+              </button>
+            </div>
+          );
+        },
+      },
+    ];
+
+    if (isMobile) {
+      const allowed = new Set(["title", "artist", "overall_rating", "actions"]);
+      return baseColumns.filter((col) =>
+        allowed.has(col.accessorKey || col.id)
+      );
     }
 
-  ], [handleDelete]);
+    return baseColumns;
+  }, [handleDelete, isMobile]);
 
   const table = useReactTable({
     data,
@@ -127,8 +143,7 @@ function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
     filterFns: {
       betweenNumberRange,
     },
-});
-
+  });
 
   return (
     <div>
