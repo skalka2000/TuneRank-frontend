@@ -140,7 +140,8 @@ function AlbumPage() {
           </p>      
       </div>
       <SongTable 
-        songs={album.songs} 
+        songs={album.songs}
+        isAlbumSpecific={true}
         onUpdate={handleSongUpdate} 
         onDelete={handleDeleteSong}
         extraContent={addSongForm}

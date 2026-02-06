@@ -15,8 +15,11 @@ import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import GlobalTextFilter from "./common/GlobalTextFilter";
 import TableToolbar from "./common/TableToolbar";
+import { useIsMobile } from "../hooks/useIsMobile";
 
-const baseColumns = (onUpdate, onDelete, handleDelete) => {
+const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
+  const songRatingHeader = isMobile ? "Rating" : "Song Rating";
+  const deleteButtonText = isMobile ? "🗑️" : "Delete";
   const columns = [
   {
     accessorKey: "track_number",
@@ -79,10 +82,9 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
       />
     ),
   },
-
   {
     accessorKey: "rating",
-    header: "Song Rating",
+    header: songRatingHeader,
     size: 80,
     filterFn: betweenNumberRange,
     cell: ({ row }) => {
@@ -108,7 +110,6 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
       );
     }
   },
-
   ];
   if (onDelete) {
     columns.push({
@@ -120,7 +121,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
               className="button button-danger"
               onClick={() => handleDelete(row.original)}
             >
-              Delete
+              {deleteButtonText}
             </button>
       ),
     });
@@ -128,7 +129,10 @@ const baseColumns = (onUpdate, onDelete, handleDelete) => {
   return columns
 }
 
-function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate, onDelete, extraContent, toolbarActions}) {
+function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, extraContent, toolbarActions}) {
+  const showAlbum = isAlbumSpecific ? false : true
+  const showTrackNumber = isAlbumSpecific ? true : false
+  const showArtistForMobile = isAlbumSpecific ? false : true
   const [sorting, setSorting] = useState(
     showTrackNumber
       ? [{ id: "track_number", desc: false }]
@@ -137,8 +141,7 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [songToDelete, setSongToDelete] = useState(null);
-  const [globalFilter, setGlobalFilter] = useState("");
-
+  const [globalFilter, setGlobalFilter] = useState("")
 
   const handleDelete = useCallback((song) => {
     setSongToDelete(song);
@@ -157,17 +160,33 @@ function SongTable({ songs, showAlbum = false, showTrackNumber = true, onUpdate,
 
   const data = useMemo(() => songs, [songs]);
 
+  const isMobile = useIsMobile();
+
   const columns = useMemo(() => {
-    let cols = [...baseColumns(onUpdate, onDelete, handleDelete)];
+    let cols = [...baseColumns(onUpdate, onDelete, handleDelete, isMobile)];
+
     if (!showAlbum) {
       cols = cols.filter(c => c.accessorKey !== "album.title");
     }
+
     if (!showTrackNumber) {
       cols = cols.filter(c => c.accessorKey !== "track_number");
     }
-    return cols;
-  }, [showAlbum, showTrackNumber, onUpdate, onDelete, handleDelete]);
 
+    if (isMobile) {
+      const allowed = new Set([
+        showTrackNumber ? "track_number" : null,
+        "title",
+        showArtistForMobile ? "album.artist" : null,
+        "rating",
+      ]);
+      cols = cols.filter((c) =>
+        c.accessorKey ? allowed.has(c.accessorKey) : c.id === "actions"
+      );
+    }
+
+    return cols;
+  }, [showAlbum, showTrackNumber, showArtistForMobile, isMobile, onUpdate, onDelete, handleDelete]);
 
   const table = useReactTable({
     data,

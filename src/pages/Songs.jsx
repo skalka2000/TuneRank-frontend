@@ -47,9 +47,8 @@ function Songs() {
     <div className="page">
       <h1>All Songs</h1>
       <SongTable 
-        songs={songs} 
-        showAlbum 
-        showTrackNumber={false}  
+        songs={songs}
+        isAlbumSpecific={false} 
         onUpdate={handleSongUpdate}
         extraContent={ratingChart}
         toolbarActions={

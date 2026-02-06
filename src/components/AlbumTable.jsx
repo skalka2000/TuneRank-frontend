@@ -51,7 +51,7 @@ function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
   const deleteButtonText = isMobile ? "🗑️" : "Delete"
   const viewButtonText = isMobile ? "🔎" : "View"
 
-  const overallRatingHeader = isMobile ? "Rating" : "Overall Rating"
+  const overallRatingHeader = isMobile ? "Overall" : "Overall Rating"
 
   const columns = useMemo(() => {
     const baseColumns = [
