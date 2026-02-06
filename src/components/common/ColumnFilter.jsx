@@ -3,7 +3,7 @@ import RangeFilter from "./RangeFilter";
 function ColumnFilter({ column }) {
   const columnId = column.id;
 
-  if (["rating", "track_number", "year"].includes(columnId)) {
+  if (["rating", "track_number", "year", "average_rating", "overall_rating"].includes(columnId)) {
     return <RangeFilter column={column} />;
   }
 
