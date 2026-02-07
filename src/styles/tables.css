@@ -66,6 +66,18 @@
   margin-top: 0.25rem;
 }
 
+.table-range-filter {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.table-interlude-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+
 .table-cell {
   overflow: hidden;
   white-space: nowrap;

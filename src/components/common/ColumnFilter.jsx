@@ -9,7 +9,7 @@ function ColumnFilter({ column }) {
 
   if (columnId === "is_interlude") {
     return (
-      <div className = "table-interlude-filter">
+      <div className = "table-filter-radio-input">
         <label>
           <input
             type="radio"
@@ -46,8 +46,8 @@ function ColumnFilter({ column }) {
       type="text"
       value={column.getFilterValue() ?? ""}
       onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`${columnId} filter`}
-      className="table-filter-text"
+      placeholder={`filter ${columnId}`}
+      className="table-filter-input"
     />
   );
 }

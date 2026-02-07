@@ -56,42 +56,57 @@
 .song-form {
   flex-wrap: wrap;
 }
+
 .input-standard,
 .input-simple,
-.range-input {
+.range-input,
+.table-filter-input {
     border: 1px solid #ccc;
     box-sizing: border-box;
     font-size: 0.9rem;
+    height: 100%;
+    border-radius: var(--radius-sm);
 }
 
 .input-standard {
   padding: var(--space-sm);
-  border-radius: var(--radius-sm);
-  height: var(--space-xl);
-}
-
-.input-standard:focus {
-  border-color: var(--primary);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .input-simple {
   padding: var(--space-xs);
-  border-radius: var(--radius-sm);
-  height: var(--space-lg);
-}
-
-.input-simple:focus {
-  border-color: var(--primary);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .range-input {
-  width: 60px;
+  width: 4rem;
   padding: var(--space-xs);
-  border-radius: var(--radius-sm);
+}
+
+.table-filter-input {
+  margin-top: var(--space-xs);
+  width: 100%;
+  padding: var(--space-xs);
+}
+
+.table-filter-radio-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+}
+
+.table-filter-radio-input label{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.input-standard:focus,
+.input-simple:focus,
+.range-input {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .checkbox-standard {
@@ -115,14 +130,8 @@
 }
 
 @media (max-width: 768px) {
-  .input-simple {
-    font-size: 0.8rem;
-    height: 1.25rem;
-  }
-  .input-standard {
-    font-size: 0.9rem;
-    height: 1.5rem;
-  }
+  .input-simple,
+  .input-standard
   .range-input {
     font-size: 0.8rem;
     height: 1.25rem;
