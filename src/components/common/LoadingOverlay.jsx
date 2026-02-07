@@ -5,7 +5,7 @@ const LYRICS = [
   "Commencing countdown, engines on...",
   "Check ignition and may God's love be with you.",
   "3, 2, 1...",
-  "LIFT OFF... 🚀"
+  "LIFT OFF... 🚀 "
 ];
 
 function LoadingOverlay({ message = "Loading...", lyrics = LYRICS }) {

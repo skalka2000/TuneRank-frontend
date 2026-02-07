@@ -43,7 +43,7 @@ function AddSongForm({ onSubmit }) {
         }}
         showTrack={true}
       />
-      <button type="submit" className="button">
+      <button type="submit" className="button" style={{height: "2rem", width: "5rem"}}>
         Confirm
       </button>
     </form>
