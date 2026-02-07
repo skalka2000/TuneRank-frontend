@@ -6,14 +6,11 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { useMemo, useState, useCallback } from "react";
-import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
-import RangeFilter from "./common/RangeFilter";
 import EditableField from "./common/EditableField";
 import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
-import GlobalTextFilter from "./common/GlobalTextFilter";
 import TableToolbar from "./common/TableToolbar";
 import { useIsMobile } from "../hooks/useIsMobile";
 
@@ -127,7 +124,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
   return columns
 }
 
-function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, extraContent, toolbarActions}) {
+function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete}) {
   const showAlbum = isAlbumSpecific ? false : true
   const showTrackNumber = isAlbumSpecific ? true : false
   const showArtistForMobile = isAlbumSpecific ? false : true
@@ -139,7 +136,6 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, extraContent, t
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [songToDelete, setSongToDelete] = useState(null);
-  const [globalFilter, setGlobalFilter] = useState("")
 
   const handleDelete = useCallback((song) => {
     setSongToDelete(song);
@@ -192,11 +188,9 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, extraContent, t
     state: {
       sorting,
       columnFilters,
-      globalFilter
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -207,14 +201,7 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, extraContent, t
 
   return (
     <div>
-      {/* Top toolbar with filter and optional external buttons */}
-      <TableToolbar
-        globalFilter={globalFilter}
-        onGlobalFilterChange={setGlobalFilter}
-        actions={toolbarActions}
-      />
-      {extraContent}
-      <div className = "table-wrapper" style={{marginTop: "1rem"}}>
+      <div className = "table-wrapper">
         <table className = "table">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (

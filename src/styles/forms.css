@@ -10,6 +10,7 @@
   display: flex;
   gap: var(--space-md);
   flex-direction: column;
+  margin-bottom: var(--space-md);
 }
 
 .song-form-group {
@@ -44,12 +45,12 @@
     gap: var(--space-xs);
     align-items: center;
   }
+  .add-song-form {
+    gap: var(--space-md);
+  }
   .song-form-group {
     flex-direction: row;
     align-items: center;
-  }
-  .add-song-form {
-    gap: var(--space-md);
   }
 }
 

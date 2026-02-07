@@ -51,20 +51,19 @@ function Songs() {
   return (
     <div className="page">
       <h1>All Songs</h1>
+      {ratingChart}
+      <div>
+        <button 
+          className="button button-secondary" 
+          onClick={() => setDisplayRatingChart(prev => !prev)}>
+          {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
+        </button>
+      </div>
       <SongTable 
         songs={songs}
         isAlbumSpecific={false} 
         onUpdate={handleSongUpdate}
-        extraContent={ratingChart}
-        toolbarActions={
-          <div>
-            <button 
-              className="button button-secondary" 
-              onClick={() => setDisplayRatingChart(prev => !prev)}>
-              {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
-            </button>
-          </div>
-        }/>
+      />
     </div>
   );
 }

@@ -51,23 +51,21 @@ function Albums() {
   return (
     <div className="page">
       <h1>Albums</h1>
+      {ratingChart}
+      <div className="toolbar-actions">
+        <button
+          className="button button-secondary"
+          onClick={() => setDisplayRatingChart(prev => !prev)}
+        >
+        {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
+        </button>
+        <Link to="/albums/add">
+          <button className="button">{addButtonText}</button>
+        </Link>
+      </div>
       <AlbumTable
         albums={albums}
         onDelete={handleDeleteAlbum}
-        extraContent={ratingChart}  
-        toolbarActions={
-          <div className="toolbar-actions">
-            <button
-              className="button button-secondary"
-              onClick={() => setDisplayRatingChart(prev => !prev)}
-            >
-            {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
-            </button>
-              <Link to="/albums/add">
-                <button className="button">{addButtonText}</button>
-              </Link>
-          </div>
-        }
       />
     </div>
   );

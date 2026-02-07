@@ -147,13 +147,6 @@ function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
 
   return (
     <div>
-      {/* Top toolbar with filter and optional external buttons */}
-      <TableToolbar
-        globalFilter={globalFilter}
-        onGlobalFilterChange={setGlobalFilter}
-        actions={toolbarActions}
-      />
-      {extraContent}
       <div className="table-wrapper">
         <table className="table">
           <thead>
