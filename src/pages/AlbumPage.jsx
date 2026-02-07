@@ -99,7 +99,7 @@ function AlbumPage() {
   return (
     <div className="page">
       <AlbumHeader album={album} onFieldUpdate={handleFieldUpdate} />
-      <div className="album-ratings" style={{alignItems: 'center'}}>
+      <div className="album-ratings-form">
           <p>
             <strong>Album Rating:</strong>{" "}
             <span

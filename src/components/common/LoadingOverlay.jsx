@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/LoadingOverlay.css";
 
 const LYRICS = [
   "Ground control to Major Tom...",

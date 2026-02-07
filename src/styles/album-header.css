@@ -1,0 +1,12 @@
+.album-header {
+  margin-bottom: var(--space-xs);
+}
+
+.album-title {
+  font-size: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.album-meta-mobile p {
+  margin: 0;
+}

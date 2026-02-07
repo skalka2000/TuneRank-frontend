@@ -28,7 +28,6 @@ function AlbumHeader({ album, onFieldUpdate }) {
         </>
         )}
       </h2>
-
       {isMobile && (
         <div className="album-meta-mobile">
           <p>

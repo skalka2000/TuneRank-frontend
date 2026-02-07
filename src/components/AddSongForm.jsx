@@ -32,16 +32,21 @@ function AddSongForm({ onSubmit }) {
   };
 
   return (
-    <SongInputRow
-      song={{ title, track_number: trackNumber, rating, is_interlude: isInterlude }}
-      onChange={(field, val) => {
-        if (field === "title") setTitle(val);
-        if (field === "track_number") setTrackNumber(val);
-        if (field === "rating") setRating(val);
-        if (field === "is_interlude") setIsInterlude(val);
-      }}
-      showTrack={true}
-    />
+    <form onSubmit={handleSubmit} className="add-song-form">
+      <SongInputRow
+        song={{ title, track_number: trackNumber, rating, is_interlude: isInterlude }}
+        onChange={(field, val) => {
+          if (field === "title") setTitle(val);
+          if (field === "track_number") setTrackNumber(val);
+          if (field === "rating") setRating(val);
+          if (field === "is_interlude") setIsInterlude(val);
+        }}
+        showTrack={true}
+      />
+      <button type="submit" className="button">
+        Confirm
+      </button>
+    </form>
   );
 }
 

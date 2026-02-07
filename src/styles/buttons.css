@@ -1,0 +1,69 @@
+.button {
+  background-color: var(--accent);
+  color: var(--background);
+  padding: var(--space-sm) var(--space-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.button-secondary {
+  background-color: var(--background);
+  color: var(--text);
+  border: 2px solid var(--primary);
+  transition: all var(--transition-fast);
+}
+
+.button-secondary:hover {
+  background-color: var(--gray-200);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.button-danger {
+  background-color: var(--danger);
+  color: var(--white);
+}
+
+.button-danger:hover {
+  background-color: var(--danger-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.button-group-center {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.form-button-group {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.album-form button {
+  align-self: flex-start;
+}
+
+@media (max-width: 768px) {
+  .button {
+    font-size: 0.85rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .button-danger,
+  .button-secondary {
+    font-size: 0.85rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+}

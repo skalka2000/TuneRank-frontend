@@ -1,0 +1,37 @@
+.editable-field {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px dashed transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.editable-field:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.edit-icon {
+  opacity: 0;
+  font-size: 0.9rem;
+  transition: opacity var(--transition-fast);
+}
+
+.editable-field:hover .edit-icon {
+  opacity: 1;
+}
+
+.editable-input {
+  font-size: 1rem;
+  line-height: 1.2;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-bottom: 1px dashed var(--accent);
+  background: transparent;
+  box-shadow: none;
+  height: auto;
+}
+

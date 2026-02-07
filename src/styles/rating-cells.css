@@ -1,0 +1,33 @@
+.rating-cell {
+  position: relative;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  overflow: hidden;
+}
+
+.rating-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.rating-value {
+  position: relative;
+  z-index: 1;
+}
+
+.rating-box {
+  color: var(--white);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-lg);
+  font-weight: bold;
+  display: inline-block;
+  min-width: 3rem;
+  text-align: center;
+}

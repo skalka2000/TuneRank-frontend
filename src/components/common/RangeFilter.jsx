@@ -2,7 +2,7 @@ function RangeFilter({ column }) {
   const value = column.getFilterValue() || [undefined, undefined];
 
   return (
-    <div className="range-filter">
+    <div className="table-range-filter">
       <input
         type="number"
         value={value[0] ?? ""}
