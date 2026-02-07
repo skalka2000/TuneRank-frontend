@@ -10,15 +10,3 @@
 @import './rating-cells.css';
 @import './settings.css';
 @import './album-header.css';
-
-.table-range-filter {
-  display: flex;
-  gap: 0.25rem;
-  margin-top: 0.25rem;
-}
-
-.table-interlude-filter {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-}

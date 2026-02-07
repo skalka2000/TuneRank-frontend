@@ -48,34 +48,10 @@
   user-select: none;
 }
 
-.table-filter-text {
-  margin-top: 0.25rem;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  padding: var(--space-sm);
-  border: 1px solid #ccc;
-  border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-}
-
-.table-filter-radio {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-top: 0.25rem;
-}
-
 .table-range-filter {
   display: flex;
   gap: 0.25rem;
   margin-top: 0.25rem;
-}
-
-.table-interlude-filter {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
 }
 
 .table-cell {
