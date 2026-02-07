@@ -13,9 +13,8 @@ import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
+function AlbumTable({ albums, onDelete }) {
   const [sorting, setSorting] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [albumToDelete, setAlbumToDelete] = useState(null);

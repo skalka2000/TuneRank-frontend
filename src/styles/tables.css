@@ -75,6 +75,10 @@
   display: flex;
   gap: var(--space-md);
   height: 100%;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: var(--space-md);
+  justify-content: flex-end;
 }
 
 @media (max-width: 768px) {

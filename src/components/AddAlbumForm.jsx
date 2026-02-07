@@ -83,7 +83,6 @@ function AddAlbumForm({onSubmit, onCancel}){
         <button type="submit" className="button">Confirm</button>
         <button type="button" className="button button-danger" onClick={onCancel}>Cancel</button>
       </div>
-      
     </form>
     );
 }

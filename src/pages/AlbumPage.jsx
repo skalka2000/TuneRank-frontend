@@ -145,11 +145,13 @@ function AlbumPage() {
             )}
           </p>      
       </div>
-      {addSongForm}
-      <div className="toolbar-actions">
-        <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
-          {showAddSongForm ? cancelButtonText : addButtonText}
-        </button>
+      <div style={{display: "flex", flexDirection: "row-reverse", justifyContent: "space-between", alignItems: "flex-end"}}>
+        <div className="toolbar-actions">
+          <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
+            {showAddSongForm ? cancelButtonText : addButtonText}
+          </button>
+        </div>
+        {addSongForm}
       </div>
       <SongTable 
         songs={album.songs}

@@ -11,7 +11,6 @@ function AddAlbum() {
     navigate("/albums");
   };
 
-
   const handleAddAlbum = async (album) => {
     try {
         await addAlbum(album);

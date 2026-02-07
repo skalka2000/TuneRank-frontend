@@ -52,7 +52,7 @@ function Songs() {
     <div className="page">
       <h1>All Songs</h1>
       {ratingChart}
-      <div>
+      <div className="toolbar-actions">
         <button 
           className="button button-secondary" 
           onClick={() => setDisplayRatingChart(prev => !prev)}>
