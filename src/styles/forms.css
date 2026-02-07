@@ -6,6 +6,13 @@
   align-items: flex-start;
 }
 
+.album-page-add-song-form {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
 .add-song-form {
   display: flex;
   gap: var(--space-md);

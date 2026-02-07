@@ -145,7 +145,7 @@ function AlbumPage() {
             )}
           </p>      
       </div>
-      <div style={{display: "flex", flexDirection: "row-reverse", justifyContent: "space-between", alignItems: "flex-end"}}>
+      <div className="album-page-add-song-form">
         <div className="toolbar-actions">
           <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
             {showAddSongForm ? cancelButtonText : addButtonText}
