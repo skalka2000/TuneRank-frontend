@@ -11,7 +11,6 @@ import EditableField from "./common/EditableField";
 import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
-import TableToolbar from "./common/TableToolbar";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {

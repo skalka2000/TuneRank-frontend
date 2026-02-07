@@ -7,14 +7,10 @@ import {
 } from "@tanstack/react-table";
 import { useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { getRatingColor } from "../utils/ratingColors";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
-import RangeFilter from "./common/RangeFilter";
 import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
-import GlobalTextFilter from "./common/GlobalTextFilter";
-import TableToolbar from "./common/TableToolbar";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 function AlbumTable({ albums, onDelete, toolbarActions, extraContent }) {
