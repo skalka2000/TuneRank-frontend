@@ -55,15 +55,22 @@
   align-self: flex-start;
 }
 
+.button-text {
+  margin-left: 0.5rem;
+  display: inline;
+}
+
 @media (max-width: 768px) {
   .button {
     font-size: 0.85rem;
     padding: var(--space-xs) var(--space-sm);
   }
-
   .button-danger,
   .button-secondary {
     font-size: 0.85rem;
     padding: var(--space-xs) var(--space-sm);
+  }
+  .button-text {
+    display: none;
   }
 }

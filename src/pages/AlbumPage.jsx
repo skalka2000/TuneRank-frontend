@@ -93,8 +93,20 @@ function AlbumPage() {
     <AddSongForm onSubmit={handleAddSong} />
   ) : null;
 
-  const addButtonText = isMobile ? "➕" : "Add Song"
-  const cancelButtonText = isMobile ? "🔙" : "Cancel"
+  const addButtonText = (
+    <>
+      <span role="img" aria-label="add">➕</span>
+      <span className="button-text">Add Song</span>
+    </>
+  );
+
+  const cancelButtonText = (
+    <>
+      <span role="img" aria-label="cancel">🔙</span>
+      <span className="button-text">Cancel</span>
+    </>
+  );
+
   const marginTopAddSongForm = addSongForm ? 0 : "-1rem"
 
   return (

@@ -45,8 +45,20 @@ function Songs() {
     />
   ) : null;
   
-  const displayRatingChartButton = isMobile ? "📊" : "Display Rating Distribution"
-  const hideRatingChartButton = isMobile ? "🔙" : "Hide Rating Distribution"
+  const displayRatingChartButton = (
+    <>
+      <span role="img" aria-label="chart">📊</span>
+      <span className="button-text">Display Rating Distribution</span>
+    </>
+  );
+
+  const hideRatingChartButton = (
+    <>
+      <span role="img" aria-label="back">🔙</span>
+      <span className="button-text">Hide Rating Distribution</span>
+    </>
+  );
+
   const marginTopToolbar = displayRatingChart ? 0 : "-1rem"
 
   return (
