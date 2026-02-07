@@ -47,12 +47,13 @@ function Songs() {
   
   const displayRatingChartButton = isMobile ? "📊" : "Display Rating Distribution"
   const hideRatingChartButton = isMobile ? "🔙" : "Hide Rating Distribution"
+  const marginTopToolbar = displayRatingChart ? 0 : "-1rem"
 
   return (
     <div className="page">
       <h1>All Songs</h1>
       {ratingChart}
-      <div className="toolbar-actions">
+      <div className="toolbar-actions" style={{marginTop: marginTopToolbar}}>
         <button 
           className="button button-secondary" 
           onClick={() => setDisplayRatingChart(prev => !prev)}>

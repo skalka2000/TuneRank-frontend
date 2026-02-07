@@ -13,5 +13,4 @@ body {
 
 .page h1{
   margin: var(--space-xs);
-  margin-bottom: var(--space-md)
 }

@@ -95,6 +95,7 @@ function AlbumPage() {
 
   const addButtonText = isMobile ? "➕" : "Add Song"
   const cancelButtonText = isMobile ? "🔙" : "Cancel"
+  const marginTopAddSongForm = addSongForm ? 0 : "-1rem"
 
   return (
     <div className="page">
@@ -145,7 +146,7 @@ function AlbumPage() {
             )}
           </p>      
       </div>
-      <div className="album-page-add-song-form">
+      <div className="album-page-add-song-form" style={{marginTop: marginTopAddSongForm}}>
         <div className="toolbar-actions">
           <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
             {showAddSongForm ? cancelButtonText : addButtonText}
