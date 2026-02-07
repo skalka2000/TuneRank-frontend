@@ -89,8 +89,6 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
     filterFn: betweenNumberRange,
     cell: ({ row }) => {
       const value = row.original.rating;
-      const percent = (value / 10) * 100;
-      const color = getRatingColor(value);
       return (
         <RatingCell
           value={value}
@@ -216,7 +214,7 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, extraContent, t
         actions={toolbarActions}
       />
       {extraContent}
-      <div className = "table-wrapper">
+      <div className = "table-wrapper" style={{marginTop: "1rem"}}>
         <table className = "table">
           <thead>
             {table.getHeaderGroups().map(headerGroup => (
