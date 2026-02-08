@@ -1,5 +1,5 @@
 .album-header {
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--space-md);
 }
 
 .album-title {
@@ -9,5 +9,4 @@
 
 .album-meta-mobile p {
   margin: 0;
-  margin-bottom: var(--space-md)
 }
