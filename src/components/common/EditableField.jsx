@@ -31,12 +31,9 @@ function EditableField({
   };
 
   const handleCancel = () => {
-    setTimeout(() => {
-      setLocalValue(value ?? "");
-      setEditing(false);
-    }, 0);
+    setLocalValue(value ?? "");
+    setEditing(false);
   };
-
 
   const handleClick = () => {
     setEditing(true);
