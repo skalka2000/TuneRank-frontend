@@ -107,7 +107,7 @@ function AlbumPage() {
     </>
   );
 
-  const marginTopAddSongForm = addSongForm ? 0 : "-1rem"
+  const marginTopAddSongForm = addSongForm && isMobile ? 0 : "-1rem"
 
   return (
     <div className="page">
