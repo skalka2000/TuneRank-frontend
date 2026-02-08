@@ -9,4 +9,5 @@
 
 .album-meta-mobile p {
   margin: 0;
+  margin-bottom: var(--space-md)
 }
