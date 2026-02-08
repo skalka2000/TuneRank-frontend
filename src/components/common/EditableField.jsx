@@ -65,7 +65,7 @@ function EditableField({
           type={inputType}
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
-          onBlur={isMobile ? handleCancel : handleBlur}
+          onBlur={handleBlur}
           onKeyDown={(e) => {
             if (e.key === "Enter") e.target.blur();
           }}

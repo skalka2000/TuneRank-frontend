@@ -113,7 +113,7 @@ function AlbumPage() {
     <div className="page">
       <AlbumHeader album={album} onFieldUpdate={handleFieldUpdate} />
       <div className="album-ratings-form">
-          <p>
+          <div>
             <strong>Album Rating:</strong>{" "}
             <span
               className="rating-box"
@@ -126,8 +126,8 @@ function AlbumPage() {
                 onSave={(val) => handleFieldUpdate("rating", val)}
               />
             </span>
-          </p>
-          <p>
+          </div>
+          <div>
             <strong>Avg. Song Rating:</strong>{" "}
             {album.average_rating != null ? (
               <span
@@ -141,8 +141,8 @@ function AlbumPage() {
             ) : (
               "N/A"
             )}
-          </p>
-          <p>
+          </div>
+          <div>
             <strong>Overall Rating:</strong>{" "}
             {album.overall_rating != null ? (
               <span
@@ -156,7 +156,7 @@ function AlbumPage() {
             ) : (
               "N/A"
             )}
-          </p>      
+          </div>      
       </div>
       <div className="album-page-add-song-form" style={{marginTop: marginTopAddSongForm}}>
         <div className="toolbar-actions">
