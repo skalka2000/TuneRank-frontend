@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useIsMobile } from "../../hooks/useIsMobile";
 
 function EditableField({
   value,
@@ -10,6 +11,7 @@ function EditableField({
   const [editing, setEditing] = useState(false);
   const [localValue, setLocalValue] = useState(value ?? "");
   const inputRef = useRef(null);
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -38,28 +40,41 @@ function EditableField({
   if (editing) {
     if (inputType === "checkbox") {
       return (
-        <input
-          type="checkbox"
-          checked={localValue}
-          onChange={(e) => setLocalValue(e.target.checked)}
-          onBlur={handleBlur}
-          ref={inputRef}
-        />
+        <div className="editable-wrapper">
+          <input
+            type="checkbox"
+            checked={localValue}
+            onChange={(e) => setLocalValue(e.target.checked)}
+            ref={inputRef}
+          />
+          {isMobile && (
+            <button className="button" onClick={handleBlur}>
+              Save
+            </button>
+          )}
+        </div>
       );
     }
 
     return (
-      <input
-        type={inputType}
-        value={localValue}
-        onChange={(e) => setLocalValue(e.target.value)}
-        onBlur={handleBlur}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") e.target.blur();
-        }}
-        ref={inputRef}
-        className="editable-input"
-      />
+      <div className="editable-wrapper">
+        <input
+          type={inputType}
+          value={localValue}
+          onChange={(e) => setLocalValue(e.target.value)}
+          onBlur={!isMobile ? handleBlur : undefined}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") e.target.blur();
+          }}
+          ref={inputRef}
+          className="editable-input"
+        />
+        {isMobile && (
+          <button className="button" onClick={handleBlur}>
+            Save
+          </button>
+        )}
+      </div>
     );
   }
 
