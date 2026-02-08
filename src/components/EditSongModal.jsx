@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import SongInputRow from "./common/SongInputRow";
+import { updateSongField } from "../api/songs";
 
-export default function EditSongModal({ song, onClose, onSave }) {
+export default function EditSongModal({ song, onClose, onSaved }) {
   const [form, setForm] = useState({
     title: "",
     track_number: 0,
     rating: 0,
     is_interlude: false,
   });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (song) {
@@ -20,25 +24,32 @@ export default function EditSongModal({ song, onClose, onSave }) {
     }
   }, [song]);
 
-    const handleSubmit = () => {
-    let hasChanges = false;
+  const handleSubmit = async () => {
+    setError(null);
+    setLoading(true);
 
-    for (const key in form) {
+    try {
+      let hasChanges = false;
+
+      for (const key in form) {
         if (form[key] !== song[key]) {
-        const value =
+          const value =
             key === "track_number" || key === "rating"
-            ? Number(form[key])
-            : form[key];
-        onSave(key, value);
-        hasChanges = true;
+              ? Number(form[key])
+              : form[key];
+
+          await updateSongField(song.id, key, value);
+          hasChanges = true;
         }
+      }
+      if (onSaved) onSaved();
+    } catch (err) {
+      console.error("Failed to update song:", err);
+      setError("Failed to save changes. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    if (!hasChanges) {
-        onClose(); 
-    }
-    };
-
+  };
 
   if (!song) return null;
 
@@ -54,11 +65,21 @@ export default function EditSongModal({ song, onClose, onSave }) {
           }
         />
 
+        {error && <p className="text-error">{error}</p>}
+
         <div className="button-group-center">
-          <button onClick={handleSubmit} className="button button-primary">
-            Save
+          <button
+            onClick={handleSubmit}
+            className="button button-primary"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save"}
           </button>
-          <button onClick={onClose} className="button button-secondary">
+          <button
+            onClick={onClose}
+            className="button button-secondary"
+            disabled={loading}
+          >
             Cancel
           </button>
         </div>

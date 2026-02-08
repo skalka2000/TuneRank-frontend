@@ -5,7 +5,7 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { betweenNumberRange } from "../utils/betweenNumberRange";
 import EditableField from "./common/EditableField";
 import ConfirmDialog from "./common/ConfirmDialog";
@@ -13,6 +13,7 @@ import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import { useIsMobile } from "../hooks/useIsMobile";
 import EditSongModal from "./EditSongModal";
+import { fetchSongs } from "../api/songs";
 
 const baseColumns = (onUpdate, onDelete, handleDelete, isMobile, setEditingRow) => {
   const songRatingHeader = isMobile ? "Rating" : "Song Rating";
@@ -173,7 +174,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile, setEditingRow) 
   return columns;
 };
 
-function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete}) {
+function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, onRefresh}) {
   const showAlbum = isAlbumSpecific ? false : true
   const showTrackNumber = isAlbumSpecific ? true : false
   const showArtistForMobile = isAlbumSpecific ? false : true
@@ -333,13 +334,12 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete}) {
         <EditSongModal
           song={editingRow}
           onClose={() => setEditingRow(null)}
-          onSave={(field, val) => {
-            onUpdate(editingRow.id, field, val);
+          onSaved={() => {
+            onRefresh?.();
             setEditingRow(null);
           }}
         />
       )}
-
     </div>
   );
 }

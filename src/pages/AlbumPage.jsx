@@ -171,6 +171,7 @@ function AlbumPage() {
         isAlbumSpecific={true}
         onUpdate={handleSongUpdate} 
         onDelete={handleDeleteSong}
+        onRefresh={refreshAlbum}
       />
     </div>
   );

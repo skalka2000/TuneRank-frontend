@@ -25,6 +25,14 @@ function Songs() {
     }
   };
 
+  const refreshSongs = async () => {
+    try {
+      const data = await fetchSongs();
+      setSongs(data);
+    } catch (err) {
+      console.error("Failed to refresh songs:", err.message);
+    }
+  };
 
   useEffect(() => {
     fetchSongs()
@@ -76,6 +84,7 @@ function Songs() {
         songs={songs}
         isAlbumSpecific={false} 
         onUpdate={handleSongUpdate}
+        onRefresh={refreshSongs}
       />
     </div>
   );
