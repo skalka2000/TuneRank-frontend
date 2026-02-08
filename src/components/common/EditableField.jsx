@@ -52,7 +52,7 @@ function EditableField({
             onChange={(e) => setLocalValue(e.target.checked)}
             ref={inputRef}
           />
-          <button className="floating-button" onClick={handleBlur} aria-label="Save">
+          <button className="floating-button" onMouseDown={handleBlur} aria-label="Save">
             ✓
           </button>
         </div>
@@ -72,7 +72,7 @@ function EditableField({
           ref={inputRef}
           className="editable-input"
         />
-          <button className="floating-button" onClick={handleBlur} aria-label="Save">
+          <button className="floating-button" onMouseDown={handleBlur} aria-label="Save">
             ✓
           </button>
       </div>

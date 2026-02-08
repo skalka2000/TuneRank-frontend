@@ -23,7 +23,7 @@ function LoadingOverlay({ message = "Loading...", lyrics = LYRICS }) {
         }
         return prev;
       });
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [lyrics]);
