@@ -24,7 +24,8 @@
 }
 
 .editable-input {
-  font-size: 1rem;
+  max-width: 75%;
+  font-size: 0.9rem;
   line-height: 1.2;
   padding: 0;
   margin: 0;
@@ -36,7 +37,28 @@
 }
 
 .editable-wrapper {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.floating-button {
+  position: absolute;
+  right: -0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--accent);
+  color: var(--background);
+  border: none;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.85rem;
+  line-height: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
 }

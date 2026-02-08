@@ -11,7 +11,7 @@ function EditableField({
   const [editing, setEditing] = useState(false);
   const [localValue, setLocalValue] = useState(value ?? "");
   const inputRef = useRef(null);
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -27,6 +27,11 @@ function EditableField({
         console.error(err.message);
       }
     }
+    setEditing(false);
+  };
+
+  const handleCancel = () => {
+    setLocalValue(value ?? "");
     setEditing(false);
   };
 
@@ -47,11 +52,9 @@ function EditableField({
             onChange={(e) => setLocalValue(e.target.checked)}
             ref={inputRef}
           />
-          {isMobile && (
-            <button className="button" onClick={handleBlur}>
-              Save
-            </button>
-          )}
+          <button className="floating-button" onClick={handleBlur} aria-label="Save">
+            ✓
+          </button>
         </div>
       );
     }
@@ -62,18 +65,16 @@ function EditableField({
           type={inputType}
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
-          onBlur={!isMobile ? handleBlur : undefined}
+          onBlur={isMobile ? handleCancel : handleBlur}
           onKeyDown={(e) => {
             if (e.key === "Enter") e.target.blur();
           }}
           ref={inputRef}
           className="editable-input"
         />
-        {isMobile && (
-          <button className="button" onClick={handleBlur}>
-            Save
+          <button className="floating-button" onClick={handleBlur} aria-label="Save">
+            ✓
           </button>
-        )}
       </div>
     );
   }
