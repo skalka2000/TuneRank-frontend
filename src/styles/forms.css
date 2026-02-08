@@ -32,7 +32,9 @@
   flex-direction: row;
   gap: var(--space-md);
   align-items: center;
+  margin-bottom: var(--space-md)
 }
+
 .album-ratings-form p{
   display: flex;
   flex-direction: column;

@@ -12,14 +12,12 @@ import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import { useIsMobile } from "../hooks/useIsMobile";
-import EditSongModal from "./EditSongModal";
-import { fetchSongs } from "../api/songs";
 
-const baseColumns = (onUpdate, onDelete, handleDelete, isMobile, setEditingRow) => {
+const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
   const songRatingHeader = isMobile ? "Rating" : "Song Rating";
   const deleteButtonText = isMobile ? "🗑️" : "Delete";
 
-  const editableColumns = [
+  const columns = [
     {
       accessorKey: "track_number",
       header: "#",
@@ -27,32 +25,44 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile, setEditingRow) 
       enableSorting: true,
       filterFn: betweenNumberRange,
       cell: ({ row }) => (
-        isMobile
-          ? row.original.track_number
-          : <EditableField
-              value={row.original.track_number}
-              inputType="number"
-              onSave={(val) =>
-                onUpdate(row.original.id, "track_number", parseInt(val))
-              }
-            />
+        <EditableField
+          value={row.original.track_number}
+          inputType="number"
+          onSave={(val) =>
+            onUpdate(row.original.id, "track_number", parseInt(val))
+          }
+        />
       ),
     },
+
     {
       accessorKey: "title",
       header: "Title",
       filterFn: "includesString",
       cell: ({ row }) => (
-        isMobile
-          ? row.original.title
-          : <EditableField
-              value={row.original.title}
-              onSave={(val) =>
-                onUpdate(row.original.id, "title", val)
-              }
-            />
+        <EditableField
+          value={row.original.title}
+          onSave={(val) =>
+            onUpdate(row.original.id, "title", val)
+          }
+        />
       ),
     },
+
+    {
+      accessorKey: "album.title",
+      header: "Album",
+      cell: ({ row }) => row.original.album?.title ?? "N/A",
+      filterFn: "includesString",
+    },
+
+    {
+      accessorKey: "album.artist",
+      header: "Artist",
+      cell: ({ row }) => row.original.album?.artist ?? "N/A",
+      filterFn: "includesString",
+    },
+
     {
       accessorKey: "is_interlude",
       header: "Interlude",
@@ -63,122 +73,69 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile, setEditingRow) 
         return true;
       },
       cell: ({ row }) => (
-        isMobile
-          ? row.original.is_interlude ? "✅" : ""
-          : <EditableField
-              value={row.original.is_interlude}
-              inputType="checkbox"
-              onSave={(val) =>
-                onUpdate(row.original.id, "is_interlude", val)
-              }
-              renderDisplay={(val) => (val ? "✅" : "")}
-            />
+        <EditableField
+          value={row.original.is_interlude}
+          inputType="checkbox"
+          onSave={(val) =>
+            onUpdate(row.original.id, "is_interlude", val)
+          }
+          renderDisplay={(val) => (val ? "✅" : "")}
+        />
       ),
     },
-  {
-    accessorKey: "rating",
-    header: songRatingHeader,
-    size: isMobile ? 40 : 80,
-    filterFn: betweenNumberRange,
-    cell: ({ row }) => {
-      const value = row.original.rating;
-
-      return (
-        <RatingCell
-          value={value}
-          editable={
-            isMobile
-              ? null
-              : (
-                <EditableField
-                  value={value}
-                  inputType="text"
-                  onSave={(val) =>
-                    onUpdate(row.original.id, "rating", parseFloat(val))
-                  }
-                  renderDisplay={(v) => (
-                    <span className="rating-value">{v != null ? v : "—"}</span>
-                  )}
-                />
-              )
-          }
-        />
-      );
+    {
+      accessorKey: "rating",
+      header: songRatingHeader,
+      size: isMobile ? 40 : 80,
+      filterFn: betweenNumberRange,
+      cell: ({ row }) => {
+        const value = row.original.rating ?? "—";
+        return (
+          <RatingCell
+            value={value}
+            editable={
+              <EditableField
+                value={value}
+                inputType="text"
+                onSave={(val) =>
+                  onUpdate(row.original.id, "rating", parseFloat(val))
+                }
+                renderDisplay={(v) => (
+                  <span className="rating-value">
+                    {v != null ? v : "—"}
+                  </span>
+                )}
+              />
+            }
+          />
+        );
+      }
     }
-  }
   ];
 
-  const staticColumns = [
-    {
-      accessorKey: "album.title",
-      header: "Album",
-      cell: ({ row }) => row.original.album?.title ?? "N/A",
-      filterFn: "includesString",
-    },
-    {
-      accessorKey: "album.artist",
-      header: "Artist",
-      cell: ({ row }) => row.original.album?.artist ?? "N/A",
-      filterFn: "includesString",
-    },
-  ];
-
-  const columns = [
-    editableColumns.find(c => c.accessorKey === "track_number"),
-    editableColumns.find(c => c.accessorKey === "title"),
-    staticColumns.find(c => c.accessorKey === "album.title"),
-    staticColumns.find(c => c.accessorKey === "album.artist"),
-    editableColumns.find(c => c.accessorKey === "is_interlude"),
-    editableColumns.find(c => c.accessorKey === "rating"),
-  ].filter(Boolean); 
-  
-  const actionsCol = {
-    id: "actions",
-    header: "Actions",
-    size: 50,
-    cell: ({ row }) => {
-      const showEdit = isMobile;
-      const showDelete = !!onDelete;
-
-      if (!showEdit && !showDelete) return null;
-
-      return (
-        <div className="table-actions">
-          {showEdit && (
-            <button
-              className="button button-secondary"
-              onClick={() => setEditingRow(row.original)}
-              title="Edit"
-            >
-              ✏️
-            </button>
-          )}
-          {showDelete && (
-            <button
-              className="button button-danger"
-              onClick={() => handleDelete(row.original)}
-              title="Delete"
-            >
-              {deleteButtonText}
-            </button>
-          )}
-        </div>
-      );
-    },
-  };
-
-  if (isMobile || onDelete) {
-    columns.push(actionsCol);
+  if (onDelete) {
+    columns.push({
+      id: "actions",
+      header: "Actions",
+      size: 50,
+      cell: ({ row }) => (
+        <button
+          className="button button-danger"
+          onClick={() => handleDelete(row.original)}
+        >
+          {deleteButtonText}
+        </button>
+      ),
+    });
   }
 
   return columns;
 };
 
-function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, onRefresh}) {
+function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete}) {
   const showAlbum = isAlbumSpecific ? false : true
   const showTrackNumber = isAlbumSpecific ? true : false
   const showArtistForMobile = isAlbumSpecific ? false : true
-  const [editingRow, setEditingRow] = useState(null);
 
   const [sorting, setSorting] = useState(
     showTrackNumber
@@ -209,7 +166,7 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, onRefresh}) {
   const isMobile = useIsMobile();
 
   const columns = useMemo(() => {
-    let cols = [...baseColumns(onUpdate, onDelete, handleDelete, isMobile, setEditingRow)];
+    let cols = [...baseColumns(onUpdate, onDelete, handleDelete, isMobile)];
 
     if (!showAlbum) {
       cols = cols.filter(c => c.accessorKey !== "album.title");
@@ -328,16 +285,6 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete, onRefresh}) {
           message={`Are you sure you want to delete "${songToDelete.title}"?`}
           onConfirm={confirmDelete}
           onCancel={cancelDelete}
-        />
-      )}
-      {editingRow && (
-        <EditSongModal
-          song={editingRow}
-          onClose={() => setEditingRow(null)}
-          onSaved={() => {
-            onRefresh?.();
-            setEditingRow(null);
-          }}
         />
       )}
     </div>

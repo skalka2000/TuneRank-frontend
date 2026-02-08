@@ -84,7 +84,6 @@ function Songs() {
         songs={songs}
         isAlbumSpecific={false} 
         onUpdate={handleSongUpdate}
-        onRefresh={refreshSongs}
       />
     </div>
   );
