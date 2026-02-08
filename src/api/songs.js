@@ -35,7 +35,7 @@ export async function addSongToAlbum(albumId, songData) {
 }
 
 export async function updateSongField(id, field, value) {
-  const res = await fetch(`${API_BASE}/${id}`, {
+  const res = await fetch(`${API_BASE}/songs/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ [field]: value }),
@@ -48,7 +48,7 @@ export async function updateSongField(id, field, value) {
 }
 
 export async function deleteSong(songId) {
-  const res = await fetch(`${API_BASE}/${songId}`, {
+  const res = await fetch(`${API_BASE}/songs/${songId}`, {
     method: "DELETE",
   });
   if (!res.ok) {
