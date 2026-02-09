@@ -1,5 +1,5 @@
-.album-form,
-.album-form-details,
+.add-album-form,
+.add-album-form-details,
 .song-form {
   display: flex;
   gap: var(--space-md);
@@ -32,7 +32,7 @@
   flex-direction: row;
   gap: var(--space-md);
   align-items: center;
-  margin-bottom: var(--space-md)
+  margin-bottom: var(--space-md);
 }
 
 .album-ratings-form p{
@@ -63,11 +63,11 @@
   }
 }
 
-.album-form {
+.add-album-form {
   flex-direction: column;
 }
 
-.album-form-details,
+.add-album-form-details,
 .song-form-group,
 .album-ratings-form,
 .song-form {
@@ -117,6 +117,27 @@
   display: flex;
   flex-direction: row;
 }
+
+.input-small {
+  width: 80px;
+}
+
+.input-medium {
+  width: 160px;
+}
+
+.input-large {
+  width: 240px;
+}
+
+.input-xl {
+  width: 300px;
+}
+
+.input-xxl {
+  width: 360px;
+}
+
 
 .input-standard:focus,
 .input-simple:focus,

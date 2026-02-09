@@ -24,28 +24,28 @@ function AverageRatingBlender() {
         <label>
           Album Rating:
           <input
-            className="input-simple"
+            className="input-simple input-small"
             type="number"
             min={0}
             max={10}
             step={0.1}
             value={albumRating}
             onChange={(e) => setAlbumRating(parseFloat(e.target.value))}
-            style={{ marginLeft: "0.5rem", width: "60px" }}
+            style={{ marginLeft: "0.5rem"}}
           />
         </label>
 
         <label>
           Weighted Average Rating:
           <input
-            className="input-simple"
+            className="input-simple input-small"
             type="number"
             min={0}
             max={10}
             step={0.1}
             value={weightedAverage}
             onChange={(e) => setWeightedAverage(parseFloat(e.target.value))}
-            style={{ marginLeft: "0.5rem", width: "60px" }}
+            style={{ marginLeft: "0.5rem"}}
           />
         </label>
 

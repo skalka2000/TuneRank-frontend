@@ -38,13 +38,13 @@ function AddAlbumForm({onSubmit, onCancel}){
     }
     return (
     <form onSubmit={handleSubmit} className="album-form">
-    <div className="album-form-details">    
+    <div className="add-album-form">    
       <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="input-standard"
+        className="input-standard input-xxl"
         required
       />
       <input
@@ -52,7 +52,7 @@ function AddAlbumForm({onSubmit, onCancel}){
         placeholder="Artist"
         value={artist}
         onChange={(e) => setArtist(e.target.value)}
-        className="input-standard"
+        className="input-standard input-xl"
         required
       />
       <input
@@ -60,14 +60,14 @@ function AddAlbumForm({onSubmit, onCancel}){
         placeholder="Year"
         value={year}
         onChange={(e) => setYear(e.target.value)}
-        className="input-standard"
+        className="input-standard input-medium"
       />
       <input
         type="text"
         placeholder="Rating"
         value={rating}
         onChange={(e) => setRating(e.target.value)}
-        className="input-standard"
+        className="input-standard input-small"
       />
       </div>
       {songs.length > 0 && <h3>Songs</h3>}

@@ -7,7 +7,6 @@ import RatingDistributionChart from "../components/graphs/RatingDistributionChar
 import LoadingOverlay from "../components/common/LoadingOverlay";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-
 function Albums() {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);

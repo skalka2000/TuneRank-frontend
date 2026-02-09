@@ -59,7 +59,7 @@ function WeightedAverageImpactGraph() {
         <label>
           Weighted Avg Rating:
           <input
-            className = "input-simple"
+            className = "input-simple input-small"
             type="number"
             value={avgRating}
             min={1}
@@ -73,7 +73,7 @@ function WeightedAverageImpactGraph() {
         <label>
           Song Count:
           <input
-            className = "input-simple"
+            className = "input-simple input-small"
             type="number"
             value={songCount}
             min={1}

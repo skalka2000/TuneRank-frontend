@@ -14,7 +14,7 @@ function SongInputRow({ song, onChange, showTrack = true }) {
           value={song.track_number}
           onChange={(e) => handleChange("track_number", e.target.value)}
           min={1}
-          className="input-standard"
+          className="input-standard input-small"
         />
       )}
       <input
@@ -22,14 +22,14 @@ function SongInputRow({ song, onChange, showTrack = true }) {
         placeholder="Song Title"
         value={song.title}
         onChange={(e) => handleChange("title", e.target.value)}
-        className="input-standard"
+        className="input-standard input-xxl"
       />
       <input
         type="text"
         placeholder="Rating"
         value={song.rating}
         onChange={(e) => handleChange("rating", e.target.value)}
-        className="input-standard"
+        className="input-standard input-small"
         onBlur={(e) => {
           const val = parseFloat(e.target.value);
           if (val === 11) fireConfetti();
