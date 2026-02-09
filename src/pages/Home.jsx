@@ -43,6 +43,7 @@ function Home() {
           <li>💾 Import/export/share/save data features</li>
           <li>⚙️ Include interlude weight and min_weight in Settings</li>
           <li>⚙️ Include default profiles in Settings</li>
+          <li>🔥 Deluxe albums option</li>
         </ul>
       </section>
     </div>

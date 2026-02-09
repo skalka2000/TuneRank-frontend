@@ -37,8 +37,8 @@ function AddAlbumForm({onSubmit, onCancel}){
         setSongs(updatedSongs)
     }
     return (
-    <form onSubmit={handleSubmit} className="album-form">
-    <div className="add-album-form">    
+    <form onSubmit={handleSubmit} className="add-album-form">
+    <div className="add-album-form-details">    
       <input
         type="text"
         placeholder="Title"
@@ -78,7 +78,7 @@ function AddAlbumForm({onSubmit, onCancel}){
           onChange={(field, value) => handleSongChange(index, field, value)}
         />
       ))}
-      <button type="button" onClick={handleAddSong} className="button">Add Song</button>
+      <button type="button" onClick={handleAddSong} className="button" style={{marginTop: "0.5rem"}}>Add Song</button>
       <div className="form-button-group">
         <button type="submit" className="button">Confirm</button>
         <button type="button" className="button button-danger" onClick={onCancel}>Cancel</button>
