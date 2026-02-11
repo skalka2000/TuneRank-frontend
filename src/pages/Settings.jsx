@@ -4,23 +4,56 @@ import LogisticNormalizationPanel from "../components/panels/LogisticNormalizati
 import WeightedAverageImpactGraph from "../components/graphs/WeightedAverageImpactGraph";
 import AverageRatingWeightPanel from "../components/panels/AverageRatingWeightPanel";
 import AverageRatingBlender from "../components/panels/AverageRatingBlenderPanel";
+import { useUserSettings } from "../context/SettingsContext";
+import { useEffect } from "react";
+import LoadingOverlay from "../components/common/LoadingOverlay";
 
 function Settings() {
+  const { settings, saveSettings, draft, setDraft, loading } = useUserSettings();
+
+  const handleSave = async () => {
+    try {
+      await saveSettings(draft);
+      alert("Settings saved.");
+    } catch (err) {
+      alert("Failed to save settings.");
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    // Reset draft every time user navigates back to this page
+    if (settings) {
+      setDraft(settings);
+    }
+  }, [settings, setDraft]);
+
+  if (loading || !settings) return <LoadingOverlay message="Loading settings..." />;;
+
   return (
     <div className="page">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <h2>⚙️ Settings</h2>
-          <div className = "settings-section" style={{alignItems: "center", justifyContent: "space-between"}}>
-              <AverageRatingWeightPanel/>
-              <AverageRatingBlender />
-          </div>       
-          <div className = "settings-section">
-              <WeightedAveragePanel/>
-              <WeightedAverageImpactGraph />
-          </div>
-          <div className = "settings-section">
-              <LogisticNormalizationPanel />
-              <NormalizationGraph />
-          </div>
+        <button onClick={handleSave} className="button">
+          Save Settings
+        </button>
+      </div>
+
+
+      <div className="settings-section" style={{ alignItems: "center", justifyContent: "space-between" }}>
+        <AverageRatingWeightPanel />
+        <AverageRatingBlender />
+      </div>
+
+      <div className="settings-section">
+        <WeightedAveragePanel />
+        <WeightedAverageImpactGraph />
+      </div>
+
+      <div className="settings-section">
+        <LogisticNormalizationPanel />
+        <NormalizationGraph />
+      </div>
     </div>
   );
 }

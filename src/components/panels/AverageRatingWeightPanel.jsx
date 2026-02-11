@@ -1,11 +1,10 @@
-import { useSettings } from "../../context/SettingsContext";
+import { useUserSettings } from "../../context/SettingsContext";
 import SliderControl from "../common/SliderControl";
 
 function AverageRatingWeightPanel() {
-  const {
-    averageRatingWeight,
-    setAverageRatingWeight
-  } = useSettings();
+  const { draft, setDraft, loading } = useUserSettings();
+
+  if (loading || !draft) return null;
 
   return (
     <div className="settings-panel">
@@ -13,8 +12,10 @@ function AverageRatingWeightPanel() {
 
       <SliderControl
         label="Average Rating Weight"
-        value={averageRatingWeight}
-        onChange={setAverageRatingWeight}
+        value={draft.average_rating_weight}
+        onChange={(val) =>
+          setDraft({ ...draft, average_rating_weight: val })
+        }
         min={0}
         max={1}
         step={0.01}

@@ -1,29 +1,42 @@
-// context/SettingsContext.js
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { getUserSettings, saveUserSettings } from "../api/settings";
 
-const SettingsContext = createContext();
+const UserSettingsContext = createContext();
 
-export function SettingsProvider({ children }) {
-  const [power, setPower] = useState(1.0);
-  const [greatnessThreshold, setGreatnessThreshold] = useState(8.0)
-  const [scalingFactor, setScalingFactor] = useState(0.3)
-  const [steepFactor, setSteepFactor] = useState(3.0)
-  const [averageRatingWeight, setAverageRatingWeight] = useState(0.5)
-  
+export function UserSettingsProvider({ children }) {
+  const [settings, setSettings] = useState(null);
+  const [draft, setDraft] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getUserSettings()
+      .then((loaded) => {
+        setSettings(loaded);
+        setDraft(loaded); // start with synced values
+      })
+      .catch((e) => console.error("Failed to load settings", e))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const saveSettings = async () => {
+    const updated = await saveUserSettings(draft);
+    setSettings(updated);
+    setDraft(updated);
+  };
+
   return (
-    <SettingsContext.Provider 
-    value={{ 
-        power, setPower, 
-        greatnessThreshold, setGreatnessThreshold, 
-        scalingFactor, setScalingFactor, 
-        steepFactor, setSteepFactor,
-        averageRatingWeight, setAverageRatingWeight
-        }}>
+    <UserSettingsContext.Provider value={{
+      settings,
+      draft,
+      setDraft,
+      saveSettings,
+      loading
+    }}>
       {children}
-    </SettingsContext.Provider>
+    </UserSettingsContext.Provider>
   );
 }
 
-export function useSettings() {
-  return useContext(SettingsContext);
+export function useUserSettings() {
+  return useContext(UserSettingsContext);
 }

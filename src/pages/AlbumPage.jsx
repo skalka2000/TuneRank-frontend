@@ -7,7 +7,7 @@ import AddSongForm from "../components/AddSongForm";
 import EditableField from "../components/common/EditableField";
 import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
-import { useSettings } from "../context/SettingsContext";
+import { useUserSettings } from "../context/SettingsContext";
 import { getRatingColor } from "../utils/ratingColors";
 import { useRef } from "react";
 import { fireConfetti } from "../utils/specialEffects";
@@ -21,7 +21,7 @@ function AlbumPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
-  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useSettings();
+  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useUserSettings();
   const previousSongRatingsRef = useRef([])
   const isMobile = useIsMobile()
   

@@ -9,11 +9,12 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
-import { useSettings } from "../../context/SettingsContext";
+import { useUserSettings } from "../../context/SettingsContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 function WeightedAverageImpactGraph() {
-  const { power } = useSettings();
+  const { draft } = useUserSettings();
+  const power = draft.average_power
   const [avgRating, setAvgRating] = useState(7.5);
   const [songCount, setSongCount] = useState(10);
   const [isInterlude, setIsInterlude] = useState(false);
