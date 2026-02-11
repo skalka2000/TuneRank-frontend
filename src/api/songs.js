@@ -5,7 +5,6 @@ export async function fetchSongs(filters = {}) {
 
   Object.entries(filters).forEach(([key, value]) => {
     if (value !== undefined && value !== null && value !== "") {
-      // Handles arrays (e.g. artist_names, album_ids)
       if (Array.isArray(value)) {
         value.forEach((v) => url.searchParams.append(key, v));
       } else {
@@ -34,16 +33,18 @@ export async function addSongToAlbum(albumId, songData) {
   return res.json();
 }
 
-export async function updateSongField(id, field, value) {
-  const res = await fetch(`${API_BASE}/songs/${id}`, {
+export async function updateSongField(songId, field, value) {
+  const res = await fetch(`${API_BASE}/songs/${songId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ [field]: value }),
   });
+
   if (!res.ok) {
     const err = await res.json();
     throw new Error(err.detail || "Failed to update song");
   }
+
   return res.json();
 }
 
@@ -51,6 +52,7 @@ export async function deleteSong(songId) {
   const res = await fetch(`${API_BASE}/songs/${songId}`, {
     method: "DELETE",
   });
+
   if (!res.ok) {
     const err = await res.json();
     throw new Error(err.detail || "Failed to delete song");

@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import { fetchAlbums, deleteAlbum } from "../api/albums";
 import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
-import { useSettings } from "../context/SettingsContext";
+import { useUserSettings } from "../context/SettingsContext";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 import LoadingOverlay from "../components/common/LoadingOverlay";
-import { useIsMobile } from "../hooks/useIsMobile";
 
 function Albums() {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useSettings();
+  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useUserSettings();
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
-  const isMobile = useIsMobile()
 
   const handleDeleteAlbum = async (id) => {
     try {

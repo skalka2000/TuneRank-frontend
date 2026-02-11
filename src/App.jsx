@@ -7,11 +7,11 @@ import Songs from "./pages/Songs";
 import Settings from "./pages/Settings";
 import Navbar from "./components/Navbar";
 import './styles/main.css';
-import { SettingsProvider } from "./context/SettingsContext";
+import { UserSettingsProvider } from "./context/SettingsContext";
 
 function App() {
   return (
-    <SettingsProvider>
+    <UserSettingsProvider>
       <Router>
         <Navbar />
         <Routes>
@@ -23,7 +23,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </Router>
-    </SettingsProvider>
+    </UserSettingsProvider>
   );
 }
 

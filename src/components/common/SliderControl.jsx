@@ -7,10 +7,11 @@ function SliderControl({
   step,
   description
 }) {
+  const input = value !== undefined && value !== null ? value : (min + max) / 2;
   return (
     <div style={{ gap: "0.25rem", marginBottom: "0.5rem" }}>
       <label>
-        {label}: <strong>{value.toFixed(2)}</strong>
+        {label}: <strong>{input.toFixed(2)}</strong>
       </label>
       <input
         type="range"

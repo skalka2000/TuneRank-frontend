@@ -9,15 +9,14 @@ import {
   ResponsiveContainer,
   Legend
 } from "recharts";
-import { useSettings } from "../../context/SettingsContext";
+import { useUserSettings } from "../../context/SettingsContext";
 import { useIsMobile } from "../../hooks/useIsMobile";
 
 function NormalizationGraph() {
-  const {
-    greatnessThreshold,
-    scalingFactor,
-    steepFactor,
-  } = useSettings();
+  const { draft } = useUserSettings();
+  const greatnessThreshold = draft.greatness_threshold
+  const scalingFactor = draft.scaling_factor
+  const steepFactor = draft.steep_factor
 
   const isMobile = useIsMobile()
 
