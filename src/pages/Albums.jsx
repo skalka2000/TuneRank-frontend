@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { fetchAlbums, deleteAlbum } from "../api/albums";
 import { Link } from "react-router-dom";
 import AlbumTable from "../components/AlbumTable";
-import { useUserSettings } from "../context/SettingsContext";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 import LoadingOverlay from "../components/common/LoadingOverlay";
+import { useUserMode } from "../hooks/useUserMode";
 
 function Albums() {
+  const { userId, mode } = useUserMode();
+  
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useUserSettings();
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
 
   const handleDeleteAlbum = async (id) => {
@@ -23,11 +24,12 @@ function Albums() {
   };
 
   useEffect(() => {
-    fetchAlbums(power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight)
+    fetchAlbums(userId)
       .then(setAlbums)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight]);
+  }, [userId]);
+
 
   if (loading) return <LoadingOverlay message="Loading albums..." />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
@@ -70,7 +72,7 @@ function Albums() {
         >
         {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
         </button>
-        <Link to="/albums/add">
+        <Link to={`/${mode}/albums/add`}>
           <button className="button">{addButtonText}</button>
         </Link>
       </div>

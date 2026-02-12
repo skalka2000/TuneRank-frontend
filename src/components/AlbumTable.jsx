@@ -12,8 +12,10 @@ import ConfirmDialog from "./common/ConfirmDialog";
 import RatingCell from "./common/RatingCell";
 import ColumnFilter from "./common/ColumnFilter";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useUserMode } from "../hooks/useUserMode";
 
 function AlbumTable({ albums, onDelete }) {
+  const { mode } = useUserMode();
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
@@ -98,7 +100,7 @@ function AlbumTable({ albums, onDelete }) {
           const albumId = row.original.id;
           return (
             <div className="table-actions">
-              <Link to={`/albums/${albumId}`}>
+              <Link to={`/${mode}/albums/${albumId}`}>
                 <button className="button button-secondary">{viewButtonText}</button>
               </Link>
               <button

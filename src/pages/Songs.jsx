@@ -4,19 +4,19 @@ import SongTable from "../components/SongTable";
 import { updateSongField } from "../api/songs";
 import RatingDistributionChart from "../components/graphs/RatingDistributionChart";
 import LoadingOverlay from "../components/common/LoadingOverlay";
-import { useIsMobile } from "../hooks/useIsMobile";
+import { useUserMode } from "../hooks/useUserMode";
 
 
 function Songs() {
+  const { userId } = useUserMode();
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
-  const isMobile = useIsMobile()
 
   const handleSongUpdate = async (songId, field, value) => {
     try {
-      const updated = await updateSongField(songId, field, value);
+      const updated = await updateSongField(songId, field, value, userId);
       setSongs(prev =>
         prev.map(song => (song.id === updated.id ? updated : song))
       );
@@ -27,7 +27,7 @@ function Songs() {
 
   const refreshSongs = async () => {
     try {
-      const data = await fetchSongs();
+      const data = await fetchSongs(userId);
       setSongs(data);
     } catch (err) {
       console.error("Failed to refresh songs:", err.message);
@@ -35,11 +35,11 @@ function Songs() {
   };
 
   useEffect(() => {
-    fetchSongs()
+    fetchSongs(userId)
       .then(setSongs)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   if (loading) return <LoadingOverlay message="Loading songs..." />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;

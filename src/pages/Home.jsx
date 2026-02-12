@@ -1,49 +1,50 @@
 import React from "react";
+import { useUserMode } from "../hooks/useUserMode";
 
 function Home() {
+  const { mode } = useUserMode();
+  const isDemo = mode === "demo";
+
   return (
     <div className="page">
       <h2>🎧 Welcome to TuneRank</h2>
+
       <p>
-        Rate, customize and analyze albums and their songs with flexible controls and real-time updates.
+        You are currently in <strong>{isDemo ? "Demo Mode" : "Your Mode"}</strong>.
+        This app supports isolated user contexts via URL-based routing.
       </p>
 
       <section style={{ marginTop: "2rem" }}>
         <h3>🚀 Capabilities</h3>
         <ul>
+          <li>🧍 Separate user contexts for different users</li>
           <li>📊 View albums and songs in sortable, filterable, responsive tables</li>
           <li>🖊️ Edit any field (title, rating, year, interlude flag, etc.) directly from the table</li>
           <li>➕ Add new albums and songs, or delete them instantly</li>
           <li>🎨 Ratings are color-coded to visually represent quality</li>
           <li>📈 Rating distribution graphs</li>
-          <li>🧮 Album average rating is calculated using a weighted formula</li>
-          <li>📈 Advanced normalization blending logistic and linear scaling for nuanced score adjustment</li>
-          <li>⚙️ Fine-tuned parameters with real-time visual feedback in the Settings panel</li>
-          <li>🔍 Filter songs by artist, album, rating, interlude status, and more</li>
-          <li>📦 Backed by a FastAPI + SQLAlchemy RESTful backend</li>
-          <li>🖥️ The backend server is fully hosted and running</li>
-          <li>🌐 The app is live and accessible <a href="https://tunerank-frontend.onrender.com/" target="_blank" rel="noopener noreferrer">here</a></li>
-          <li>📱 Fully responsive and supports mobile usage</li>
+          <li>🧮 Album average rating calculated using a weighted formula</li>
+          <li>📈 Advanced normalization blending logistic and linear scaling</li>
+          <li>⚙️ Real-time parameter tuning in Settings (user-specific)</li>
+          <li>🔍 Powerful filtering across multiple fields</li>
+          <li>📦 FastAPI + SQLAlchemy backend with user-scoped data</li>
+          <li>📱 Fully responsive and mobile-friendly</li>
         </ul>
       </section>
 
       <section style={{ marginTop: "2rem" }}>
-        <h3>🛠️ To Do</h3>
+        <h3>🛠️ Roadmap</h3>
         <ul>
+          <li>🔐 Replace URL-based identity with real authentication</li>
           <li>📷 Album cover image support</li>
-          <li>📐 Polish the UI</li>
-          <li>🎶 Add genres to albums</li>
-          <li>📊 Rating distribution graphs for filtered input</li>
-          <li>📈 Add advanced statistics and rating analysis tools</li>
-          <li>🌐 Integrate with Spotify to import entire albums</li>
-          <li>🧮 Create and manage custom lists</li>
-          <li>🔐 User login/authentication</li>
-          <li>⚙️ Persistent user settings</li>
-          <li>🧍 User-specific ratings</li>
-          <li>💾 Import/export/share/save data features</li>
-          <li>⚙️ Include interlude weight and min_weight in Settings</li>
-          <li>⚙️ Include default profiles in Settings</li>
-          <li>🔥 Deluxe albums option</li>
+          <li>🎶 Genre tagging and filtering</li>
+          <li>📊 Rating graphs for filtered subsets</li>
+          <li>📈 Advanced statistical analysis tools</li>
+          <li>🌐 Spotify import integration</li>
+          <li>🧮 Custom list creation</li>
+          <li>💾 Import/export/share features</li>
+          <li>⚙️ Default scoring profiles</li>
+          <li>🔥 Deluxe album support</li>
         </ul>
       </section>
     </div>

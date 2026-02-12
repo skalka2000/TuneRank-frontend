@@ -14,8 +14,10 @@ import { fireConfetti } from "../utils/specialEffects";
 import AlbumHeader from "../components/AlbumHeader";
 import LoadingOverlay from "../components/common/LoadingOverlay";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useUserMode } from "../hooks/useUserMode";
 
 function AlbumPage() {
+  const { userId } = useUserMode();
   const { id } = useParams();
   const [album, setAlbum] = useState(null);
   const [error, setError] = useState("");
@@ -28,7 +30,7 @@ function AlbumPage() {
 
   const refreshAlbum = async () => {
     try {
-      const updated = await fetchAlbumById(id, power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight);
+      const updated = await fetchAlbumById(id, userId);
       const previous = previousSongRatingsRef.current;
       const current = updated.songs.map(s => ({ id: s.id, rating: s.rating }));
       const newPerfectSongs = current.filter(({ id, rating }) => {
@@ -48,7 +50,7 @@ function AlbumPage() {
   };
 
   const handleFieldUpdate = async (field, value) => {
-    const updated = await updateAlbumField(id, field, value);
+    const updated = await updateAlbumField(id, field, value, userId);
     await refreshAlbum();
   };
 
@@ -63,7 +65,7 @@ function AlbumPage() {
 
   const handleDeleteSong = async (songId) => {
     try {
-      await deleteSong(songId);
+      await deleteSong(songId, userId);
       await refreshAlbum();
     } catch (err) {
       console.error("Failed to delete song:", err.message);
@@ -71,11 +73,11 @@ function AlbumPage() {
   };
 
   useEffect(() => {
-    fetchAlbumById(id, power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight)
+    fetchAlbumById(id, userId)
       .then(setAlbum)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
-  }, [id, power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight]);
+  }, [id, userId]);
 
   const handleAddSong = async (songData) => {
     try {

@@ -1,37 +1,45 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { getUserSettings, saveUserSettings } from "../api/settings";
+import { useUserMode } from "../hooks/useUserMode";
 
 const UserSettingsContext = createContext();
 
 export function UserSettingsProvider({ children }) {
+  const { userId } = useUserMode();
+
   const [settings, setSettings] = useState(null);
   const [draft, setDraft] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getUserSettings()
+    setLoading(true);
+
+    getUserSettings(userId)
       .then((loaded) => {
         setSettings(loaded);
-        setDraft(loaded); // start with synced values
+        setDraft(loaded);
       })
       .catch((e) => console.error("Failed to load settings", e))
       .finally(() => setLoading(false));
-  }, []);
 
-  const saveSettings = async () => {
-    const updated = await saveUserSettings(draft);
+  }, [userId]);
+
+  const saveSettingsHandler = async () => {
+    const updated = await saveUserSettings(draft, userId);
     setSettings(updated);
     setDraft(updated);
   };
 
   return (
-    <UserSettingsContext.Provider value={{
-      settings,
-      draft,
-      setDraft,
-      saveSettings,
-      loading
-    }}>
+    <UserSettingsContext.Provider
+      value={{
+        settings,
+        draft,
+        setDraft,
+        saveSettings: saveSettingsHandler,
+        loading
+      }}
+    >
       {children}
     </UserSettingsContext.Provider>
   );
