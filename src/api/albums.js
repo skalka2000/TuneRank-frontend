@@ -19,7 +19,7 @@ export async function fetchAlbumById(id, userId) {
 }
 
 export async function addAlbum(album, userId) {
-  const res = await fetch(`${API_BASE}/albums`, {
+  const res = await fetch(`${API_BASE}/albums?user_id=${userId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
