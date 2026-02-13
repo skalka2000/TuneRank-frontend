@@ -206,7 +206,14 @@ function AlbumTable({ albums, onDelete }) {
 
       {albumToDelete && (
         <ConfirmDialog
-          message={`Are you sure you want to delete "${albumToDelete.title}"?`}
+          isOpen={!!albumToDelete}
+          message={
+            albumToDelete
+              ? `Are you sure you want to delete "${albumToDelete.title}"?`
+              : ""
+          }
+          confirmText="Delete"
+          cancelText="Cancel"
           onConfirm={confirmDelete}
           onCancel={cancelDelete}
         />

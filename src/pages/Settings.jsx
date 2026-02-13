@@ -7,6 +7,7 @@ import AverageRatingBlender from "../components/panels/AverageRatingBlenderPanel
 import { useUserSettings } from "../context/SettingsContext";
 import { useEffect } from "react";
 import LoadingOverlay from "../components/common/LoadingOverlay";
+import { showSuccessCheckmark, showErrorX } from "../utils/specialEffects";
 
 function Settings() {
   const { settings, saveSettings, draft, setDraft, loading } = useUserSettings();
@@ -14,9 +15,9 @@ function Settings() {
   const handleSave = async () => {
     try {
       await saveSettings(draft);
-      alert("Settings saved.");
+      showSuccessCheckmark();
     } catch (err) {
-      alert("Failed to save settings.");
+      showErrorX()
       console.error(err);
     }
   };

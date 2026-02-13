@@ -280,13 +280,19 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete}) {
           </tbody>
         </table>
       </div>
-      {songToDelete !== null && (
-        <ConfirmDialog
-          message={`Are you sure you want to delete "${songToDelete.title}"?`}
-          onConfirm={confirmDelete}
-          onCancel={cancelDelete}
-        />
-      )}
+      <ConfirmDialog
+        isOpen={!!songToDelete}
+        message={
+          songToDelete
+            ? `Are you sure you want to delete "${songToDelete.title}"?`
+            : ""
+        }
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
+
     </div>
   );
 }

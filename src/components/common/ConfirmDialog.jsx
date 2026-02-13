@@ -1,14 +1,25 @@
-function ConfirmDialog({ message, onConfirm, onCancel }) {
+import Modal from "./Modal";
+
+function ConfirmDialog({
+  isOpen,
+  message,
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  onConfirm,
+  onCancel,
+}) {
   return (
-    <div className="modal-backdrop">
-      <div className="modal">
-        <p>{message}</p>
-        <div className="button-group-center">
-          <button className="button" onClick={onCancel}>Cancel</button>
-          <button className="button button-danger" onClick={onConfirm}>Delete</button>
-        </div>
+    <Modal isOpen={isOpen} onClose={onCancel}>
+      <p>{message}</p>
+      <div className="button-group-center">
+        <button className="button button-secondary" onClick={onCancel}>
+          {cancelText}
+        </button>
+        <button className="button button-danger" onClick={onConfirm}>
+          {confirmText}
+        </button>
       </div>
-    </div>
+    </Modal>
   );
 }
 
