@@ -7,7 +7,6 @@ import AddSongForm from "../components/AddSongForm";
 import EditableField from "../components/common/EditableField";
 import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
-import { useUserSettings } from "../context/SettingsContext";
 import { getRatingColor } from "../utils/ratingColors";
 import { useRef } from "react";
 import { fireConfetti } from "../utils/specialEffects";
@@ -23,7 +22,6 @@ function AlbumPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [showAddSongForm, setShowAddSongForm] = useState(false);
-  const { power, greatnessThreshold, scalingFactor, steepFactor, averageRatingWeight } = useUserSettings();
   const previousSongRatingsRef = useRef([])
   const isMobile = useIsMobile()
   
@@ -56,7 +54,7 @@ function AlbumPage() {
 
   const handleSongUpdate = async (songId, field, value) => {
     try {
-      const updated = await updateSongField(songId, field, value);
+      const updated = await updateSongField(songId, field, value, userId);
       await refreshAlbum();
     } catch (err) {
       console.error("Failed to update song:", err.message);
@@ -81,7 +79,7 @@ function AlbumPage() {
 
   const handleAddSong = async (songData) => {
     try {
-      const newSong = await addSongToAlbum(id, songData);
+      const newSong = await addSongToAlbum(id, songData, userId);
       await refreshAlbum();
     } catch (err) {
       console.error(err.message);
