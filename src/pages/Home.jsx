@@ -12,6 +12,7 @@ function Home() {
       <p>
         You are currently in <strong>{isDemo ? "Demo Mode" : "Your Mode"}</strong>.
         This app supports isolated user contexts via URL-based routing.
+        Feel free to add, edit, delete, and customize your collection here.
       </p>
 
       <section style={{ marginTop: "2rem" }}>
