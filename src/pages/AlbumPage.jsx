@@ -9,7 +9,7 @@ import { updateSongField } from "../api/songs";
 import { deleteSong } from "../api/songs";
 import { getRatingColor } from "../utils/ratingColors";
 import { useRef } from "react";
-import { fireConfetti } from "../utils/specialEffects";
+import { fireConfetti, showSuccessCheckmark } from "../utils/specialEffects";
 import AlbumHeader from "../components/AlbumHeader";
 import LoadingOverlay from "../components/common/LoadingOverlay";
 import { useIsMobile } from "../hooks/useIsMobile";
@@ -70,7 +70,8 @@ function AlbumPage() {
         updated = await attachGenre(userId, album.id, genreId);
       }
 
-      setAlbum(updated); 
+      setAlbum(updated);
+      showSuccessCheckmark();
     } catch (err) {
       console.error(err);
     }
@@ -111,6 +112,7 @@ function AlbumPage() {
     try {
       const newSong = await addSongToAlbum(id, songData, userId);
       await refreshAlbum();
+      showSuccessCheckmark();
     } catch (err) {
       showErrorX()
       console.error(err.message);
@@ -176,7 +178,7 @@ function AlbumPage() {
               })}
 
               <button
-                className="button button-secondary"
+                className="button"
                 onClick={() => setEditingGenres(false)}
                 style={{ marginTop: "0.5rem" }}
               >
