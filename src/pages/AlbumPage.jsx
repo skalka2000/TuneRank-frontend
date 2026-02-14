@@ -15,6 +15,7 @@ import LoadingOverlay from "../components/common/LoadingOverlay";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { useUserMode } from "../hooks/useUserMode";
 import { showErrorX } from "../utils/specialEffects";
+import { fetchGenres, attachGenre, detachGenre } from "../api/genres";
 
 function AlbumPage() {
   const { userId } = useUserMode();
@@ -25,7 +26,14 @@ function AlbumPage() {
   const [showAddSongForm, setShowAddSongForm] = useState(false);
   const previousSongRatingsRef = useRef([])
   const isMobile = useIsMobile()
-  
+  const [allGenres, setAllGenres] = useState([]);
+  const [editingGenres, setEditingGenres] = useState(false);
+
+  useEffect(() => {
+    fetchGenres(userId)
+      .then(setAllGenres)
+      .catch(err => console.error(err));
+  }, [userId]);
 
   const refreshAlbum = async () => {
     try {
@@ -45,6 +53,26 @@ function AlbumPage() {
       setAlbum(updated);
     } catch (err) {
       console.error("Failed to refresh album:", err.message);
+    }
+  };
+
+  const toggleGenre = async (genreId) => {
+    if (!album) return;
+
+    const isSelected = album.genres?.some(g => g.id === genreId);
+
+    try {
+      let updated;
+
+      if (isSelected) {
+        updated = await detachGenre(userId, album.id, genreId);
+      } else {
+        updated = await attachGenre(userId, album.id, genreId);
+      }
+
+      setAlbum(updated); 
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -115,6 +143,50 @@ function AlbumPage() {
   return (
     <div className="page">
       <AlbumHeader album={album} onFieldUpdate={handleFieldUpdate} />
+      {allGenres.length > 0 && (
+        <div className="album-genres-section">
+          <strong>Genres:</strong>{" "}
+
+          {!editingGenres ? (
+            <span
+              className="editable-field"
+              onClick={() => setEditingGenres(true)}
+            >
+              {album.genres?.length
+                ? album.genres.map(g => g.name).join(", ")
+                : <span className="placeholder-muted">No genres</span>}
+              <span className="edit-icon"> ✏️</span>
+            </span>
+          ) : (
+            <div>
+              {allGenres.map(genre => {
+                const selected = album.genres?.some(g => g.id === genre.id);
+
+                return (
+                  <label key={genre.id} className="checkbox-label">
+                    <input
+                      className="checkbox-standard"
+                      type="checkbox"
+                      checked={selected}
+                      onChange={() => toggleGenre(genre.id)}
+                    />
+                    {genre.name}
+                  </label>
+                );
+              })}
+
+              <button
+                className="button button-secondary"
+                onClick={() => setEditingGenres(false)}
+                style={{ marginTop: "0.5rem" }}
+              >
+                Done
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="album-ratings-form">
           <div>
             <strong>Album Rating:</strong>{" "}

@@ -31,6 +31,7 @@ function Home() {
           <li>📱 Fully responsive and mobile-friendly</li>
           <li>🧍 Separate user contexts for different users</li>
           <li>⚙️ Default scoring profiles</li>
+          <li>🎶 Genre tagging</li>
         </ul>
       </section>
 
@@ -39,14 +40,13 @@ function Home() {
         <ul>
           <li>🔐 Replace URL-based identity with real authentication</li>
           <li>📷 Album cover image support</li>
-          <li>🎶 Genre tagging and filtering</li>
+          <li>🎶 Filtering by genre and release decade</li>
           <li>📊 Rating graphs for filtered subsets</li>
           <li>📈 Advanced statistical analysis tools</li>
           <li>🌐 Spotify import integration</li>
           <li>🧮 Custom list creation</li>
           <li>💾 Import/export/share features</li>
           <li>🔥 Deluxe album support</li>
-          <li>⚙️ Support for adjusting interlude weight and min_rating in Settings</li>
         </ul>
       </section>
     </div>

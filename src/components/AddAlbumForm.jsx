@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SongInputRow from "./common/SongInputRow";
+import { fetchGenres } from "../api/genres";
+import { useUserMode } from "../hooks/useUserMode";
+import { showErrorX } from "../utils/specialEffects";
 
 function AddAlbumForm({onSubmit, onCancel}){
     const [title, setTitle] = useState("");
@@ -7,6 +10,34 @@ function AddAlbumForm({onSubmit, onCancel}){
     const [year, setYear] = useState("");
     const [rating, setRating] = useState("");
     const [songs, setSongs] = useState([]);
+    const { userId } = useUserMode();
+    const [allGenres, setAllGenres] = useState([]);
+    const [selectedGenres, setSelectedGenres] = useState(new Set());
+
+    useEffect(() => {
+      const loadGenres = async () => {
+        try {
+          const data = await fetchGenres(userId);
+          setAllGenres(data);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      loadGenres();
+    }, [userId]);
+
+    const toggleGenre = (genreId) => {
+      setSelectedGenres(prev => {
+        const copy = new Set(prev);
+        if (copy.has(genreId)) {
+          copy.delete(genreId);
+        } else {
+          copy.add(genreId);
+        }
+        return copy;
+      });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -15,6 +46,7 @@ function AddAlbumForm({onSubmit, onCancel}){
             artist,
             year: year && parseInt(year),
             rating: rating && parseFloat(rating),
+            genre_ids: Array.from(selectedGenres),
             songs: songs
               .filter(song => song.title.trim() !== "")
               .map(song => ({
@@ -70,6 +102,22 @@ function AddAlbumForm({onSubmit, onCancel}){
         className="input-standard input-small"
       />
       </div>
+      {allGenres.length > 0 && (
+        <div className="genre-selector">
+          <h4>Genres</h4>
+          {allGenres.map(genre => (
+            <label key={genre.id} className="checkbox-label">
+              <input
+                className="checkbox-standard"
+                type="checkbox"
+                checked={selectedGenres.has(genre.id)}
+                onChange={() => toggleGenre(genre.id)}
+              />
+              {genre.name}
+            </label>
+          ))}
+        </div>
+      )}
       {songs.length > 0 && <h3>Songs</h3>}
       {songs.map((song, index) => (
         <SongInputRow

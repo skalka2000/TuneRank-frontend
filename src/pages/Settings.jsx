@@ -7,6 +7,7 @@ import { useUserSettings } from "../context/SettingsContext";
 import { useEffect, useState } from "react";
 import LoadingOverlay from "../components/common/LoadingOverlay";
 import { showSuccessCheckmark, showErrorX } from "../utils/specialEffects";
+import GenresPanel from "../components/panels/GenresPanel";
 
 const SCORING_PROFILES = {
   custom: {
@@ -64,7 +65,6 @@ const SCORING_PROFILES = {
       scaling_factor: 0.0,
       steep_factor: 1,
       interlude_weight: 0.5,
-
     }
   }
 };
@@ -120,6 +120,9 @@ function Settings() {
         <button onClick={handleSave} className="button">
           Save Settings
         </button>
+      </div>
+      <div className="settings-section">
+        <GenresPanel/>
       </div>
       <div className="scoring-profile-section">
         <h3>Default Scoring Profile</h3>
