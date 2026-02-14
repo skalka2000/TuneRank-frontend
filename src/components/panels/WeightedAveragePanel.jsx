@@ -18,37 +18,36 @@ function WeightedAveragePanel() {
 const extraInfo = (
   <div className="info-box-inner">
     <p>
-      The <strong>Power</strong> value controls how strongly higher-rated songs
-      dominate the weighted average.
+      The weighted average amplifies or suppresses songs based on rating,
+      structural role, and exponent scaling.
     </p>
 
-    <p><strong>Weight calculation:</strong></p>
+    <p><strong>Weight Formula:</strong></p>
 
     <code>
       weight = baseWeight × max(rating, 6)^power
     </code>
 
     <ul>
-      <li><strong>baseWeight = 1</strong> (normal song)</li>
-      <li><strong>baseWeight = 0.5</strong> (interlude)</li>
-      <li><strong>Power = 0</strong> → All songs equal weight</li>
-      <li><strong>Higher Power</strong> → High ratings dominate</li>
+      <li><strong>baseWeight</strong> = 1.0 (normal track)</li>
+      <li><strong>baseWeight</strong> = interlude weight (interlude)</li>
+      <li>A floor of 6 prevents low ratings from becoming mathematically insignificant when power is high.</li>
+      <li><strong>power</strong> controls how aggressively high ratings dominate</li>
     </ul>
 
-    <p>
-      Final average:
-    </p>
+    <p><strong>Final Calculation:</strong></p>
 
     <code>
       Weighted Avg = Σ(rating × weight) / Σ(weight)
     </code>
 
     <p>
-      The max(rating, 6) floor prevents low ratings from becoming mathematically
-      insignificant when power is high.
+      Higher power exaggerates standout tracks.  
+      Lower interlude weight minimizes structural filler impact.
     </p>
   </div>
 );
+
 
 return (
   <div className="settings-panel">
@@ -70,6 +69,16 @@ return (
         max={4}
         step={0.1}
         description="Controls how strongly higher-rated songs influence the weighted average."
+      />
+
+      <SliderControl
+        label="Interlude Weight"
+        value={draft.interlude_weight}
+        onChange={(val) => setDraft({ ...draft, interlude_weight: val })}
+        min={0}
+        max={1}
+        step={0.05}
+        description="Base multiplier applied to interludes before power weighting."
       />
 
       <div className={`extra-info ${displayExtraInfo ? "open" : ""}`}>

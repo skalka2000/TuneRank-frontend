@@ -15,6 +15,7 @@ import { useIsMobile } from "../../hooks/useIsMobile";
 function WeightedAverageImpactGraph() {
   const { draft } = useUserSettings();
   const power = draft.average_power
+  const interludeWeight = draft.interlude_weight;
   const [avgRating, setAvgRating] = useState(7.5);
   const [songCount, setSongCount] = useState(10);
   const [isInterlude, setIsInterlude] = useState(false);
@@ -28,12 +29,21 @@ function WeightedAverageImpactGraph() {
       const weights = baseRatings.map(() => 1.0); // full weight
 
       // Add new rating
-      const weight = isInterlude ? 0.5 : 1.0;
+      const baseWeight = isInterlude ? interludeWeight : 1.0;
+
+      weights.push(
+        baseWeight *
+        Math.pow(
+          Math.max(newRating, 6),
+          power
+        )
+      );
       ratings.push(newRating);
-      weights.push(weight * Math.pow(Math.max(newRating,6), power));
 
       // Original weights (apply power)
-      const poweredWeights = baseRatings.map(r => Math.pow(r, power));
+      const poweredWeights = baseRatings.map(r =>
+        Math.pow(Math.max(r, 6), power)
+      );
       const totalWeights = [...poweredWeights, weights[weights.length - 1]];
 
       const numerator = ratings.reduce((sum, r, i) => sum + r * totalWeights[i], 0);

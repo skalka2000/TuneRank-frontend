@@ -14,7 +14,6 @@ const SCORING_PROFILES = {
     description: "Manual configuration. Adjust settings freely.",
     values: null
   },
-
   balanced: {
     name: "Balanced",
     description: "Moderate weighting, soft normalization. Analytical but fair.",
@@ -23,7 +22,9 @@ const SCORING_PROFILES = {
       average_power: 1.5,
       greatness_threshold: 8.0,
       scaling_factor: 0.3,
-      steep_factor: 4
+      steep_factor: 4,
+      interlude_weight: 0.5,
+
     }
   },
 
@@ -35,7 +36,8 @@ const SCORING_PROFILES = {
       average_power: 1.0,
       greatness_threshold: 8.0,
       scaling_factor: 0.3,
-      steep_factor: 3
+      steep_factor: 3,
+      interlude_weight: 0.5
     }
   },
 
@@ -47,7 +49,8 @@ const SCORING_PROFILES = {
       average_power: 3.0,
       greatness_threshold: 7.5,
       scaling_factor: 0.4,
-      steep_factor: 7
+      steep_factor: 7,
+      interlude_weight: 0.5,
     }
   },
 
@@ -59,7 +62,9 @@ const SCORING_PROFILES = {
       average_power: 0.0,
       greatness_threshold: 8.0,
       scaling_factor: 0.0,
-      steep_factor: 1
+      steep_factor: 1,
+      interlude_weight: 0.5,
+
     }
   }
 };
