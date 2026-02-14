@@ -25,7 +25,7 @@ function Home() {
           <li>📈 Rating distribution graphs</li>
           <li>🧮 Album average rating calculated using a weighted formula</li>
           <li>📈 Advanced normalization blending logistic and linear scaling</li>
-          <li>⚙️ Real-time parameter tuning in Settings (user-specific)</li>
+          <li>⚙️ Real-time parameter tuning in Settings (user-specific) with detailed explainations</li>
           <li>🔍 Powerful filtering across multiple fields</li>
           <li>📦 FastAPI + SQLAlchemy backend with user-scoped data</li>
           <li>📱 Fully responsive and mobile-friendly</li>
@@ -46,7 +46,7 @@ function Home() {
           <li>💾 Import/export/share features</li>
           <li>⚙️ Default scoring profiles</li>
           <li>🔥 Deluxe album support</li>
-          <li>❔ Setting info details</li>
+          <li>⚙️ Support for adjusting interlude weight and min_weight in Settings</li>
         </ul>
       </section>
     </div>

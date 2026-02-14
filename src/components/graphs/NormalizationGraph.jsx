@@ -61,7 +61,7 @@ function NormalizationGraph() {
 
   return (
     <div style={{ width: "100%", maxWidth: "600px", height: "400px", margin: "0 auto" }}>
-      <h4 style={{ marginBottom: "1rem" }}>🎵 Weighted Average Rating Adjustment Curve</h4>
+      <h4 style={{ marginBottom: "1rem" }}>📈 Weighted Average Rating Adjustment Curve</h4>
 
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>

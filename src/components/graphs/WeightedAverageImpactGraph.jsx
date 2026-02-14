@@ -53,7 +53,7 @@ function WeightedAverageImpactGraph() {
 
   return (
     <div style={{ width: "100%", maxWidth: "600px", height: "450px", display: "flex", flexDirection: "column", gap: "1rem", margin: "0 auto" }}>
-      <h4>📊 Weighted Avg Sensitivity (1 New Song)</h4>
+      <h4>📈 Weighted Average Sensitivity (1 New Song)</h4>
 
       {/* Inputs */}
       <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
@@ -124,7 +124,7 @@ function WeightedAverageImpactGraph() {
             stroke="#ff7300"
             strokeWidth={2}
             dot={false}
-            name="Weighted Avg"
+            name="Weighted Average"
           />
         </LineChart>
       </ResponsiveContainer>

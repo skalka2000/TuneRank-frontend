@@ -43,3 +43,45 @@
     align-items: start;
   }
 }
+
+.extra-info {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: 
+    max-height 300ms ease,
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.extra-info.open {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.info-box-inner {
+  margin-top: 0.75rem;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+
+  background: #f5f7fa;
+  border: 1px solid #e2e8f0;
+
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #1f2937;
+}
+
+.info-box-inner code {
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+
+  background: #e9eef5;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}
