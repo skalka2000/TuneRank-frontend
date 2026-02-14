@@ -2,8 +2,8 @@ import NormalizationGraph from "../components/graphs/NormalizationGraph";
 import WeightedAveragePanel from "../components/panels/WeightedAveragePanel";
 import LogisticNormalizationPanel from "../components/panels/LogisticNormalizationPanel";
 import WeightedAverageImpactGraph from "../components/graphs/WeightedAverageImpactGraph";
-import AverageRatingWeightPanel from "../components/panels/AverageRatingWeightPanel";
-import AverageRatingBlender from "../components/panels/AverageRatingBlenderPanel";
+import OverallRating from "../components/panels/OverallRatingPanel";
+import AverageRatingPanel from "../components/panels/OverallRatingPanel";
 import { useUserSettings } from "../context/SettingsContext";
 import { useEffect } from "react";
 import LoadingOverlay from "../components/common/LoadingOverlay";
@@ -40,18 +40,16 @@ function Settings() {
         </button>
       </div>
 
-
-      <div className="settings-section" style={{ alignItems: "center", justifyContent: "space-between" }}>
-        <AverageRatingWeightPanel />
-        <AverageRatingBlender />
+      <div className="settings-section">
+        <AverageRatingPanel />
       </div>
 
-      <div className="settings-section">
+      <div className="settings-section" style={{alignItems: "flex-start" }}>
         <WeightedAveragePanel />
         <WeightedAverageImpactGraph />
       </div>
 
-      <div className="settings-section">
+      <div className="settings-section" style={{alignItems: "flex-start" }}>
         <LogisticNormalizationPanel />
         <NormalizationGraph />
       </div>

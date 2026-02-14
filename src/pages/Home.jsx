@@ -18,7 +18,6 @@ function Home() {
       <section style={{ marginTop: "2rem" }}>
         <h3>🚀 Capabilities</h3>
         <ul>
-          <li>🧍 Separate user contexts for different users</li>
           <li>📊 View albums and songs in sortable, filterable, responsive tables</li>
           <li>🖊️ Edit any field (title, rating, year, interlude flag, etc.) directly from the table</li>
           <li>➕ Add new albums and songs, or delete them instantly</li>
@@ -30,6 +29,7 @@ function Home() {
           <li>🔍 Powerful filtering across multiple fields</li>
           <li>📦 FastAPI + SQLAlchemy backend with user-scoped data</li>
           <li>📱 Fully responsive and mobile-friendly</li>
+          <li>🧍 Separate user contexts for different users</li>
         </ul>
       </section>
 
@@ -46,6 +46,7 @@ function Home() {
           <li>💾 Import/export/share features</li>
           <li>⚙️ Default scoring profiles</li>
           <li>🔥 Deluxe album support</li>
+          <li>❔ Setting info details</li>
         </ul>
       </section>
     </div>
