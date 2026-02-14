@@ -46,7 +46,7 @@ function Home() {
           <li>🧮 Custom list creation</li>
           <li>💾 Import/export/share features</li>
           <li>🔥 Deluxe album support</li>
-          <li>⚙️ Support for adjusting interlude weight and min_weight in Settings</li>
+          <li>⚙️ Support for adjusting interlude weight and min_rating in Settings</li>
         </ul>
       </section>
     </div>

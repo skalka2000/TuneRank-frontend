@@ -105,7 +105,7 @@ function AlbumPage() {
 
   const cancelButtonText = (
     <>
-      <span role="img" aria-label="cancel">🔙</span>
+      <span role="img" aria-label="cancel">✖</span>
       <span className="button-text">Cancel</span>
     </>
   );
@@ -163,9 +163,12 @@ function AlbumPage() {
       </div>
       <div className="album-page-add-song-form" style={{marginTop: marginTopAddSongForm}}>
         <div className="toolbar-actions">
-          <button className="button" onClick={() => setShowAddSongForm(prev => !prev)}>
-            {showAddSongForm ? cancelButtonText : addButtonText}
-          </button>
+        <button
+          className={`button ${showAddSongForm ? "button-secondary" : ""}`}
+          onClick={() => setShowAddSongForm(prev => !prev)}
+        >
+          {showAddSongForm ? cancelButtonText : addButtonText}
+        </button>
         </div>
         {addSongForm}
       </div>
