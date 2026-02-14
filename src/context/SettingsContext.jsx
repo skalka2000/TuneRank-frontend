@@ -12,16 +12,39 @@ export function UserSettingsProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+    let isMounted = true;
+    let retryTimeout;
 
-    getUserSettings(userId)
-      .then((loaded) => {
+    const loadSettings = async (retryCount = 0) => {
+      try {
+        const loaded = await getUserSettings(userId);
+
+        if (!isMounted) return;
+
         setSettings(loaded);
         setDraft(loaded);
-      })
-      .catch((e) => console.error("Failed to load settings", e))
-      .finally(() => setLoading(false));
+        setLoading(false);
+      } catch (e) {
+        if (!isMounted) return;
 
+        if (retryCount < 1) {
+          retryTimeout = setTimeout(() => {
+            loadSettings(retryCount + 1);
+          }, 2000);
+        } else {
+          console.error("Failed to load settings", e);
+          setLoading(false);
+        }
+      }
+    };
+
+    setLoading(true);
+    loadSettings();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(retryTimeout);
+    };
   }, [userId]);
 
   const saveSettingsHandler = async () => {

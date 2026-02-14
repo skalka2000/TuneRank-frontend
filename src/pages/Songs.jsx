@@ -35,10 +35,39 @@ function Songs() {
   };
 
   useEffect(() => {
-    fetchSongs(userId)
-      .then(setSongs)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+    let isMounted = true;
+    let retryTimeout;
+
+    const loadSongs = async (retryCount = 0) => {
+      try {
+        const data = await fetchSongs(userId);
+
+        if (!isMounted) return;
+
+        setSongs(data);
+        setError("");
+        setLoading(false);
+      } catch (err) {
+        if (!isMounted) return;
+
+        if (retryCount < 1) {
+          retryTimeout = setTimeout(() => {
+            loadSongs(retryCount + 1);
+          }, 2000);
+        } else {
+          setError(err.message);
+          setLoading(false);
+        }
+      }
+    };
+
+    setLoading(true);
+    loadSongs();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(retryTimeout);
+    };
   }, [userId]);
 
   if (loading) return <LoadingOverlay message="Loading songs..." />;

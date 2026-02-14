@@ -30,10 +30,41 @@ function AlbumPage() {
   const [editingGenres, setEditingGenres] = useState(false);
 
   useEffect(() => {
-    fetchGenres(userId)
-      .then(setAllGenres)
-      .catch(err => console.error(err));
-  }, [userId]);
+    let isMounted = true;
+    let retryTimeout;
+
+    const loadAlbum = async (retryCount = 0) => {
+      try {
+        const data = await fetchAlbumById(id, userId);
+
+        if (!isMounted) return;
+
+        setAlbum(data);
+        setError("");
+        setLoading(false);
+      } catch (err) {
+        if (!isMounted) return;
+
+        if (retryCount < 1) {
+          retryTimeout = setTimeout(() => {
+            loadAlbum(retryCount + 1);
+          }, 2000);
+        } else {
+          setError(err.message);
+          setLoading(false);
+        }
+      }
+    };
+
+    setLoading(true);
+    loadAlbum();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(retryTimeout);
+    };
+  }, [id, userId]);
+
 
   const refreshAlbum = async () => {
     try {

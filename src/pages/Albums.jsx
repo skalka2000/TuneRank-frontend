@@ -14,6 +14,43 @@ function Albums() {
   const [error, setError] = useState("");
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
 
+  useEffect(() => {
+    let isMounted = true;
+    let retryTimeout;
+
+    const loadAlbums = async (retryCount = 0) => {
+      try {
+        const data = await fetchAlbums(userId);
+
+        if (!isMounted) return;
+
+        setAlbums(data);
+        setError("");
+        setLoading(false);
+      } catch (err) {
+        if (!isMounted) return;
+
+        if (retryCount < 1) {
+          retryTimeout = setTimeout(() => {
+            loadAlbums(retryCount + 1);
+          }, 2000);
+        } else {
+          setError(err.message);
+          setLoading(false);
+        }
+      }
+    };
+
+    setLoading(true);
+    loadAlbums();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(retryTimeout);
+    };
+  }, [userId]);
+
+
   const handleDeleteAlbum = async (id) => {
     try {
       await deleteAlbum(id);
@@ -22,14 +59,6 @@ function Albums() {
       setError(err.message);
     }
   };
-
-  useEffect(() => {
-    fetchAlbums(userId)
-      .then(setAlbums)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [userId]);
-
 
   if (loading) return <LoadingOverlay message="Loading albums..." />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
