@@ -140,7 +140,7 @@ function SongTable({ songs, isAlbumSpecific, onUpdate, onDelete}) {
   const [sorting, setSorting] = useState(
     showTrackNumber
       ? [{ id: "track_number", desc: false }]
-      : []
+      : [{ id: "rating", desc: true }]
   );
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
