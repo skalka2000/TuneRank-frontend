@@ -132,6 +132,12 @@ function AlbumPage() {
   };
 
   useEffect(() => {
+    fetchGenres(userId)
+      .then(setAllGenres)
+      .catch(err => console.error(err));
+  }, [userId]);
+
+  useEffect(() => {
     fetchAlbumById(id, userId)
       .then(setAlbum)
       .catch((err) => setError(err.message))
