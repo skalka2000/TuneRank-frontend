@@ -102,7 +102,6 @@ function AlbumPage() {
       }
 
       setAlbum(updated);
-      showSuccessCheckmark();
     } catch (err) {
       console.error(err);
     }

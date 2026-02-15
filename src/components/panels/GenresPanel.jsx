@@ -68,7 +68,7 @@ function GenresPanel() {
           <div key={genre.id} className="genre-item">
             <span>{genre.name}</span>
             <button
-              className="button button-secondary button-small"
+              className="button button-danger"
               onClick={() => handleDelete(genre.id)}
             >
               Delete

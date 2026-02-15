@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AddAlbumForm from "../components/AddAlbumForm";
 import { addAlbum } from "../api/albums";
 import { useUserMode } from "../hooks/useUserMode";
-import { showErrorX } from "../utils/specialEffects";
+import { showErrorX, showSuccessCheckmark } from "../utils/specialEffects";
 
 function AddAlbum() {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ function AddAlbum() {
     try {
       await addAlbum(album, userId);
       navigate(`/${mode}/albums`);
+      showSuccessCheckmark()
     } catch (err) {
       showErrorX()
       console.log("Failed to add album: ", album);

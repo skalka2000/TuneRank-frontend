@@ -48,6 +48,7 @@ function EditableField({
         <div className="editable-wrapper">
           <input
             type="checkbox"
+            className="checkbox-standard"
             checked={localValue}
             onChange={(e) => setLocalValue(e.target.checked)}
             ref={inputRef}
