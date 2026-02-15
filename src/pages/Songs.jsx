@@ -82,16 +82,16 @@ function Songs() {
     />
   ) : null;
   
-  const displayRatingChartButton = (
+  const displayRatingChartButtonText = (
     <>
       <span role="img" aria-label="chart">📊</span>
       <span className="button-text">Display Rating Distribution</span>
     </>
   );
 
-  const hideRatingChartButton = (
+  const hideRatingChartButtonText = (
     <>
-      <span role="img" aria-label="back">🔙</span>
+      <span role="img" aria-label="back">✖</span>
       <span className="button-text">Hide Rating Distribution</span>
     </>
   );
@@ -106,7 +106,7 @@ function Songs() {
         <button 
           className="button button-secondary" 
           onClick={() => setDisplayRatingChart(prev => !prev)}>
-          {displayRatingChart ? hideRatingChartButton : displayRatingChartButton}
+          {displayRatingChart ? hideRatingChartButtonText : displayRatingChartButtonText}
         </button>
       </div>
       <SongTable 

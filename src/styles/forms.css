@@ -176,17 +176,3 @@
   }
 }
 
-.genre-selector {
-  margin-top: var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-
-.genre-selector h4{
-  margin: 0
-}
-
-.album-genres-section {
-  margin-bottom: var(--space-md);
-}

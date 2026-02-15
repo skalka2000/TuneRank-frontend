@@ -95,6 +95,27 @@ function AlbumTable({ albums, onDelete }) {
         cell: info => <RatingCell value={info.getValue()} precision={2} />,
       },
       {
+        accessorKey: "genres",
+        header: "Genres",
+        size: 180,
+        enableSorting: false,
+        enableColumnFilter: false,
+        cell: info => {
+          const genres = info.getValue() || [];
+
+          if (!genres.length) return "—";
+
+          const names = genres.map(g => g.name);
+
+          const display =
+            names.length > 3
+              ? `${names.slice(0, 3).join(", ")} +${names.length - 3}`
+              : names.join(", ");
+
+          return <span title={names.join(", ")}>{display}</span>;
+        },
+      },
+      {
         id: "actions",
         header: "Actions",
         size: 80,

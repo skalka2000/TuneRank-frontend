@@ -1,4 +1,5 @@
 .button {
+  height: 100%;
   background-color: var(--accent);
   color: var(--background);
   padding: var(--space-sm) var(--space-md);

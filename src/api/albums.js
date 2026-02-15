@@ -1,11 +1,16 @@
 const API_BASE = process.env.REACT_APP_API_BASE;
 
-export async function fetchAlbums(userId) {
-  const res = await fetch(
-    `${API_BASE}/albums?user_id=${userId}`
-  );
+export async function fetchAlbums(userId, genreIds = []) {
+  const params = new URLSearchParams({
+    user_id: userId
+  });
+
+  genreIds.forEach(id => params.append("genre_ids", id));
+
+  const res = await fetch(`${API_BASE}/albums?${params}`);
 
   if (!res.ok) throw new Error("Failed to fetch albums");
+
   return res.json();
 }
 
@@ -15,6 +20,7 @@ export async function fetchAlbumById(id, userId) {
   );
 
   if (!res.ok) throw new Error("Album not found");
+
   return res.json();
 }
 
@@ -62,6 +68,7 @@ export async function updateAlbum(id, albumData, userId) {
   );
 
   if (!res.ok) throw new Error("Failed to update album");
+  
   return res.json();
 }
 
