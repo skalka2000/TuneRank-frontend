@@ -16,7 +16,9 @@ import { useUserMode } from "../hooks/useUserMode";
 
 function AlbumTable({ albums, onDelete }) {
   const { mode } = useUserMode();
-  const [sorting, setSorting] = useState([]);
+  const [sorting, setSorting] = useState([
+    { id: "overall_rating", desc: true }
+  ]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [activeFilterColumn, setActiveFilterColumn] = useState(null);
   const [albumToDelete, setAlbumToDelete] = useState(null);
