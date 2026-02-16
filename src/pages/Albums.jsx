@@ -16,7 +16,8 @@ function Albums() {
   const [displayRatingChart, setDisplayRatingChart] = useState(false)
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [allGenres, setAllGenres] = useState([]);
-  const [showGenreFilter, setShowGenreFilter] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [selectedDecades, setSelectedDecades] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -60,14 +61,34 @@ function Albums() {
       .catch(err => console.error(err));
   }, [userId]);
 
+  const availableDecades = useMemo(() => {
+    const decades = new Set();
+
+    albums.forEach(album => {
+      if (album.year) {
+        const decade = Math.floor(album.year / 10) * 10;
+        decades.add(decade);
+      }
+    });
+
+    return Array.from(decades).sort((a, b) => a - b);
+  }, [albums]);
+
   const filteredAlbums = useMemo(() => {
-    if (selectedGenres.length === 0) return albums;
+    return albums.filter(album => {
 
-    return albums.filter(album =>
-      album.genres?.some(g => selectedGenres.includes(g.id))
-    );
-  }, [albums, selectedGenres]);
+      const genreMatch =
+        selectedGenres.length === 0 ||
+        album.genres?.some(g => selectedGenres.includes(g.id));
 
+      const decadeMatch =
+        selectedDecades.length === 0 ||
+        (album.year &&
+          selectedDecades.includes(Math.floor(album.year / 10) * 10));
+
+      return genreMatch && decadeMatch;
+    });
+  }, [albums, selectedGenres, selectedDecades]);
 
   const handleDeleteAlbum = async (id) => {
     try {
@@ -83,7 +104,7 @@ function Albums() {
 
   const ratingChart = displayRatingChart ? (
     <RatingDistributionChart
-      data={albums}
+      data={filteredAlbums}
       valueAccessor={(a) => a.overall_rating}
       type="continuous"
       step={0.25}
@@ -105,14 +126,14 @@ function Albums() {
     <span className="button-text">Hide Rating Distribution</span>
   </>;
 
-  const displayFilterByGenreText = <>
-    <span role="img" aria-label="chart">🎵</span>
-    <span className="button-text">Filter by Genre</span>
+  const displayGeneralFilterText = <>
+    <span role="img" aria-label="chart">🔍</span>
+    <span className="button-text">Filters</span>
   </>;
 
-  const hideFilterByGenreText = <>
+  const hideGeneralFilterText = <>
     <span role="img" aria-label="chart">✖</span>
-    <span className="button-text">Hide Filter</span>
+    <span className="button-text">Hide Filters</span>
   </>;
 
   const marginTopToolbar = displayRatingChart ? 0 : "-1rem"
@@ -124,9 +145,9 @@ function Albums() {
       <div className="toolbar-actions" style={{marginTop: marginTopToolbar}}>
         <button
           className="button button-secondary"
-          onClick={() => setShowGenreFilter(prev => !prev)}
+          onClick={() => setShowFilters(prev => !prev)}
         >
-        {showGenreFilter ? hideFilterByGenreText : displayFilterByGenreText}
+        {showFilters ? hideGeneralFilterText : displayGeneralFilterText}
         </button>
         <button
           className="button button-secondary"
@@ -140,34 +161,67 @@ function Albums() {
           <button className="button">{addButtonText}</button>
         </Link>
       </div>
-      {showGenreFilter && allGenres.length > 0 && (
+      {showFilters > 0 && (
         <div className="genre-filter">
-          <div className="genre-selector">
-            <strong>Filter by Genres:</strong>
-            {allGenres.map(genre => (
-              <label key={genre.id} className="checkbox-label">
-                <input
-                  type="checkbox"
-                  className = "checkbox-standard"
-                  checked={selectedGenres.includes(genre.id)}
-                  onChange={() => {
-                    setSelectedGenres(prev =>
-                      prev.includes(genre.id)
-                        ? prev.filter(id => id !== genre.id)
-                        : [...prev, genre.id]
-                    );
-                  }}
-                />
-                {genre.name}
-              </label>
-            ))}
-          </div>
+          {/* Genre Section */}
+          {allGenres.length > 0 && (
+            <div className="genre-selector">
+              <strong>Genres:</strong>
+              {allGenres.map(genre => (
+                <label key={genre.id} className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    className="checkbox-standard"
+                    checked={selectedGenres.includes(genre.id)}
+                    onChange={() => {
+                      setSelectedGenres(prev =>
+                        prev.includes(genre.id)
+                          ? prev.filter(id => id !== genre.id)
+                          : [...prev, genre.id]
+                      );
+                    }}
+                  />
+                  {genre.name}
+                </label>
+              ))}
+            </div>
+          )}
+
+          {/* Decade Section */}
+          {availableDecades.length > 0 && (
+            <div className="genre-selector">
+              <strong>Decades:</strong>
+              {availableDecades.map(decade => (
+                <label key={decade} className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    className="checkbox-standard"
+                    checked={selectedDecades.includes(decade)}
+                    onChange={() => {
+                      setSelectedDecades(prev =>
+                        prev.includes(decade)
+                          ? prev.filter(d => d !== decade)
+                          : [...prev, decade]
+                      );
+                    }}
+                  />
+                  {decade}s
+                </label>
+              ))}
+            </div>
+          )}
+
           <button
             className="button button-secondary"
-            onClick={() => setSelectedGenres([])}
+            style={{ marginTop: "1rem" }}
+            onClick={() => {
+              setSelectedGenres([]);
+              setSelectedDecades([]);
+            }}
           >
-            Clear Filter
+            Clear Filters
           </button>
+
         </div>
       )}
 

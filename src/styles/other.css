@@ -16,7 +16,7 @@
 .genre-filter {
   display: flex;
   flex-direction: row;
-  gap: var(--space-xl);
+  gap: var(--space-xxl);
   align-items: center;
   margin-bottom: var(--space-md);
 }
