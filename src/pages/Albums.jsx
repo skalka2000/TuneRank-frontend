@@ -92,7 +92,7 @@ function Albums() {
 
   const handleDeleteAlbum = async (id) => {
     try {
-      await deleteAlbum(id);
+      await deleteAlbum(id, userId);
       setAlbums((prev) => prev.filter((album) => album.id !== id));
     } catch (err) {
       setError(err.message);
