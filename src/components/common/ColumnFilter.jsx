@@ -15,8 +15,8 @@ function ColumnFilter({ column }) {
             type="radio"
             name="song_type"
             value="all"
-            checked={!column.getFilterValue() || column.getFilterValue() === "all"}
-            onChange={() => column.setFilterValue("all")}
+            checked={!column.getFilterValue()}
+            onChange={() => column.setFilterValue(undefined)}
           />{" "}
           All
         </label>
@@ -25,37 +25,16 @@ function ColumnFilter({ column }) {
           <input
             type="radio"
             name="song_type"
-            value="song"
-            checked={column.getFilterValue() === "song"}
-            onChange={() => column.setFilterValue("song")}
+            value="songs"
+            checked={column.getFilterValue() === "songs"}
+            onChange={() => column.setFilterValue("songs")}
           />{" "}
           Songs
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="song_type"
-            value="interlude"
-            checked={column.getFilterValue() === "interlude"}
-            onChange={() => column.setFilterValue("interlude")}
-          />{" "}
-          Interludes
-        </label>
-
-        <label>
-          <input
-            type="radio"
-            name="song_type"
-            value="epic"
-            checked={column.getFilterValue() === "epic"}
-            onChange={() => column.setFilterValue("epic")}
-          />{" "}
-          Epics
         </label>
       </div>
     );
   }
+
 
   return (
     <input

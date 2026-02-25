@@ -67,8 +67,9 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
       header: "Type",
       size: 70,
       filterFn: (row, columnId, filterValue) => {
-        if (!filterValue || filterValue === "all") return true;
-        return row.getValue(columnId) === filterValue;
+        if (!filterValue) return true; // All
+        if (filterValue === "songs") return row.getValue(columnId) !== "interlude";
+        return true;
       },
       cell: ({ row }) => (
         <EditableField
@@ -80,11 +81,7 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
             { label: "Epic", value: "epic" },
           ]}
           onSave={(val) => onUpdate(row.original.id, "song_type", val)}
-          renderDisplay={(val) => {
-            if (val === "interlude") return "Interlude";
-            if (val === "epic") return "Epic";
-            return "Song";
-          }}
+          renderDisplay={(val) => (val === "interlude" ? "Interlude" : val === "epic" ? "Epic" : "Song")}
         />
       ),
     },
