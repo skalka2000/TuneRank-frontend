@@ -7,35 +7,51 @@ function ColumnFilter({ column }) {
     return <RangeFilter column={column} />;
   }
 
-  if (columnId === "is_interlude") {
+  if (columnId === "song_type") {
     return (
-      <div className = "table-filter-radio-input">
+      <div className="table-filter-radio-input">
         <label>
           <input
             type="radio"
-            name="interlude"
+            name="song_type"
             value="all"
-            checked={!column.getFilterValue()}
-            onChange={() => column.setFilterValue(undefined)}
-          /> All
+            checked={!column.getFilterValue() || column.getFilterValue() === "all"}
+            onChange={() => column.setFilterValue("all")}
+          />{" "}
+          All
         </label>
+
         <label>
           <input
             type="radio"
-            name="interlude"
-            value="no"
-            checked={column.getFilterValue() === "no"}
-            onChange={() => column.setFilterValue("no")}
-          /> Songs
+            name="song_type"
+            value="song"
+            checked={column.getFilterValue() === "song"}
+            onChange={() => column.setFilterValue("song")}
+          />{" "}
+          Songs
         </label>
+
         <label>
           <input
             type="radio"
-            name="interlude"
-            value="yes"
-            checked={column.getFilterValue() === "yes"}
-            onChange={() => column.setFilterValue("yes")}
-          /> Interludes
+            name="song_type"
+            value="interlude"
+            checked={column.getFilterValue() === "interlude"}
+            onChange={() => column.setFilterValue("interlude")}
+          />{" "}
+          Interludes
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="song_type"
+            value="epic"
+            checked={column.getFilterValue() === "epic"}
+            onChange={() => column.setFilterValue("epic")}
+          />{" "}
+          Epics
         </label>
       </div>
     );

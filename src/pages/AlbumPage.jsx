@@ -261,7 +261,7 @@ function AlbumPage() {
               <span
                 className="rating-box"
                 style={{
-                  backgroundColor: getRatingColor(album.average_rating),
+                  backgroundColor: getRatingColor(album.overall_rating),
                 }}
               >
                 {(Math.floor(album.overall_rating * 100) / 100).toFixed(2)}

@@ -11,55 +11,59 @@ function WeightedAveragePanel() {
   const handlePowerChange = (value) => {
     setDraft({
       ...draft,
-      average_power: value
+      average_power: value,
     });
   };
 
-const extraInfo = (
-  <div className="info-box-inner">
-    <p>
-      The weighted average amplifies or suppresses songs based on rating,
-      structural role, and exponent scaling.
-    </p>
+  const extraInfo = (
+    <div className="info-box-inner">
+      <p>
+        The weighted average amplifies or suppresses songs based on rating,
+        track type, and exponent scaling.
+      </p>
 
-    <p><strong>Weight Formula:</strong></p>
+      <p><strong>Weight Formula:</strong></p>
 
-    <code>
-      weight = baseWeight × max(rating, 6)^power
-    </code>
+      <code>
+        weight = baseWeight × max(rating, 6)^power
+      </code>
 
-    <ul>
-      <li><strong>baseWeight</strong> = 1.0 (normal track)</li>
-      <li><strong>baseWeight</strong> = interlude weight (interlude)</li>
-      <li>A floor of 6 prevents low ratings from becoming mathematically insignificant when power is high.</li>
-      <li><strong>power</strong> controls how aggressively high ratings dominate</li>
-    </ul>
+      <ul>
+        <li><strong>baseWeight</strong> = 1.0 (song)</li>
+        <li><strong>baseWeight</strong> = interlude weight (interlude)</li>
+        <li><strong>baseWeight</strong> = epic weight (epic)</li>
+        <li>
+          A floor of 6 prevents low ratings from becoming mathematically
+          insignificant when power is high.
+        </li>
+        <li><strong>power</strong> controls how aggressively high ratings dominate</li>
+      </ul>
 
-    <p><strong>Final Calculation:</strong></p>
+      <p><strong>Final Calculation:</strong></p>
 
-    <code>
-      Weighted Avg = Σ(rating × weight) / Σ(weight)
-    </code>
+      <code>
+        Weighted Avg = Σ(rating × weight) / Σ(weight)
+      </code>
 
-    <p>
-      Higher power exaggerates standout tracks.  
-      Lower interlude weight minimizes structural filler impact.
-    </p>
-  </div>
-);
-
-
-return (
-  <div className="settings-panel">
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <h3>Weighted Average Rating</h3>
-      <button
-        className={`button button-info ${displayExtraInfo ? "active" : ""}`}
-        onClick={() => setDisplayExtraInfo(prev => !prev)}
-      >
-        ❔
-      </button>
+      <p>
+        Higher power exaggerates standout tracks.  
+        Lower interlude weight minimizes structural filler impact.  
+        Higher epic weight boosts “centerpiece” tracks.
+      </p>
     </div>
+  );
+
+  return (
+    <div className="settings-panel">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h3>Weighted Average Rating</h3>
+        <button
+          className={`button button-info ${displayExtraInfo ? "active" : ""}`}
+          onClick={() => setDisplayExtraInfo((prev) => !prev)}
+        >
+          ❔
+        </button>
+      </div>
 
       <SliderControl
         label="Power"
@@ -79,6 +83,16 @@ return (
         max={1}
         step={0.05}
         description="Base multiplier applied to interludes before power weighting."
+      />
+
+      <SliderControl
+        label="Epic Weight"
+        value={draft.epic_weight}
+        onChange={(val) => setDraft({ ...draft, epic_weight: val })}
+        min={1}
+        max={4}
+        step={0.1}
+        description="Base multiplier applied to epic tracks before power weighting."
       />
 
       <div className={`extra-info ${displayExtraInfo ? "open" : ""}`}>

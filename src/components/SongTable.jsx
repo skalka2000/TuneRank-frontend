@@ -62,24 +62,29 @@ const baseColumns = (onUpdate, onDelete, handleDelete, isMobile) => {
       cell: ({ row }) => row.original.album?.artist ?? "N/A",
       filterFn: "includesString",
     },
-
     {
-      accessorKey: "is_interlude",
-      header: "Interlude",
-      size: 40,
+      accessorKey: "song_type",
+      header: "Type",
+      size: 70,
       filterFn: (row, columnId, filterValue) => {
-        if (filterValue === "yes") return row.getValue(columnId);
-        if (filterValue === "no") return !row.getValue(columnId);
-        return true;
+        if (!filterValue || filterValue === "all") return true;
+        return row.getValue(columnId) === filterValue;
       },
       cell: ({ row }) => (
         <EditableField
-          value={row.original.is_interlude}
-          inputType="checkbox"
-          onSave={(val) =>
-            onUpdate(row.original.id, "is_interlude", val)
-          }
-          renderDisplay={(val) => (val ? "✅" : "")}
+          value={row.original.song_type ?? "song"}
+          inputType="select"
+          options={[
+            { label: "Song", value: "song" },
+            { label: "Interlude", value: "interlude" },
+            { label: "Epic", value: "epic" },
+          ]}
+          onSave={(val) => onUpdate(row.original.id, "song_type", val)}
+          renderDisplay={(val) => {
+            if (val === "interlude") return "Interlude";
+            if (val === "epic") return "Epic";
+            return "Song";
+          }}
         />
       ),
     },

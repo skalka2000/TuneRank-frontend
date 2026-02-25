@@ -25,7 +25,7 @@ const SCORING_PROFILES = {
       scaling_factor: 0.3,
       steep_factor: 4,
       interlude_weight: 0.5,
-
+      epic_weight: 2,
     }
   },
 
@@ -38,7 +38,8 @@ const SCORING_PROFILES = {
       greatness_threshold: 8.0,
       scaling_factor: 0.3,
       steep_factor: 3,
-      interlude_weight: 0.5
+      interlude_weight: 0.5,
+      epic_weight: 2,
     }
   },
 
@@ -52,6 +53,7 @@ const SCORING_PROFILES = {
       scaling_factor: 0.4,
       steep_factor: 7,
       interlude_weight: 0.5,
+      epic_weight: 2,
     }
   },
 
@@ -65,6 +67,7 @@ const SCORING_PROFILES = {
       scaling_factor: 0.0,
       steep_factor: 1,
       interlude_weight: 0.5,
+      epic_weight: 2,
     }
   }
 };

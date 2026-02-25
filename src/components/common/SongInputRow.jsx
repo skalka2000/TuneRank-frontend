@@ -17,6 +17,7 @@ function SongInputRow({ song, onChange, showTrack = true }) {
           className="input-standard input-small"
         />
       )}
+
       <input
         type="text"
         placeholder="Song Title"
@@ -24,6 +25,7 @@ function SongInputRow({ song, onChange, showTrack = true }) {
         onChange={(e) => handleChange("title", e.target.value)}
         className="input-standard input-xxl"
       />
+
       <input
         type="text"
         placeholder="Rating"
@@ -35,14 +37,18 @@ function SongInputRow({ song, onChange, showTrack = true }) {
           if (val === 11) fireConfetti();
         }}
       />
+
       <label className="checkbox-label">
-        <input
-          type="checkbox"
-          className="checkbox-standard"
-          checked={song.is_interlude}
-          onChange={(e) => handleChange("is_interlude", e.target.checked)}
-        />
-        Interlude
+        <span style={{ marginRight: "0.5rem" }}>Type</span>
+        <select
+          className="input-standard"
+          value={song.song_type ?? "song"}
+          onChange={(e) => handleChange("song_type", e.target.value)}
+        >
+          <option value="song">Song</option>
+          <option value="interlude">Interlude</option>
+          <option value="epic">Epic</option>
+        </select>
       </label>
     </div>
   );

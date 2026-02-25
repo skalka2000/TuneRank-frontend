@@ -53,14 +53,14 @@ function AddAlbumForm({onSubmit, onCancel}){
                 title: song.title,
                 ...(song.track_number && { track_number: parseInt(song.track_number) }),
                 ...(song.rating && { rating: parseFloat(song.rating) }),
-                is_interlude: song.is_interlude ?? false,
+                song_type: song.song_type ?? "song", 
               }))
         };
         onSubmit(album);
     }
 
     const handleAddSong = () => {
-      setSongs([...songs, { title: "", track_number: "", rating: "", is_interlude: false }]);
+      setSongs([...songs, { title: "", track_number: "", rating: "", song_type: "song" }]);
     }
 
     const handleSongChange = (index, field, value) => {

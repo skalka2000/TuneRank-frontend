@@ -19,7 +19,7 @@ function Home() {
         <h3>🚀 Capabilities</h3>
         <ul>
           <li>📊 View albums and songs in sortable, filterable, responsive tables</li>
-          <li>🖊️ Edit any field (title, rating, year, interlude flag, etc.) directly from the table</li>
+          <li>🖊️ Edit any field (title, rating, year, song type, etc.) directly from the table</li>
           <li>➕ Add new albums and songs, or delete them instantly</li>
           <li>🎨 Ratings are color-coded to visually represent quality</li>
           <li>📈 Rating distribution graphs</li>

@@ -169,10 +169,14 @@
 
 @media (max-width: 768px) {
   .input-simple,
-  .input-standard
+  .input-standard,
   .range-input {
     font-size: 0.8rem;
     height: 1.25rem;
+  }
+  .type-selector select {
+    font-size: 0.7rem;
+    height: 1.5rem;
   }
 }
 
